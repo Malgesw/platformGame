@@ -2,19 +2,66 @@
 
 MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states) : State(window, states) {
 
-    shape.setSize(sf::Vector2f(100.f, 100.f));
-    shape.setFillColor(sf::Color::Red);
+    font.loadFromFile("/home/kaneki/CLionProjects/platformGame/Fonts/PAPYRUS.ttf");
+    initButtons();
+
+    background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
+    background.setFillColor(sf::Color::Green);
 
 }
 
 void MainMenuState::update(const float &dt) {
 
-    checkForClose();
+    updateMousePosition();
+
+    /*if(typeid(states->top()) == typeid(MainMenuState)) {
+        std::cout << "MainMenuState is on the top" << std::endl;
+        checkForClose();
+    }*/
+
+    updateButtons();
+
+
+}
+
+void MainMenuState::updateButtons() {
+
+    for(auto &b : buttons)
+        b.second->update(mousePos);
+
+    if(buttons["PLAY"]->isPressed())
+        states->push(std::make_unique<GameState>(window, states));
+
+    if(buttons["EXIT"]->isPressed())
+        states->pop();
+
+}
+
+void MainMenuState::updateMousePosition() {
+
+    mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
 }
 
 void MainMenuState::render(sf::RenderTarget &target) {
 
-    target.draw(shape);
+    target.draw(background);
+
+    for(auto &b : buttons)
+        b.second->render(target);
+
+}
+
+void MainMenuState::initButtons() {
+
+    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 50.f),
+                                               sf::Color(70, 70, 70, 200), "Play", font, 16,
+                                               sf::Color(150, 150, 150, 255),
+                                               sf::Color(20, 20, 20, 200));
+
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 250.f),
+                                               sf::Color(70, 70, 70, 200), "Exit", font, 16,
+                                               sf::Color(150, 150, 150, 255),
+                                               sf::Color(20, 20, 20, 200));
 
 }
