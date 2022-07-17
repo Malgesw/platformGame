@@ -3,7 +3,7 @@ project(platformGame)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(platformGame main.cpp)
+add_executable(platformGame main.cpp Game.cpp Game.h)
 
 include_directories(/usr/local/include)
 
