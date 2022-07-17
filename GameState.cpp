@@ -7,7 +7,11 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
 }
 
-void GameState::update(const float &dt) {}
+void GameState::update(const float &dt) {
+
+    checkForClose();
+
+}
 
 void GameState::render(sf::RenderTarget &target) {
 
