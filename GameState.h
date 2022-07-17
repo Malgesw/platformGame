@@ -14,6 +14,7 @@ public:
 
     void update(const float &dt) override;
     void render(sf::RenderTarget &target) override;
+    bool isReady() const;
 
 private:
 
@@ -22,6 +23,8 @@ private:
     sf::Vector2f mousePos;
     std::unique_ptr<PauseMenu> pauseMenu;
     bool isPaused;
+    float pauseTime;
+    sf::Clock pauseClock;
 
 };
 

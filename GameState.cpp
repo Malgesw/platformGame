@@ -10,6 +10,8 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     isPaused = false;
 
     pauseMenu = std::make_unique<PauseMenu>(window, font);
+    pauseTime = 0.5f;
+    pauseClock.restart();
 
 }
 
@@ -17,7 +19,9 @@ void GameState::update(const float &dt) {
 
     mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && isReady()){
+
+        pauseClock.restart();
 
         if(!isPaused)
             isPaused = true;
@@ -48,5 +52,14 @@ void GameState::render(sf::RenderTarget &target) {
     if(isPaused)
         pauseMenu->render(target);
 
+
+}
+
+bool GameState::isReady() const {
+
+    if(pauseClock.getElapsedTime().asSeconds() >= pauseTime)
+        return true;
+    else
+        return false;
 
 }
