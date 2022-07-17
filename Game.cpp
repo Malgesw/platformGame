@@ -39,7 +39,6 @@ void Game::update() {
     else
         window->close();
 
-
 }
 
 void Game::render() {

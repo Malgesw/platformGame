@@ -2,6 +2,7 @@
 #define PLATFORMGAME_GAMESTATE_H
 
 #include "State.h"
+#include "PauseMenu.h"
 
 
 class GameState : public State {
@@ -17,6 +18,10 @@ public:
 private:
 
     sf::RectangleShape shape;
+    sf::Font font;
+    sf::Vector2f mousePos;
+    std::unique_ptr<PauseMenu> pauseMenu;
+    bool isPaused;
 
 };
 

@@ -14,10 +14,7 @@ void MainMenuState::update(const float &dt) {
 
     updateMousePosition();
 
-    /*if(typeid(states->top()) == typeid(MainMenuState)) {
-        std::cout << "MainMenuState is on the top" << std::endl;
-        checkForClose();
-    }*/
+    checkForClose();
 
     updateButtons();
 
