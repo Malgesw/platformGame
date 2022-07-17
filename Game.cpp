@@ -12,6 +12,9 @@ Game::~Game() {
 
     delete window;
 
+    while(!states.empty())
+        states.pop();
+
 }
 
 void Game::updateDeltaTime() {

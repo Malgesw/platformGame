@@ -12,12 +12,11 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
 
 void MainMenuState::update(const float &dt) {
 
-    updateMousePosition();
-
     checkForClose();
-
-    updateButtons();
-
+    if(!states->empty()) {
+        updateMousePosition();
+        updateButtons();
+    }
 
 }
 
