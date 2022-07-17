@@ -3,6 +3,7 @@
 Game::Game() {
 
     initWindow();
+    initStates();
     deltaTime = 0.f;
 
 }
@@ -33,11 +34,21 @@ void Game::update() {
 
     updateEvents();
 
+    if(!states.empty())
+        states.top()->update(deltaTime);
+    else
+        window->close();
+
+
 }
 
 void Game::render() {
 
     window->clear();
+
+    if(!states.empty())
+        states.top()->render(*window);
+
     window->display();
 
 }
@@ -57,6 +68,12 @@ void Game::run() {
 void Game::initWindow() {
 
     window = new sf::RenderWindow(sf::VideoMode(400, 400), "Platform");
+
+}
+
+void Game::initStates() {
+
+    states.push(std::make_unique<GameState>(window, &states));
 
 }
 

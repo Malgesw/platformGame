@@ -1,7 +1,8 @@
 #ifndef PLATFORMGAME_GAME_H
 #define PLATFORMGAME_GAME_H
 
-#include "SFML/Graphics.hpp"
+#include "State.h"
+#include "GameState.h"
 
 
 class Game {
@@ -20,11 +21,13 @@ public:
 private:
 
     sf::RenderWindow *window;
+    std::stack<std::unique_ptr<State>> states;
     float deltaTime;
     sf::Clock clock;
     sf::Event event{};
 
     void initWindow();
+    void initStates();
 
 
 
