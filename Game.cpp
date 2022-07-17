@@ -3,6 +3,7 @@
 Game::Game() {
 
     initWindow();
+    deltaTime = 0.f;
 
 }
 
