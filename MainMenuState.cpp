@@ -28,6 +28,9 @@ void MainMenuState::updateButtons() {
     if(buttons["PLAY"]->isPressed())
         states->push(std::make_unique<GameState>(window, states));
 
+    if(buttons["SETTINGS"]->isPressed())
+        states->push(std::make_unique<SettingsState>(window, states));
+
     if(buttons["EXIT"]->isPressed())
         states->pop();
 
@@ -55,7 +58,12 @@ void MainMenuState::initButtons() {
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 250.f),
+    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 250.f),
+                                               sf::Color(70, 70, 70, 200), "Settings", font, 16,
+                                               sf::Color(150, 150, 150, 255),
+                                               sf::Color(20, 20, 20, 200));
+
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 450.f),
                                                sf::Color(70, 70, 70, 200), "Exit", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));

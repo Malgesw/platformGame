@@ -1,23 +1,23 @@
-#ifndef PLATFORMGAME_MAINMENUSTATE_H
-#define PLATFORMGAME_MAINMENUSTATE_H
+#ifndef PLATFORMGAME_SETTINGSSTATE_H
+#define PLATFORMGAME_SETTINGSSTATE_H
 
 #include "State.h"
 #include "GameState.h"
-#include "SettingsState.h"
 #include "Button.h"
+#include "MainMenuState.h"
+#include "headers.h"
 
-class MainMenuState : public State {
+class SettingsState : public State {
 
 public:
 
-    MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states);
-    ~MainMenuState() override = default;
+    SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states);
+    ~SettingsState() override = default;
 
     void update(const float &dt) override;
     void updateButtons();
     void updateMousePosition();
     void render(sf::RenderTarget &target) override;
-
 
 private:
 
@@ -30,7 +30,8 @@ private:
 
 
 
+
 };
 
 
-#endif //PLATFORMGAME_MAINMENUSTATE_H
+#endif //PLATFORMGAME_SETTINGSSTATE_H

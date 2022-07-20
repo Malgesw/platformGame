@@ -3,7 +3,7 @@ project(platformGame)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.cpp GameState.h MainMenuState.cpp MainMenuState.h Button.cpp Button.h PauseMenu.cpp PauseMenu.h)
+add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.cpp GameState.h MainMenuState.cpp MainMenuState.h Button.cpp Button.h PauseMenu.cpp PauseMenu.h SettingsState.cpp SettingsState.h)
 
 include_directories(/usr/local/include)
 
