@@ -9,7 +9,7 @@ class GameState : public State {
 
 public:
 
-    GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states);
+    GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev);
     ~GameState() override = default;
 
     void update(const float &dt) override;

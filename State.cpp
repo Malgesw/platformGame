@@ -1,6 +1,7 @@
 #include "State.h"
 
-State::State(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states) : window(window), states(states) {}
+State::State(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev) :
+window(window), states(states), textEvent(ev) {}
 
 void State::checkForClose() {
 

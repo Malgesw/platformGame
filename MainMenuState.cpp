@@ -1,6 +1,7 @@
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states) : State(window, states) {
+MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev) :
+State(window, states, ev) {
 
     font.loadFromFile("/home/kaneki/CLionProjects/platformGame/Fonts/PAPYRUS.ttf");
     initButtons();
@@ -26,10 +27,10 @@ void MainMenuState::updateButtons() {
         b.second->update(mousePos);
 
     if(buttons["PLAY"]->isPressed())
-        states->push(std::make_unique<GameState>(window, states));
+        states->push(std::make_unique<GameState>(window, states, textEvent));
 
     if(buttons["SETTINGS"]->isPressed())
-        states->push(std::make_unique<SettingsState>(window, states));
+        states->push(std::make_unique<SettingsState>(window, states, textEvent));
 
     if(buttons["EXIT"]->isPressed())
         states->pop();

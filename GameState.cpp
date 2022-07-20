@@ -1,6 +1,7 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states) : State(window, states) {
+GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev) :
+State(window, states, ev) {
 
     shape.setSize(sf::Vector2f(100.f, 100.f));
     shape.setFillColor(sf::Color::Green);

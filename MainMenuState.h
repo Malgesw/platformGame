@@ -10,7 +10,7 @@ class MainMenuState : public State {
 
 public:
 
-    MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states);
+    MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev);
     ~MainMenuState() override = default;
 
     void update(const float &dt) override;

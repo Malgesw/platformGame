@@ -75,7 +75,7 @@ void Game::initWindow() {
 
 void Game::initStates() {
 
-    states.push(std::make_unique<MainMenuState>(window, &states));
+    states.push(std::make_unique<MainMenuState>(window, &states, event));
 
 }
 
