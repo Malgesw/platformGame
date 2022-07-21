@@ -9,7 +9,8 @@ class GameState : public State {
 
 public:
 
-    GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev);
+    GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
+              std::map<std::string, int> *supportedKeys);
     ~GameState() override = default;
 
     void update(const float &dt) override;
@@ -25,6 +26,8 @@ private:
     bool isPaused;
     float pauseTime;
     sf::Clock pauseClock;
+
+    void initKeys() override;
 
 };
 

@@ -23,12 +23,16 @@ private:
 
     sf::RenderWindow *window;
     std::stack<std::unique_ptr<State>> states;
-    float deltaTime;
+    std::map<std::string, int> supportedKeys;
+
     sf::Clock clock;
     sf::Event event{};
 
+    float deltaTime;
+
     void initWindow();
     void initStates();
+    void initKeys();
 
 
 

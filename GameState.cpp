@@ -1,7 +1,10 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev) :
-State(window, states, ev) {
+GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
+                     std::map<std::string, int> *supportedKeys) :
+State(window, states, ev, supportedKeys) {
+
+    initKeys();
 
     shape.setSize(sf::Vector2f(100.f, 100.f));
     shape.setFillColor(sf::Color::Green);
@@ -62,5 +65,29 @@ bool GameState::isReady() const {
         return true;
     else
         return false;
+
+}
+
+void GameState::initKeys() {
+
+    std::ifstream file;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/mainMenuState_keys.ini");
+    std::string keyName;
+    std::string key;
+
+    while(file >> keyName >> key)
+        keyBinds[keyName] = supportedKeys->at(key);
+
+    file.close();
+
+    std::ifstream file2;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+
+    while(file2 >> keyName >> key)
+        keyBinds[keyName] = supportedKeys->at(key);
+
+    file.close();
 
 }

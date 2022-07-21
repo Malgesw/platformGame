@@ -1,10 +1,11 @@
 #include "SettingsState.h"
 
-SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev) :
-State(window, states, ev) {
+SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
+                             std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
     font.loadFromFile("/home/kaneki/CLionProjects/platformGame/Fonts/PAPYRUS.ttf");
 
+    initKeys();
     initButtons();
     initTextFields();
 
@@ -16,9 +17,9 @@ State(window, states, ev) {
 void SettingsState::update(const float &dt) {
 
     updateMousePosition();
+    updateTextFields();
     checkForClose(); //FIXME : checkForClose() causes segmentation fault error
     updateButtons();
-    updateTextFields();
 
 }
 
@@ -77,6 +78,22 @@ void SettingsState::updateTextFields() {
             }
         }
     }
+
+    updateKeys();
+
+}
+
+void SettingsState::updateKeys() {
+
+    std::ofstream file;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+
+    for(auto &t : textFields)
+        file << t.second->getDescription() << " " << static_cast<std::string>(t.second->getString()) << std::endl;
+
+    file.close();
+
 }
 
 void SettingsState::initButtons() {
@@ -105,5 +122,21 @@ void SettingsState::initTextFields() {
     textFields["SHOOT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 280.f), 22,
                                                      sf::Vector2f(125.f, 290.f), "Shoot", sf::Vector2f(35.f, 290.f),
                                                      &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+
+}
+
+void SettingsState::initKeys() {
+
+    std::ifstream file;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/mainMenuState_keys.ini");
+
+    std::string keyName;
+    std::string key;
+
+    while(file >> keyName >> key)
+        keyBinds[keyName] = supportedKeys->at(key);
+
+    file.close();
 
 }

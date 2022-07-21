@@ -8,6 +8,7 @@
 #include <map>
 #include <stack>
 #include <memory>
+#include <fstream>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"

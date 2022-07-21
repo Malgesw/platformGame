@@ -10,7 +10,8 @@ class MainMenuState : public State {
 
 public:
 
-    MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev);
+    MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
+                  std::map<std::string, int> *supportedKeys);
     ~MainMenuState() override = default;
 
     void update(const float &dt) override;
@@ -27,6 +28,7 @@ private:
     sf::RectangleShape background;
 
     void initButtons();
+    void initKeys() override;
 
 
 

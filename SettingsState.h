@@ -11,13 +11,15 @@ class SettingsState : public State {
 
 public:
 
-    SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev);
+    SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
+                  std::map<std::string, int> *supportedKeys);
     ~SettingsState() override = default;
 
     void update(const float &dt) override;
     void updateButtons();
     void updateMousePosition();
     void updateTextFields();
+    void updateKeys();
     void render(sf::RenderTarget &target) override;
 
 private:
@@ -30,6 +32,7 @@ private:
 
     void initButtons();
     void initTextFields();
+    void initKeys() override;
 
 
 

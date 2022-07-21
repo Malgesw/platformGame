@@ -3,7 +3,9 @@
 Game::Game() {
 
     initWindow();
+    initKeys();
     initStates();
+
     deltaTime = 0.f;
 
 }
@@ -75,7 +77,22 @@ void Game::initWindow() {
 
 void Game::initStates() {
 
-    states.push(std::make_unique<MainMenuState>(window, &states, event));
+    states.push(std::make_unique<MainMenuState>(window, &states, event, &supportedKeys));
+
+}
+
+void Game::initKeys() {
+
+    std::ifstream file;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/supported_keys.ini");
+    std::string key;
+    int keyValue = 0;
+
+    while(file >> key >> keyValue)
+        supportedKeys[key] = keyValue;
+
+    file.close();
 
 }
 
