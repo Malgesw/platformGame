@@ -1,8 +1,7 @@
 #include "GameState.h"
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
-                     std::map<std::string, int> *supportedKeys) :
-State(window, states, ev, supportedKeys) {
+                     std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
     initKeys();
 
@@ -23,7 +22,7 @@ void GameState::update(const float &dt) {
 
     mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && isReady()){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()){
 
         pauseClock.restart();
 
@@ -45,6 +44,20 @@ void GameState::update(const float &dt) {
             states->pop();
 
     }
+
+    updatePlayerPos();
+
+
+}
+
+void GameState::updatePlayerPos() {
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))))
+        shape.move(0.f, -1.f);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
+        shape.move(-1.f, 0.f);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
+        shape.move(1.f, 0.f);
 
 
 }
@@ -83,11 +96,11 @@ void GameState::initKeys() {
 
     std::ifstream file2;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+    file2.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key)
         keyBinds[keyName] = supportedKeys->at(key);
 
-    file.close();
+    file2.close();
 
 }

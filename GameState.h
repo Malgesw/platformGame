@@ -14,6 +14,7 @@ public:
     ~GameState() override = default;
 
     void update(const float &dt) override;
+    void updatePlayerPos();
     void render(sf::RenderTarget &target) override;
     bool isReady() const;
 

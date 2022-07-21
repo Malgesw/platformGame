@@ -6,7 +6,7 @@ State::State(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *state
 
 void State::checkForClose() {
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))))
         states->pop();
 
 }
