@@ -16,11 +16,14 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_pt
 
 void SettingsState::update(const float &dt) {
 
-    updateMousePosition();
-    updateTextFields();
-    checkForClose(); //FIXME : checkForClose() causes segmentation fault error
-    updateButtons();
-
+    checkForClose();
+    if(states->size() != 1) { //now there is only the MainMenuState in the stack
+        updateMousePosition();
+        updateTextFields();
+        updateButtons();
+    }
+    else
+        sf::sleep(sf::seconds(0.05)); //0.1s is waited to prevent a second pop() after pressing ESC
 }
 
 void SettingsState::updateButtons() {
@@ -122,6 +125,21 @@ void SettingsState::initTextFields() {
     textFields["SHOOT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 280.f), 22,
                                                      sf::Vector2f(125.f, 290.f), "Shoot", sf::Vector2f(35.f, 290.f),
                                                      &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+
+    std::ifstream file;
+
+    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+
+    std::string keyName;
+    std::string key;
+    auto i = textFields.begin();
+
+    while(file >> keyName >> key && i != textFields.end()){
+        i->second->setString(key);
+        i++;
+    }
+
+    file.close();
 
 }
 
