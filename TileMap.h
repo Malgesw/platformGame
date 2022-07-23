@@ -2,8 +2,8 @@
 // Created by seren on 19/07/2022.
 //
 
-#ifndef LEVELMAPSTATE_H
-#define LEVELMAPSTATE_H
+#ifndef TILEMAP_H
+#define TILEMAP_H
 #include <SFML/Graphics.hpp>
 #include "LevelTile.h"
 #include <vector>
@@ -15,16 +15,16 @@ private:
     void setTile();
     void setInipos();
     std::map< std:: string, Item*> items;
-public:
-    std::vector< std:: vector<LevelTile*>> tiles;
     int gridLength;
     int gridWidth;
+
+public:
+    std::vector< std:: vector<LevelTile*>> tiles;
     sf::Vector2i playerxy;
     sf::Vector2i exitxy;
-
-
+    void renderMap(sf::RenderTarget target);
     TileMap();
 };
 
 
-#endif //LEVELMAPSTATE_H
+#endif //TILEMAP_H
