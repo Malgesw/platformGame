@@ -3,6 +3,7 @@
 //
 
 #include "TileMap.h"
+
 void TileMap::setInipos() {
     //player and exit update ini pos-temporary arbitrary coordinates and subject to change
     exitxy = sf::Vector2i(1,0);
@@ -12,10 +13,13 @@ TileMap::TileMap() {
     gridLength = 8;
     gridWidth = 8;
     setTile();
+    // setInipos();
 }
 
 void TileMap::setTile() {
+
     sf::Vector2f size(50.f,50.f);
+
     tiles.clear();
     std::vector<LevelTile*> Row1;
     Row1.push_back(new LevelTile("C:/Users/seren/OneDrive/Documenti/projects/map_attempt/images/wall.png", 0 , 0, false, false, size));
@@ -106,6 +110,17 @@ void TileMap::setTile() {
     tiles.push_back(Row8);
 
 }
+
+
+void TileMap::renderMap(sf::RenderTarget target) {
+    for(int i=0;i<gridWidth;i++){
+        for(int j=0;j<gridLength;j++){
+              tiles[i][j]->render(target);
+        }
+    }
+
+}
+
 
 
 
