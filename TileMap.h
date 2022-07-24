@@ -10,20 +10,29 @@
 #include "Item.h"
 
 
+
 class TileMap {
 private:
-    void setTile();
+    void setTile(sf::RenderWindow* window);
     void setInipos();
     std::map< std:: string, Item*> items;
     int gridLength;
     int gridWidth;
-
-public:
     std::vector< std:: vector<LevelTile*>> tiles;
     sf::Vector2i playerxy;
     sf::Vector2i exitxy;
-    void renderMap(sf::RenderTarget target);
-    TileMap();
+public:
+     std::vector<LevelTile *> getWalls() const{
+        return walls;
+    }
+
+private:
+    std::vector<LevelTile*> walls;
+
+public:
+
+    void renderMap(sf::RenderTarget &target);
+    TileMap(sf::RenderWindow* window);
 };
 
 

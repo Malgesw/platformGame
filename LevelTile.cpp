@@ -26,6 +26,7 @@ LevelTile::LevelTile(std::string textureName , float x, float y, bool viable, bo
 
     isViable = viable;
     //collision checking
+    /*
     if(!isViable){
         body.setOutlineColor(sf::Color::Red);
         body.setOutlineThickness(2.f);
@@ -36,6 +37,7 @@ LevelTile::LevelTile(std::string textureName , float x, float y, bool viable, bo
         body.setOutlineColor(sf::Color::Blue);
         body.setOutlineThickness(2.f);
     }
+     */
     body.setPosition(pos);
 
 }
@@ -54,6 +56,10 @@ void LevelTile::setBody(const sf::RectangleShape &body) {
 }
 
 //collision handling for later
-const sf::FloatRect LevelTile::getGlobalBounds() const {
+ sf::FloatRect LevelTile::getGlobalBounds() const {
     return this->body.getGlobalBounds();
+}
+
+bool LevelTile::getViable() const {
+    return isViable;
 }

@@ -85,7 +85,7 @@ void Game::initKeys() {
 
     std::ifstream file;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/supported_keys.ini");
+    file.open("../Config/supported_keys.ini");
     std::string key;
     int keyValue = 0;
 
