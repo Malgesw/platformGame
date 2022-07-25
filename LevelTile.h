@@ -12,17 +12,24 @@
 class LevelTile {
 private:
     sf::Vector2f pos;
+    sf::Texture texture;
+    sf::RectangleShape body;
+    bool isViable;
+public:
+    bool getViable() const;
+
+private:
+    bool isExit;
+public:
+    const sf::RectangleShape &getBody() const;
+    void setBody(const sf::RectangleShape &body);
 
 public:
     bool setupSprite(std:: string);
     LevelTile(std::string, float, float, bool, bool,sf::Vector2f);
-    bool isitViable();
-    bool isViable;
-    bool isExit;
-    sf::Texture texture;
-   // sf::Sprite sprite;
-   sf::RectangleShape body;
-   const sf::FloatRect getGlobalBounds() const;
+
+    void render(sf::RenderTarget &target);
+    sf::FloatRect getGlobalBounds() const;
 };
 
 

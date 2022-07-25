@@ -2,29 +2,38 @@
 // Created by seren on 19/07/2022.
 //
 
-#ifndef LEVELMAPSTATE_H
-#define LEVELMAPSTATE_H
+#ifndef TILEMAP_H
+#define TILEMAP_H
 #include <SFML/Graphics.hpp>
 #include "LevelTile.h"
 #include <vector>
 #include "Item.h"
 
 
+
 class TileMap {
 private:
-    void setTile();
+    void setTile(sf::RenderWindow* window);
     void setInipos();
     std::map< std:: string, Item*> items;
-public:
-    std::vector< std:: vector<LevelTile*>> tiles;
     int gridLength;
     int gridWidth;
+    std::vector< std:: vector<LevelTile*>> tiles;
     sf::Vector2i playerxy;
     sf::Vector2i exitxy;
+public:
+     std::vector<LevelTile *> getWalls() const{
+        return walls;
+    }
 
+private:
+    std::vector<LevelTile*> walls;
 
-    TileMap();
+public:
+
+    void renderMap(sf::RenderTarget &target);
+    TileMap(sf::RenderWindow* window);
 };
 
 
-#endif //LEVELMAPSTATE_H
+#endif //TILEMAP_H
