@@ -3,8 +3,11 @@
 //
 #include "Movement.h"
 
-void Movement::moveX() {
-
+void Movement::moveLeft() {
+    collisionBox.move(speed*dt*-1.f,0.f);
+}
+void Movement::moveRight() {
+    collisionBox.move(speed*dt,0.f);
 }
 
 float Movement::getSpeed() {
@@ -15,8 +18,12 @@ void Movement::checkCollision() {
 
 }
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size):speed(velocity) {
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size):speed(velocity),dt(0.01f) {
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
+}
+
+void Movement::updateDt(float deltaTime){
+dt=deltaTime;
 }
 

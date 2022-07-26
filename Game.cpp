@@ -96,4 +96,18 @@ void Game::initKeys() {
 
 }
 
+void Game::addObserver(Observer *o) {
+dtShare.push_back(o);
+}
+
+void Game::removeObserver(Observer *o) {
+dtShare.remove(o);
+}
+
+void Game::notifyObservers() const {
+for (auto &element : dtShare){
+    (+element)->updateDt(deltaTime);
+}
+}
+
 

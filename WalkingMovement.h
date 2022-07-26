@@ -11,6 +11,8 @@ class WalkingMovement : public Movement{
 
 public:
     WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size);
+    void moveUp() override;
+    void moveDown() override;
 
 private:
     bool canJump= true;

@@ -9,3 +9,11 @@ WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf:
                                                                                                            size) {
 
 }
+
+void WalkingMovement::moveUp() {
+
+}
+
+void WalkingMovement::moveDown() {
+
+}
