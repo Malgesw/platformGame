@@ -7,29 +7,28 @@
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "headers.h"
 
+enum TILES{GROUND, WALL, DOOR};
 
 class LevelTile {
+
+public:
+
+    LevelTile(unsigned short tile, float x, float y, sf::Vector2f size);
+
+    bool getViable() const;
+    bool setupSprite(unsigned short tile);
+    void render(sf::RenderTarget &target);
+    sf::FloatRect getGlobalBounds() const;
+
 private:
-    sf::Vector2f pos;
+
     sf::Texture texture;
     sf::RectangleShape body;
     bool isViable;
-public:
-    bool getViable() const;
-
-private:
     bool isExit;
-public:
-    const sf::RectangleShape &getBody() const;
-    void setBody(const sf::RectangleShape &body);
 
-public:
-    bool setupSprite(std:: string);
-    LevelTile(std::string, float, float, bool, bool,sf::Vector2f);
-
-    void render(sf::RenderTarget &target);
-    sf::FloatRect getGlobalBounds() const;
 };
 
 

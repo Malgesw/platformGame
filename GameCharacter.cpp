@@ -1,5 +1,7 @@
 #include "GameCharacter.h"
 
+#include <utility>
+
 GameCharacter::GameCharacter(float width, float height, sf::Color color, float posX, float posY) {
 
     body.setSize(sf::Vector2f(width, height));
@@ -19,7 +21,7 @@ void GameCharacter::render(sf::RenderTarget &target) {
     target.draw(body);
 }
 
-void GameCharacter::update(const float &dt, const std::vector<LevelTile*> objects,
+void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects,
                            sf::RenderWindow *window) {
 
     if(body.getPosition().y + body.getSize().y < (float)(*window).getSize().y)
@@ -46,11 +48,10 @@ void GameCharacter::update(const float &dt, const std::vector<LevelTile*> object
 
 }
 
-void GameCharacter::checkCollisions(const float &dt, const std::vector<LevelTile*> objects) {
+void GameCharacter::checkCollisions(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects) {
 
     for(auto &o : objects){
-
-        sf::FloatRect playerBounds = body.getGlobalBounds();
+       sf::FloatRect playerBounds = body.getGlobalBounds();
         sf::FloatRect objectBounds;
         sf::FloatRect nextPlayerPos = playerBounds;
         nextPlayerPos.left += velocity.x*dt;

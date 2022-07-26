@@ -12,27 +12,29 @@
 
 
 class TileMap {
-private:
-    void setTile(sf::RenderWindow* window);
-    void setInipos();
-    std::map< std:: string, Item*> items;
-    int gridLength;
-    int gridWidth;
-    std::vector< std:: vector<LevelTile*>> tiles;
-    sf::Vector2i playerxy;
-    sf::Vector2i exitxy;
+
 public:
-     std::vector<LevelTile *> getWalls() const{
+
+    explicit TileMap(sf::RenderWindow* window);
+    void renderMap(sf::RenderTarget &target);
+
+    std::vector<std::shared_ptr<LevelTile>> getWalls() const {
         return walls;
     }
 
 private:
-    std::vector<LevelTile*> walls;
 
-public:
+    std::map< std:: string, std::unique_ptr<Item>> items;
+    std::vector< std:: vector<std::shared_ptr<LevelTile>>> tiles;
+    std::vector<std::shared_ptr<LevelTile>> walls;
+    int gridLength;
+    int gridWidth;
+    sf::Vector2i playerxy;
+    sf::Vector2i exitxy;
 
-    void renderMap(sf::RenderTarget &target);
-    TileMap(sf::RenderWindow* window);
+    void setTile(sf::RenderWindow* window);
+    void setInipos();
+
 };
 
 

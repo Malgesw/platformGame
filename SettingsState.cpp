@@ -139,7 +139,7 @@ void SettingsState::initTextFields() {
         i++;
     }
 
-    file.close();
+    file.close() ;
 
 }
 

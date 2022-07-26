@@ -11,8 +11,9 @@ public:
     ~GameCharacter() = default;
 
     void render(sf::RenderTarget &target);
-    void update(const float &dt, const std::vector<LevelTile*> objects, sf::RenderWindow *window);
-    void checkCollisions(const float &dt, const std::vector<LevelTile*> objects);
+    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects, sf::RenderWindow *window);
+    void checkCollisions(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects);
+
     bool getJump() const{
         return canJump;
     }

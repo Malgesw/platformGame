@@ -5,40 +5,51 @@
 #include "LevelTile.h"
 
 
-bool LevelTile::setupSprite(std::string textureName) {
-    if(!texture.loadFromFile(textureName)){
-        return false;
+bool LevelTile::setupSprite(unsigned short tile) {
+
+    std::string textureName;
+
+    switch(tile){
+
+        case TILES::DOOR:
+            textureName = "../images/door.png";
+            isExit = true;
+            break;
+        case TILES::GROUND:
+            textureName = "../images/Ground.jpg";
+            break;
+        case TILES::WALL:
+            textureName = "../images/wall.png";
+            isViable = false;
+            break;
+        default:
+            textureName = "";
+
     }
+
+    if(!texture.loadFromFile(textureName))
+        return false;
+
     texture.setSmooth(true);
     body.setFillColor(sf:: Color::White);
     body.setTexture(&texture);
     //temporary texture cut for testing
     body.setTextureRect(sf::IntRect(0,0,50,50));
     return true;
+
 }
 
-LevelTile::LevelTile(std::string textureName , float x, float y, bool viable, bool exit,sf::Vector2f size) {
+LevelTile::LevelTile(unsigned short tile , float x, float y, sf::Vector2f size) {
+
     body.setSize(size);
-    pos= sf:: Vector2f(x,y);
-    if(!setupSprite(textureName)){
-        return;
+    isViable = true;
+    isExit = false;
+
+    if(!setupSprite(tile)){
+        std::cout << "Sprite not loaded" << std::endl;
     }
 
-    isViable = viable;
-    //collision checking
-    /*
-    if(!isViable){
-        body.setOutlineColor(sf::Color::Red);
-        body.setOutlineThickness(2.f);
-    }
-    isExit = exit;
-    //exit checking
-    if(isExit){
-        body.setOutlineColor(sf::Color::Blue);
-        body.setOutlineThickness(2.f);
-    }
-     */
-    body.setPosition(pos);
+    body.setPosition( sf:: Vector2f(x,y));
 
 }
 
@@ -47,17 +58,9 @@ void LevelTile::render(sf::RenderTarget &target) {
 
 }
 
-const sf::RectangleShape &LevelTile::getBody() const {
-    return body;
-}
-
-void LevelTile::setBody(const sf::RectangleShape &body) {
-    LevelTile::body = body;
-}
-
 //collision handling for later
  sf::FloatRect LevelTile::getGlobalBounds() const {
-    return this->body.getGlobalBounds();
+    return body.getGlobalBounds();
 }
 
 bool LevelTile::getViable() const {
