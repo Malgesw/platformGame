@@ -8,7 +8,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     shape.setSize(sf::Vector2f(100.f, 100.f));
     shape.setFillColor(sf::Color::Green);
 
-    font.loadFromFile("/home/kaneki/CLionProjects/platformGame/Fonts/PAPYRUS.ttf");
+    font.loadFromFile("../Fonts/PAPYRUS.ttf");
 
     isPaused = false;
 
@@ -85,7 +85,7 @@ void GameState::initKeys() {
 
     std::ifstream file;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/mainMenuState_keys.ini");
+    file.open("../Config/mainMenuState_keys.ini");
     std::string keyName;
     std::string key;
 
@@ -96,7 +96,7 @@ void GameState::initKeys() {
 
     std::ifstream file2;
 
-    file2.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+    file2.open("../Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key)
         keyBinds[keyName] = supportedKeys->at(key);
