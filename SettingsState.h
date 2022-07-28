@@ -17,7 +17,6 @@ public:
 
     void update(const float &dt) override;
     void updateButtons();
-    void updateMousePosition();
     void updateTextFields();
     void updateKeys();
     void render(sf::RenderTarget &target) override;
@@ -27,7 +26,6 @@ private:
     std::map<std::string, std::unique_ptr<Button>> buttons;
     std::map<std::string, std::unique_ptr<TextField>> textFields;
     sf::Font font;
-    sf::Vector2f mousePos;
     sf::RectangleShape background;
 
     void initButtons();

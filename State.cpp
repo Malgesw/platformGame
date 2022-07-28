@@ -10,3 +10,9 @@ void State::checkForClose() {
         states->pop();
 
 }
+
+void State::updateMousePosition() {
+
+    mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+
+}

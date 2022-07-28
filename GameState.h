@@ -22,7 +22,6 @@ private:
 
     sf::RectangleShape shape;
     sf::Font font;
-    sf::Vector2f mousePos;
     std::unique_ptr<PauseMenu> pauseMenu;
     bool isPaused;
     float pauseTime;

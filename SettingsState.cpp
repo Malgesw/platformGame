@@ -36,12 +36,6 @@ void SettingsState::updateButtons() {
 
 }
 
-void SettingsState::updateMousePosition() {
-
-    mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-
-}
-
 void SettingsState::render(sf::RenderTarget &target) {
 
     target.draw(background);
