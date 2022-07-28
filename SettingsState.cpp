@@ -3,7 +3,7 @@
 SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                              std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
-    font.loadFromFile("/home/kaneki/CLionProjects/platformGame/Fonts/PAPYRUS.ttf");
+    font.loadFromFile("../Fonts/PAPYRUS.ttf");
 
     initKeys();
     initButtons();
@@ -90,7 +90,7 @@ void SettingsState::updateKeys() {
 
     std::ofstream file;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+    file.open("../Config/settingsState_keys.ini");
 
     for(auto &t : textFields)
         file << t.second->getDescription() << " " << static_cast<std::string>(t.second->getString()) << std::endl;
@@ -128,7 +128,7 @@ void SettingsState::initTextFields() {
 
     std::ifstream file;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/settingsState_keys.ini");
+    file.open("../Config/settingsState_keys.ini");
 
     std::string keyName;
     std::string key;
@@ -147,7 +147,7 @@ void SettingsState::initKeys() {
 
     std::ifstream file;
 
-    file.open("/home/kaneki/CLionProjects/platformGame/Config/mainMenuState_keys.ini");
+    file.open("../Config/mainMenuState_keys.ini");
 
     std::string keyName;
     std::string key;

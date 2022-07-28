@@ -1,7 +1,3 @@
-//
-// Created by kaneki on 20/07/22.
-//
-
 #include "TextField.h"
 
 TextField::TextField(sf::Vector2f size, sf::Vector2f position, int textSize, sf::Vector2f textPosition,
