@@ -44,10 +44,9 @@ void GameState::update(const float &dt) {
             states->pop();
 
     }
-
-    updatePlayerPos();
-
-
+    else
+        updatePlayerPos();
+    
 }
 
 void GameState::updatePlayerPos() {

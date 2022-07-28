@@ -20,6 +20,19 @@ void MainMenuState::update(const float &dt) {
         updateMousePosition();
         updateButtons();
     }
+    else{
+
+        std::ofstream file;
+        std::ifstream file2;
+        std::string a, b;
+        file.open("../Config/settingsState_keys.ini");
+        file2.open("../Config/settingsState_keys.ini");
+        while(file2 >> a >> b)
+            file << " "; //clears every textfield after quitting the game
+        file2.close();
+        file.close();
+
+    }
 
 }
 
@@ -42,7 +55,7 @@ void MainMenuState::updateButtons() {
         file.open("../Config/settingsState_keys.ini");
         file2.open("../Config/settingsState_keys.ini");
         while(file2 >> a >> b)
-            file << " "; //clears every textfield after quitting from the game
+            file << " "; //clears every textfield after quitting the game
         file2.close();
         file.close();
 

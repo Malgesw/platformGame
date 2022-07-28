@@ -23,7 +23,7 @@ void SettingsState::update(const float &dt) {
         updateButtons();
     }
     else
-        sf::sleep(sf::seconds(0.05)); //0.1s is waited to prevent a second pop() after pressing ESC
+        sf::sleep(sf::seconds(0.05)); //0.05s is waited to prevent a second pop() after pressing ESC
 }
 
 void SettingsState::updateButtons() {
