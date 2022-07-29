@@ -34,8 +34,21 @@ void MainMenuState::updateButtons() {
     if(buttons["SETTINGS"]->isPressed())
         states->push(std::make_unique<SettingsState>(window, states, textEvent, supportedKeys));
 
-    if(buttons["EXIT"]->isPressed())
+    if(buttons["EXIT"]->isPressed()) {
+
+        std::ofstream file;
+        std::ifstream file2;
+        std::string a, b;
+        file.open("../Config/settingsState_keys.ini");
+        file2.open("../Config/settingsState_keys.ini");
+        while(file2 >> a >> b){
+            file << " ";
+        }
+        file2.close();
+        file.close();
+
         states->pop();
+    }
 
 }
 

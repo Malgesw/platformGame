@@ -5,8 +5,6 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
     initKeys();
 
-    shape.setSize(sf::Vector2f(100.f, 100.f));
-    shape.setFillColor(sf::Color::Green);
 
     font.loadFromFile("../Fonts/PAPYRUS.ttf");
 
@@ -15,6 +13,8 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
+    tileMap = std::make_unique<TileMap>(window);
+    player = std::make_unique<GameCharacter>(100.f, 75.f,sf::Color::Green);
 
 }
 
@@ -44,27 +44,37 @@ void GameState::update(const float &dt) {
             states->pop();
 
     }
+    else{
+        updatePlayerPos();
+        player->update(dt,tileMap->getWalls(), window);
+    }
 
-    updatePlayerPos();
+
+
 
 
 }
 
 void GameState::updatePlayerPos() {
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))))
-        shape.move(0.f, -1.f);
+    player->setVelocity(player->getVelocity().x * 0.5f, player->getVelocity().y);
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
-        shape.move(-1.f, 0.f);
+        player->setVelocity(player->getVelocity().x - player->getSpeed(), player->getVelocity().y);
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
-        shape.move(1.f, 0.f);
+        player->setVelocity(player->getVelocity().x + player->getSpeed(), player->getVelocity().y);
 
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))) && player->getJump()){
 
+        player->setJump(false);
+        player->setVelocity(player->getVelocity().x, -sqrtf(2.f* 981.f * player->getJumpHeight()));
+    }
 }
 
 void GameState::render(sf::RenderTarget &target) {
+    tileMap->renderMap(target);
+    player->render(target);
 
-    target.draw(shape);
     
     if(isPaused)
         pauseMenu->render(target);
@@ -104,3 +114,6 @@ void GameState::initKeys() {
     file2.close();
 
 }
+
+
+
