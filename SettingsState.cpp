@@ -133,6 +133,11 @@ void SettingsState::initTextFields() {
         i++;
     }
 
+    for(auto &t : textFields){
+        if(t.second->getString() == "\b")
+            t.second->clear();
+    }
+
     file.close();
 
 }
