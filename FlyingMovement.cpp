@@ -8,7 +8,7 @@
 
 FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size) : Movement(velocity,
                                                                                                          startPosition,
-                                                                                                         size) {
+                                                                                                         size,'F') {
 
 }
 

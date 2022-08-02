@@ -6,7 +6,7 @@
 
 WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size) : Movement(velocity,
                                                                                                            startPosition,
-                                                                                                           size) {
+                                                                                                           size,'W'){
 
 }
 
@@ -16,4 +16,16 @@ void WalkingMovement::moveUp() {
 
 void WalkingMovement::moveDown() {
 
+}
+
+void WalkingMovement::setJump(bool jump) {
+canJump=jump;
+}
+
+float WalkingMovement::getJumpHeight() const{
+    return jumpHeight;
+}
+
+bool WalkingMovement::getJump() const {
+    return canJump;
 }

@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "WalkingMovement.h"
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                      std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
@@ -14,7 +15,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseTime = 0.5f;
     pauseClock.restart();
     tileMap = std::make_unique<TileMap>(window);
-    player = std::make_unique<GameCharacter>(100.f, 75.f,sf::Color::Green);
+    player = std::make_shared<GameCharacter>(sf::Vector2f (100.f,75.f),sf::Vector2f (0,0));
 
 }
 
@@ -57,17 +58,17 @@ void GameState::update(const float &dt) {
 
 void GameState::updatePlayerPos() {
 
-    player->setVelocity(player->getVelocity().x * 0.5f, player->getVelocity().y);
+    player->getMovement()->setVelocity(player->getMovement()->getVelocity().x * 0.5f, player->getMovement()->getVelocity().y);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
-        player->setVelocity(player->getVelocity().x - player->getSpeed(), player->getVelocity().y);
+        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x - player->getMovement()->getSpeed(), player->getMovement()->getVelocity().y);
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
-        player->setVelocity(player->getVelocity().x + player->getSpeed(), player->getVelocity().y);
+        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x + player->getMovement()->getSpeed(), player->getMovement()->getVelocity().y);
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))) && player->getJump()){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))) && dynamic_cast<WalkingMovement*>(player->getMovement())->getJump()){
 
-        player->setJump(false);
-        player->setVelocity(player->getVelocity().x, -sqrtf(2.f* 981.f * player->getJumpHeight()));
+        dynamic_cast<WalkingMovement*>(player->getMovement())->setJump(false);
+        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x, -sqrtf(2.f* 981.f * dynamic_cast<WalkingMovement*>(player->getMovement())->getJumpHeight()));
     }
 }
 

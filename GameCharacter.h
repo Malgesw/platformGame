@@ -13,12 +13,16 @@ class GameCharacter {
 public:
     GameCharacter(sf::Vector2f startPosition, sf::Vector2f size);
     void setMovement(Movement* newMovement);
+    void render(sf::RenderTarget &target);
+    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects, sf::RenderWindow *window);
 
 
 private:
 
-
     Movement* movement;
+
+public:
+    Movement *getMovement() const;
 };
 
 
