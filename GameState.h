@@ -23,7 +23,7 @@ public:
 private:
 
 
-    std::shared_ptr<GameCharacter> player;
+    std::unique_ptr<GameCharacter> player;
     sf::Font font;
     sf::Vector2f mousePos;
     std::unique_ptr<PauseMenu> pauseMenu;

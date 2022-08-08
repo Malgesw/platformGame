@@ -15,7 +15,8 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseTime = 0.5f;
     pauseClock.restart();
     tileMap = std::make_unique<TileMap>(window);
-    player = std::make_shared<GameCharacter>(sf::Vector2f (100.f,75.f),sf::Vector2f (0,0));
+
+    player = std::make_unique<GameCharacter>(sf::Vector2f (100.f,75.f),sf::Vector2f (0,0),tileMap->getWalls());
 
 }
 
@@ -61,14 +62,14 @@ void GameState::updatePlayerPos() {
     player->getMovement()->setVelocity(player->getMovement()->getVelocity().x * 0.5f, player->getMovement()->getVelocity().y);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
-        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x - player->getMovement()->getSpeed(), player->getMovement()->getVelocity().y);
+        player->getMovement()->moveLeft();
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
-        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x + player->getMovement()->getSpeed(), player->getMovement()->getVelocity().y);
+        player->getMovement()->moveRight();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump"))) && dynamic_cast<WalkingMovement*>(player->getMovement())->getJump()){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
 
-        dynamic_cast<WalkingMovement*>(player->getMovement())->setJump(false);
-        player->getMovement()->setVelocity(player->getMovement()->getVelocity().x, -sqrtf(2.f* 981.f * dynamic_cast<WalkingMovement*>(player->getMovement())->getJumpHeight()));
+        player->getMovement()->moveUp();
     }
 }
 
