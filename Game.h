@@ -4,24 +4,20 @@
 #include "State.h"
 #include "GameState.h"
 #include "MainMenuState.h"
-#include "Subject.h"
 #include "list"
 
-class Game: public Subject{
+class Game {
 
 public:
 
     Game();
-    ~Game() override;
+    ~Game();
 
     void updateDeltaTime();
     void updateEvents();
     void update();
     void render();
     void run();
-    void addObserver(Observer* o) override;
-    void removeObserver(Observer* o) override;
-    void notifyObservers() const override;
 
 
 private:
@@ -34,7 +30,6 @@ private:
     sf::Event event{};
 
     float deltaTime;
-    std::list<Observer*> dtShare;
 
     void initWindow();
     void initStates();

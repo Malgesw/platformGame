@@ -12,11 +12,6 @@ void Movement::moveRight() {
     collisionBox.move(velocity.x*dt,0.f);
 }
 
-float Movement::getSpeed() const{
-    return speed;
-}
-
-
 
 Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>& walls)
 :speed(velocity),dt(0.01f),typeOfMovement(type),barriers(walls){
@@ -27,13 +22,6 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 
 
 }
-
-void Movement::updateDt(float deltaTime){
-dt=deltaTime;
-}
-
-
-
 
 
 void Movement::checkCollisions() {
@@ -114,9 +102,6 @@ sf::RectangleShape Movement::getCollisions() const {
     return collisionBox;
 }
 
-char Movement::getTypeOfMovement() const {
-    return typeOfMovement;
-}
 
 void Movement::update( sf::RenderWindow *window, float deltaTime) {
 

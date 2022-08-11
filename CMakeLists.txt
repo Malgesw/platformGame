@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SFML_DIR /usr/include/SFML)
 
-add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.cpp GameState.h MainMenuState.cpp MainMenuState.h Button.cpp Button.h PauseMenu.cpp PauseMenu.h SettingsState.cpp SettingsState.h TextField.cpp TextField.h GameCharacter.cpp GameCharacter.h Movement.h Movement.cpp WalkingMovement.cpp WalkingMovement.h FlyingMovement.cpp FlyingMovement.h Observer.h Subject.h LevelTile.cpp LevelTile.h TileMap.cpp TileMap.h)
+add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.cpp GameState.h MainMenuState.cpp MainMenuState.h Button.cpp Button.h PauseMenu.cpp PauseMenu.h SettingsState.cpp SettingsState.h TextField.cpp TextField.h GameCharacter.cpp GameCharacter.h Movement.h Movement.cpp WalkingMovement.cpp WalkingMovement.h FlyingMovement.cpp FlyingMovement.h LevelTile.cpp LevelTile.h TileMap.cpp TileMap.h)
 
 include_directories(/usr/local/include)
 

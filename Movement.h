@@ -6,11 +6,10 @@
 #define PLATFORMGAME_MOVEMENT_H
 
 
-#include "Observer.h"
 #include "LevelTile.h"
 
 
-class Movement: public Observer{
+class Movement{
 
 public:
     Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>& walls);
@@ -19,14 +18,14 @@ public:
     virtual void moveRight();
     virtual void moveUp()=0;
     virtual void moveDown()=0;
-    float getSpeed() const;
+
     virtual void checkCollisions();
-    void updateDt(float deltaTime)override;
+
     void setVelocity(float x, float y);
     void update(sf::RenderWindow *window, float deltaTime);
     sf::Vector2f getVelocity() const;
     sf::RectangleShape getCollisions() const;
-    char getTypeOfMovement() const;
+
 
 
 protected:
