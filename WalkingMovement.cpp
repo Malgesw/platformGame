@@ -16,7 +16,6 @@ void WalkingMovement::moveUp() {
         velocity.y = -sqrtf(2.f * 981.f * jumpHeight);
         collisionBox.move(0.f, velocity.y * dt);
     }
-    checkCollisions();
 }
 
 void WalkingMovement::moveDown() {

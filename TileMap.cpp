@@ -25,7 +25,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
     std::vector<std::shared_ptr<LevelTile>> Row1;
     Row1.push_back(std::make_unique<LevelTile>(GROUND, 0 , 0,  size));
     Row1.push_back(std::make_unique<LevelTile>(DOOR, 100 , 0, size));
-    Row1.push_back(std::make_unique<LevelTile>(WALL, 200 , 0,  size));
+    Row1.push_back(std::make_unique<LevelTile>(GROUND, 200 , 0,  size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 300 , 0, size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 400, 0, size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 500 , 0, size));
@@ -49,7 +49,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
     std::vector<std::shared_ptr<LevelTile>> Row3;
     Row3.push_back(std::make_unique<LevelTile>(GROUND, 0 ,150, size));
     Row3.push_back(std::make_unique<LevelTile>(GROUND, 100 ,150, size));
-    Row3.push_back(std::make_unique<LevelTile>(WALL, 200 , 150, size));
+    Row3.push_back(std::make_unique<LevelTile>(GROUND, 200 , 150, size));
     Row3.push_back(std::make_unique<LevelTile>(GROUND,300 , 150, size));
     Row3.push_back(std::make_unique<LevelTile>(GROUND, 400 , 150, size));
     Row3.push_back(std::make_unique<LevelTile>(WALL, 500 ,150, size));
@@ -60,7 +60,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
     std::vector<std::shared_ptr<LevelTile>> Row4;
     Row4.push_back(std::make_unique<LevelTile>(WALL, 0 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 100 , 225, size));
-    Row4.push_back(std::make_unique<LevelTile>(WALL, 200 , 225, size));
+    Row4.push_back(std::make_unique<LevelTile>(GROUND, 200 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 300 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 400 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 500 , 225, size));
