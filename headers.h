@@ -9,6 +9,7 @@
 #include <stack>
 #include <memory>
 #include <fstream>
+#include <cmath>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"

@@ -72,6 +72,7 @@ void Game::run() {
 void Game::initWindow() {
 
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "Platform");
+    window->setFramerateLimit(120);
 
 }
 
@@ -95,5 +96,8 @@ void Game::initKeys() {
     file.close();
 
 }
+
+
+
 
 

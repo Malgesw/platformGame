@@ -17,6 +17,7 @@ public:
 
     void update(const float &dt) override;
     void updateButtons();
+
     void updateTextFields();
     void updateKeys();
     void render(sf::RenderTarget &target) override;

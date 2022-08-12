@@ -4,7 +4,7 @@
 #include "State.h"
 #include "GameState.h"
 #include "MainMenuState.h"
-
+#include "list"
 
 class Game {
 
@@ -18,6 +18,7 @@ public:
     void update();
     void render();
     void run();
+
 
 private:
 

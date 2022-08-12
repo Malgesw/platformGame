@@ -3,6 +3,8 @@
 
 #include "State.h"
 #include "PauseMenu.h"
+#include "TileMap.h"
+#include "GameCharacter.h"
 
 
 class GameState : public State {
@@ -20,12 +22,14 @@ public:
 
 private:
 
-    sf::RectangleShape shape;
+
+    std::unique_ptr<GameCharacter> player;
     sf::Font font;
     std::unique_ptr<PauseMenu> pauseMenu;
     bool isPaused;
     float pauseTime;
     sf::Clock pauseClock;
+    std::unique_ptr<TileMap> tileMap;
 
     void initKeys() override;
 

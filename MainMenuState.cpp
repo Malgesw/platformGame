@@ -20,7 +20,7 @@ void MainMenuState::update(const float &dt) {
         updateMousePosition();
         updateButtons();
     }
-    
+
 }
 
 void MainMenuState::updateButtons() {
