@@ -15,6 +15,7 @@ public:
     virtual void render(sf::RenderTarget &target) = 0;
     virtual void initKeys() = 0;
     virtual void checkForClose();
+    void updateMousePosition();
 
 
 
@@ -24,6 +25,7 @@ protected:
     std::stack<std::unique_ptr<State>> *states;
     std::map<std::string, int> *supportedKeys;
     std::map<std::string, int> keyBinds;
+    sf::Vector2f mousePos;
 
     const sf::Event &textEvent;
 
