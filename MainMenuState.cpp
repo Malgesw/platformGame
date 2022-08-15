@@ -50,17 +50,17 @@ void MainMenuState::render(sf::RenderTarget &target) {
 
 void MainMenuState::initButtons() {
 
-    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 50.f),
+    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 50.f),
                                                sf::Color(70, 70, 70, 200), "Play", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 250.f),
+    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 250.f),
                                                sf::Color(70, 70, 70, 200), "Settings", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 450.f),
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 450.f),
                                                sf::Color(70, 70, 70, 200), "Exit", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));

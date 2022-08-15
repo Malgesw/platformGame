@@ -43,7 +43,7 @@ void TextField::setString(const sf::String &string) {
 
 void TextField::clear() {
 
-    textString.clear();
+    text.setString("");
 
 }
 

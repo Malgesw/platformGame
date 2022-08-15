@@ -11,7 +11,7 @@ class Button {
 public:
 
     Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, const std::string& textString, sf::Font &textFont,
-           int textSize, sf::Color hoverColor, sf::Color pressedColor, sf::Color textColor = sf::Color::Black);
+           int textSize, sf::Color hoverColor, sf::Color pressedColor, sf::Color textColor = sf::Color::White);
     ~Button() = default;
 
     void update(sf::Vector2f mousePos);
@@ -27,6 +27,7 @@ private:
     sf::Color idleColor;
     sf::Color hoverColor;
     sf::Color pressedColor;
+    sf::Texture texture;
 
 };
 

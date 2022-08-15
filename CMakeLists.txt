@@ -10,8 +10,6 @@ add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h
 
 include_directories(/usr/local/include)
 
-
-
 find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 include_directories(${SFML_INCLUDE_DIRS})
 target_link_libraries(platformGame sfml-system sfml-window sfml-graphics sfml-audio sfml-network)

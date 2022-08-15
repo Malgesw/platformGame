@@ -18,6 +18,10 @@ Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, co
 
     buttonState = IDLE;
 
+    texture.loadFromFile("../images/text box.png");
+    button.setTexture(&texture);
+    button.setTextureRect(sf::IntRect(500.f, 500.f, 2366.f, 799.f));
+
 }
 
 void Button::update(sf::Vector2f mousePos) {
