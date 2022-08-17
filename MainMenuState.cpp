@@ -8,8 +8,18 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
     initKeys();
     initButtons();
 
+    bgTexture.loadFromFile("../images/bg2fixed.png");
+
     background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    background.setFillColor(sf::Color::Green);
+    //background.setFillColor(sf::Color::Green);
+    background.setTexture(&bgTexture);
+
+    title.setFont(font);
+    title.setCharacterSize(40);
+    title.setString("Escape from the lab");
+    title.setFillColor(sf::Color::White);
+    title.setPosition(sf::Vector2f(210.f, 80.f));
+
 
 }
 
@@ -42,6 +52,7 @@ void MainMenuState::updateButtons() {
 void MainMenuState::render(sf::RenderTarget &target) {
 
     target.draw(background);
+    target.draw(title);
 
     for(auto &b : buttons)
         b.second->render(target);
@@ -50,18 +61,18 @@ void MainMenuState::render(sf::RenderTarget &target) {
 
 void MainMenuState::initButtons() {
 
-    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 50.f),
-                                               sf::Color(70, 70, 70, 200), "Play", font, 16,
+    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 200.f),
+                                               sf::Color(130, 130, 130, 200), "Play", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 250.f),
-                                               sf::Color(70, 70, 70, 200), "Settings", font, 16,
+    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 260.f),
+                                               sf::Color(130, 130, 130, 200), "Settings", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(250.f, 450.f),
-                                               sf::Color(70, 70, 70, 200), "Exit", font, 16,
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 320.f),
+                                               sf::Color(130, 130, 130, 200), "Exit", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 

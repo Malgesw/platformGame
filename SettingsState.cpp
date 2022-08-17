@@ -9,8 +9,11 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_pt
     initButtons();
     initTextFields();
 
+    bgTexture.loadFromFile("../images/bg2fixed.png");
+
     background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    background.setFillColor(sf::Color::Green);
+    //background.setFillColor(sf::Color::Green);
+    //background.setTexture(&bgTexture);
 
 }
 
@@ -95,7 +98,7 @@ void SettingsState::updateKeys() {
 
 void SettingsState::initButtons() {
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(300.f, 100.f), sf::Vector2f(200.f, 350.f),
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(300.f, 350.f),
                                                sf::Color(70, 70, 70, 200), "Exit", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));

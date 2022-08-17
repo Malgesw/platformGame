@@ -41,7 +41,7 @@ void PauseMenu::initButtons() {
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["EXIT_MENU"] = std::make_unique<Button>(sf::Vector2f(180.f, 50.f), sf::Vector2f(300.f, 180.f),
+    buttons["EXIT_MENU"] = std::make_unique<Button>(sf::Vector2f(180.f, 50.f), sf::Vector2f(300.f, 110.f),
                                                sf::Color(70, 70, 70, 200), "Exit to menu", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));

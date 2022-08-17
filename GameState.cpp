@@ -51,10 +51,6 @@ void GameState::update(const float &dt) {
         player->update(dt,tileMap->getWalls(), window);
     }
 
-
-
-
-
 }
 
 void GameState::updatePlayerPos() {

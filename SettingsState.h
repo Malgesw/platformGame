@@ -28,6 +28,7 @@ private:
     std::map<std::string, std::unique_ptr<TextField>> textFields;
     sf::Font font;
     sf::RectangleShape background;
+    sf::Texture bgTexture;
 
     void initButtons();
     void initTextFields();
