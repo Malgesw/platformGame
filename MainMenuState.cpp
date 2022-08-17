@@ -15,10 +15,10 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
     background.setTexture(&bgTexture);
 
     title.setFont(font);
-    title.setCharacterSize(40);
-    title.setString("Escape from the lab");
+    title.setCharacterSize(50);
+    title.setString("Steamrush");
     title.setFillColor(sf::Color::White);
-    title.setPosition(sf::Vector2f(210.f, 80.f));
+    title.setPosition(sf::Vector2f(270.f, 80.f));
 
 
 }
