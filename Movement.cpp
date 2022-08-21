@@ -3,6 +3,8 @@
 //
 #include "Movement.h"
 
+#include <utility>
+
 void Movement::moveLeft() {
     velocity.x=velocity.x-speed;
     collisionBox.move(velocity.x*dt,0.f);
@@ -13,8 +15,8 @@ void Movement::moveRight() {
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>& walls)
-:speed(velocity),dt(0.01f),typeOfMovement(type),barriers(walls){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,std::vector<std::shared_ptr<LevelTile>>  walls)
+:speed(velocity),dt(0.01f),typeOfMovement(type),barriers(std::move(walls)){
 
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
@@ -107,7 +109,7 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
 
     dt=deltaTime;
 
-    if(collisionBox.getPosition().y + collisionBox.getSize().y < (float)(*window).getSize().y)
+    if(collisionBox.getPosition().y + collisionBox.getSize().y < (float)(*window).getSize().y and typeOfMovement=='W')
 
         velocity.y+=981.f*dt;
 
@@ -133,6 +135,12 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
     if(collisionBox.getGlobalBounds().top < 0.f)
         collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
 }
+
+sf::Vector2f Movement::getPosition() const {
+    return collisionBox.getPosition();
+}
+
+Movement::~Movement() = default;
 
 
 

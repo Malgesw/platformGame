@@ -12,7 +12,8 @@
 class Movement{
 
 public:
-    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>& walls);
+    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,std::vector<std::shared_ptr<LevelTile>>  walls);
+    virtual ~Movement();
 
     virtual void moveLeft();
     virtual void moveRight();
@@ -22,9 +23,10 @@ public:
     virtual void checkCollisions();
 
     void setVelocity(float x, float y);
-    void update(sf::RenderWindow *window, float deltaTime);
+    virtual void update(sf::RenderWindow *window, float deltaTime);
     sf::Vector2f getVelocity() const;
     sf::RectangleShape getCollisions() const;
+    sf::Vector2f getPosition() const;
 
 
 

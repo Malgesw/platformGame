@@ -1,5 +1,7 @@
 #include "GameState.h"
 #include "WalkingMovement.h"
+#include "FlyingMovement.h"
+#include "AutoWalking.h"
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                      std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
@@ -16,7 +18,12 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseClock.restart();
     tileMap = std::make_unique<TileMap>(window);
 
-    player = std::make_unique<GameCharacter>(sf::Vector2f (100.f,75.f),sf::Vector2f (0,0),tileMap->getWalls());
+    player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (50,50),tileMap->getWalls(),50,50);
+    enemy= std::make_unique<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,50);
+    std::shared_ptr<Movement> autoMovement;
+    autoMovement=std::make_shared<AutoWalking>( AutoWalking(100,sf::Vector2f (500.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,4));
+    enemy->setMovement(autoMovement);
+
 
 }
 
@@ -49,6 +56,8 @@ void GameState::update(const float &dt) {
     else{
         updatePlayerPos();
         player->update(dt,tileMap->getWalls(), window);
+        enemy->update(dt,tileMap->getWalls(),window);
+
     }
 
 
@@ -76,6 +85,7 @@ void GameState::updatePlayerPos() {
 void GameState::render(sf::RenderTarget &target) {
     tileMap->renderMap(target);
     player->render(target);
+    enemy->render(target);
 
     
     if(isPaused)
