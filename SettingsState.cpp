@@ -8,11 +8,12 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_pt
     initKeys();
     initButtons();
     initTextFields();
+    initDropDownList();
 
     bgTexture.loadFromFile("../images/bg2fixed.png");
 
     background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    //background.setFillColor(sf::Color::Green);
+    background.setFillColor(sf::Color::Green);
     //background.setTexture(&bgTexture);
 
 }
@@ -49,6 +50,8 @@ void SettingsState::render(sf::RenderTarget &target) {
     for(auto &t : textFields)
         t.second->render(target);
 
+    dropDownList->render(target);
+
 }
 
 void SettingsState::updateTextFields() {
@@ -79,6 +82,8 @@ void SettingsState::updateTextFields() {
         }
     }
 
+    dropDownList->update(mousePos, window);
+
     updateKeys();
 
 }
@@ -98,7 +103,7 @@ void SettingsState::updateKeys() {
 
 void SettingsState::initButtons() {
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(300.f, 350.f),
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(300.f, 450.f),
                                                sf::Color(70, 70, 70, 200), "Exit", font, 16,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
@@ -109,19 +114,19 @@ void SettingsState::initTextFields() {
 
     textFields["LEFT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 100.f), 22,
                                                      sf::Vector2f(125.f, 110.f), "Left", sf::Vector2f(40.f, 110.f),
-                                                     &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+                                                     &font, sf::Color(31, 157, 115, 255));
 
     textFields["RIGHT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 160.f), 22,
                                                      sf::Vector2f(125.f, 170.f), "Right", sf::Vector2f(40.f, 170.f),
-                                                     &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+                                                     &font, sf::Color(31, 157, 115, 255));
 
     textFields["JUMP"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 220.f), 22,
                                                      sf::Vector2f(100.f, 230.f), "Jump", sf::Vector2f(40.f, 230.f),
-                                                     &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+                                                     &font, sf::Color(31, 157, 115, 255));
 
     textFields["SHOOT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 280.f), 22,
                                                      sf::Vector2f(125.f, 290.f), "Shoot", sf::Vector2f(35.f, 290.f),
-                                                     &font, sf::Color(31, 157, 115, 255), sf::Color::Red);
+                                                     &font, sf::Color(31, 157, 115, 255));
 
     std::ifstream file;
 
@@ -141,6 +146,28 @@ void SettingsState::initTextFields() {
             t.second->clear();
     }
 
+    file.close();
+
+}
+
+void SettingsState::initDropDownList() {
+
+    std::vector<std::string> fields;
+    fields = {"800x600", "400x600", "1920x1080"};
+
+    dropDownList = std::make_unique<DropDownList>(sf::Vector2f(100.f, 50.f), sf::Vector2f(200.f, 100.f),
+                                                  sf::Color(130, 130, 130, 200),
+                                                  font, 16, fields, "Resolution", sf::Vector2f(200.f, 80.f),
+                                                  sf::Color(150, 150, 150, 255),
+                                                  sf::Color(20, 20, 20, 200));
+
+    std::ifstream file;
+    file.open("../Config/window_settings.ini");
+    std::string first;
+    std::string second;
+    while(file >> first >> second) {
+        dropDownList->setFirstElement(first+second);
+    }
     file.close();
 
 }

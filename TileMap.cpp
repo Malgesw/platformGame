@@ -19,7 +19,7 @@ TileMap::TileMap(sf::RenderWindow* window) {
 
 void TileMap::setTile(sf::RenderWindow* window) {
 
-    sf::Vector2f size(window->getSize().x/gridWidth,window->getSize().y/gridLength);
+    sf::Vector2f size(800.f/gridWidth,600.f/gridLength);
 
     tiles.clear();
     std::vector<std::shared_ptr<LevelTile>> Row1;
