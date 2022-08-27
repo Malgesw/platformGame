@@ -59,7 +59,6 @@ void DropDownList::update(sf::Vector2f mousePos, sf::RenderWindow *window) {
                 std::ofstream ofs;
                 std::string first = firstElement->getField();
                 std::string w,h;
-                w = "";
 
                 for(int i = 0; i < first.find('x'); i++)
                     w += first[i];

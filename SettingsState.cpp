@@ -10,11 +10,12 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_pt
     initTextFields();
     initDropDownList();
 
-    bgTexture.loadFromFile("../images/bg2fixed.png");
+    bgTexture.loadFromFile("../images/OPTIONS.png");
 
-    background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    background.setFillColor(sf::Color::Green);
-    //background.setTexture(&bgTexture);
+    //background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
+    background.setSize(sf::Vector2f(800, 600));
+    //background.setFillColor(sf::Color::Green);
+    background.setTexture(&bgTexture);
 
 }
 
@@ -153,7 +154,7 @@ void SettingsState::initTextFields() {
 void SettingsState::initDropDownList() {
 
     std::vector<std::string> fields;
-    fields = {"800x600", "400x600", "1920x1080"};
+    fields = {"720x480", "1280x720", "1920x1080", "800x600"};
 
     dropDownList = std::make_unique<DropDownList>(sf::Vector2f(100.f, 50.f), sf::Vector2f(200.f, 100.f),
                                                   sf::Color(130, 130, 130, 200),
@@ -166,7 +167,9 @@ void SettingsState::initDropDownList() {
     std::string first;
     std::string second;
     while(file >> first >> second) {
-        dropDownList->setFirstElement(first+second);
+        first += "x";
+        first += second;
+        dropDownList->setFirstElement(first);
     }
     file.close();
 
