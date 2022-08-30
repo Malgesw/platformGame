@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Movement.h"
+#include "Animation.h"
 
 class GameCharacter {
 
@@ -20,6 +21,9 @@ public:
 private:
 
     Movement* movement;
+    std::unique_ptr<Animation> animation;
+    sf::Texture texture;
+
 
 
 

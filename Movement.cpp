@@ -4,10 +4,12 @@
 #include "Movement.h"
 
 void Movement::moveLeft() {
+    typeOfSprite = MOVELEFT;
     velocity.x=velocity.x-speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
 void Movement::moveRight() {
+    typeOfSprite = MOVERIGHT;
     velocity.x=velocity.x+speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
@@ -18,7 +20,9 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
-    collisionBox.setFillColor(sf::Color::Black);
+    collisionBox.setFillColor(sf::Color::White);
+
+    typeOfSprite = IDLE_SPRITE;
 
 
 }
@@ -98,7 +102,7 @@ sf::Vector2f Movement::getVelocity() const{
     return velocity;
 }
 
-sf::RectangleShape Movement::getCollisions() const {
+sf::RectangleShape &Movement::getCollisions() {
     return collisionBox;
 }
 
@@ -132,6 +136,7 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
 
     if(collisionBox.getGlobalBounds().top < 0.f)
         collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
+
 }
 
 

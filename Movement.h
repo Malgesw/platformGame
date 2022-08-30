@@ -1,13 +1,10 @@
-//
-// Created by alessio on 25/07/22.
-//
-
 #ifndef PLATFORMGAME_MOVEMENT_H
 #define PLATFORMGAME_MOVEMENT_H
 
 
 #include "LevelTile.h"
 
+enum spriteType {IDLE_SPRITE, MOVERIGHT, MOVELEFT};
 
 class Movement{
 
@@ -24,7 +21,15 @@ public:
     void setVelocity(float x, float y);
     void update(sf::RenderWindow *window, float deltaTime);
     sf::Vector2f getVelocity() const;
-    sf::RectangleShape getCollisions() const;
+    sf::RectangleShape& getCollisions();
+
+    unsigned short &getSpriteType(){
+        return typeOfSprite;
+    }
+
+    void setSpriteType(unsigned short type){
+        typeOfSprite = type;
+    }
 
 
 
@@ -37,6 +42,8 @@ protected:
     sf::RectangleShape collisionBox;
     const std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
+    unsigned short typeOfSprite;
+
 };
 
 
