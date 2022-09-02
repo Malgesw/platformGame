@@ -12,28 +12,34 @@ WalkingMovement(movementSpeed,startPosition,size,walls,jHeight),turnbackTime(tur
 
 }
 
-void AutoWalking::wander() {
+void AutoWalking::rest() {
 
-if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2)) {
-    moveRight();
-    velocity.x=0;
+    if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2)) {
+        moveRight();
+        velocity.x=0;
 
 
+    }
+    else if ( timeCounter.getElapsedTime().asSeconds()<turnbackTime){
+        moveLeft();
+        velocity.x=0;
+    }
+    else{
+        timeCounter.restart();
+    }
+    }
+
+void AutoWalking::aggro() {
+
 }
-else if ( timeCounter.getElapsedTime().asSeconds()<turnbackTime){
-    moveLeft();
-    velocity.x=0;
-}
-else{
-    timeCounter.restart();
-}
-}
+
 
 void AutoWalking::update(sf::RenderWindow *window, float deltaTime) {
 
 
-    wander();
-    Movement::update(window, deltaTime);
+        rest();
+        Movement::update(window, deltaTime);
 
 
 }
+

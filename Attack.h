@@ -15,6 +15,7 @@ public:
 Attack();
 
 
+
 private:
     sf::RectangleShape hitBox;
     sf::Clock cooldown;

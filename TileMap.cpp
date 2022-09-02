@@ -138,6 +138,32 @@ void TileMap::renderMap(sf::RenderTarget &target) {
 }
 
 
+void TileMap::addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id) {
+    enemies.insert({id,enemy});
+}
+
+void TileMap::removeEnemy(std::string &id) {
+    enemies.erase(id);
+}
+
+
+void
+TileMap::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::RenderWindow *window) {
+for(auto &e : enemies){
+    e.second->update(dt,objects,window);
+}
+}
+
+
+void TileMap::renderEnemies(sf::RenderTarget &target) {
+    for(auto &e : enemies){
+        e.second->render(target);
+    }
+}
+
+
+
+
 
 
 

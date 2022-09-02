@@ -5,11 +5,13 @@
 #ifndef PLATFORMGAME_AUTOWALKING_H
 #define PLATFORMGAME_AUTOWALKING_H
 #include "WalkingMovement.h"
+#include "AutoMovement.h"
 
-class AutoWalking : public WalkingMovement{
+class AutoWalking : public WalkingMovement, public AutoMovement{
 public:
     AutoWalking(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls,float jHeight,float turnTime);
-    void wander();
+    void rest() override;
+    void aggro() override;
     void update(sf::RenderWindow *window, float deltaTime) override;
 
 

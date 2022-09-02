@@ -5,6 +5,7 @@
 #include "GameCharacter.h"
 
 #include "WalkingMovement.h"
+#
 #include "FlyingMovement.h"
 
 GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls, int healthPoints, int mana)
@@ -29,6 +30,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                            sf::RenderWindow* window) {
 
     movement->update(window,dt);
+
 }
 
 std::shared_ptr<Movement> GameCharacter::getMovement() const {

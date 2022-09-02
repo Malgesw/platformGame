@@ -24,7 +24,7 @@ private:
 
 
     std::unique_ptr<GameCharacter> player;
-    std::unique_ptr<GameCharacter> enemy;
+
     sf::Font font;
     std::unique_ptr<PauseMenu> pauseMenu;
     bool isPaused;
