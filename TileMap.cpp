@@ -6,7 +6,6 @@
 
 
 void TileMap::setInipos() {
-    //player and exit update ini pos-temporary arbitrary coordinates and subject to change
     exitxy = sf::Vector2i(1,0);
     playerxy = sf::Vector2i(gridLength-1,gridLength-1);
 }
@@ -14,7 +13,6 @@ TileMap::TileMap(sf::RenderWindow* window) {
     gridLength = 8;
     gridWidth = 8;
     setTile(window);
-    //setInipos();
 }
 
 void TileMap::setTile(sf::RenderWindow* window) {
@@ -93,7 +91,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
     std::vector<std::shared_ptr<LevelTile>> Row7;
     Row7.push_back(std::make_unique<LevelTile>(GROUND, 0 , 450, size));
     Row7.push_back(std::make_unique<LevelTile>(GROUND, 100 , 450, size));
-    Row7.push_back(std::make_unique<LevelTile>(WALL, 200 , 450, size));
+    Row7.push_back(std::make_unique<LevelTile>(GROUND, 200 , 450, size));
     Row7.push_back(std::make_unique<LevelTile>(GROUND, 300 , 450, size));
     Row7.push_back(std::make_unique<LevelTile>(GROUND, 400 , 450, size));
     Row7.push_back(std::make_unique<LevelTile>(GROUND, 500 , 450, size));
