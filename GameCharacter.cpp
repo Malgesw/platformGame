@@ -8,7 +8,7 @@
 
 GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls) {
 
-movement=new WalkingMovement(80,sf::Vector2f(1,1),sf::Vector2f(50,50),walls,200);
+movement=new WalkingMovement(80,sf::Vector2f(0,0),sf::Vector2f(50,50),walls,200);
 }
 
 void GameCharacter::setMovement(Movement *newMovement) {
