@@ -22,8 +22,8 @@ void TileMap::setTile(sf::RenderWindow* window) {
     tiles.clear();
     std::vector<std::shared_ptr<LevelTile>> Row1;
     Row1.push_back(std::make_unique<LevelTile>(GROUND, 0 , 0,  size));
-    Row1.push_back(std::make_unique<LevelTile>(DOOR, 100 , 0, size));
-    Row1.push_back(std::make_unique<LevelTile>(GROUND, 200 , 0,  size));
+    Row1.push_back(std::make_unique<LevelTile>(WALL, 100 , 0, size));
+    Row1.push_back(std::make_unique<LevelTile>(WALL, 200 , 0,  size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 300 , 0, size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 400, 0, size));
     Row1.push_back(std::make_unique<LevelTile>(WALL, 500 , 0, size));
@@ -34,7 +34,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
 
 
     std::vector<std::shared_ptr<LevelTile>> Row2;
-    Row2.push_back(std::make_unique<LevelTile>(WALL, 0 , 75, size));
+    Row2.push_back(std::make_unique<LevelTile>(GROUND, 0 , 75, size));
     Row2.push_back(std::make_unique<LevelTile>(GROUND, 100 , 75, size));
     Row2.push_back(std::make_unique<LevelTile>(GROUND,200 ,75, size));
     Row2.push_back(std::make_unique<LevelTile>(GROUND, 300 , 75, size));
@@ -56,8 +56,8 @@ void TileMap::setTile(sf::RenderWindow* window) {
     tiles.push_back(Row3);
 
     std::vector<std::shared_ptr<LevelTile>> Row4;
-    Row4.push_back(std::make_unique<LevelTile>(WALL, 0 , 225, size));
-    Row4.push_back(std::make_unique<LevelTile>(GROUND, 100 , 225, size));
+    Row4.push_back(std::make_unique<LevelTile>(GROUND, 0 , 225, size));
+    Row4.push_back(std::make_unique<LevelTile>(WALL, 100 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 200 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 300 , 225, size));
     Row4.push_back(std::make_unique<LevelTile>(GROUND, 400 , 225, size));
@@ -68,7 +68,7 @@ void TileMap::setTile(sf::RenderWindow* window) {
 
     std::vector<std::shared_ptr<LevelTile>> Row5;
     Row5.push_back(std::make_unique<LevelTile>(WALL, 0 , 300, size));
-    Row5.push_back(std::make_unique<LevelTile>(GROUND, 100 , 300, size));
+    Row5.push_back(std::make_unique<LevelTile>(WALL, 100 , 300, size));
     Row5.push_back(std::make_unique<LevelTile>(GROUND, 200 , 300, size));
     Row5.push_back(std::make_unique<LevelTile>(GROUND, 300 , 300, size));
     Row5.push_back(std::make_unique<LevelTile>(WALL, 400 , 300, size));
