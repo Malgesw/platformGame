@@ -47,11 +47,19 @@ void GameState::update(const float &dt) {
 
     }
     else{
+        tileMap->update(player->getMovement()->getCollisions());
+
+        if(tileMap->getCurrentRoom() == 1) {
+            player->getMovement()->getCollisions().setPosition(100.f, 300.f);
+        }
+
         updatePlayerPos();
         player->update(dt,tileMap->getWalls(), window);
+        player->getMovement()->setBarriers(tileMap->getWalls());
+
+        std::cout << player->getMovement()->getBarriers().size() << std::endl;
+
     }
-
-
 
 
 
@@ -74,7 +82,8 @@ void GameState::updatePlayerPos() {
 }
 
 void GameState::render(sf::RenderTarget &target) {
-    tileMap->renderMap(target);
+
+    tileMap->render(target);
     player->render(target);
 
     

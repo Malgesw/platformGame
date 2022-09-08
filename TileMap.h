@@ -1,13 +1,7 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #ifndef TILEMAP_H
 #define TILEMAP_H
-#include <SFML/Graphics.hpp>
-#include "LevelTile.h"
-#include <vector>
-#include "Item.h"
+#include "Room.h"
+#include "GameCharacter.h"
 
 
 
@@ -15,25 +9,32 @@ class TileMap {
 
 public:
 
-    explicit TileMap(sf::RenderWindow* window);
-    void renderMap(sf::RenderTarget &target);
+    explicit TileMap(sf::RenderWindow *window);
 
-    std::vector<std::shared_ptr<LevelTile>> getWalls() const {
-        return walls;
+    void update(const sf::RectangleShape &playerBody);
+    void render(sf::RenderTarget &target);
+
+    const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
+        return rooms[currentRoom]->getWalls();
+    }
+
+    unsigned int getCurrentRoom() const {
+        return currentRoom;
+    }
+
+    const std::unique_ptr<Room> &getRoom() const {
+        return rooms[currentRoom];
     }
 
 private:
+    std::vector<std::unique_ptr<Room>> rooms;
+    unsigned int currentRoom;
 
-    std::map< std:: string, std::unique_ptr<Item>> items;
-    std::vector< std:: vector<std::shared_ptr<LevelTile>>> tiles;
-    std::vector<std::shared_ptr<LevelTile>> walls;
-    int gridLength;
-    int gridWidth;
-    sf::Vector2i playerxy;
-    sf::Vector2i exitxy;
+    void addRoom(sf::RenderWindow *window, const std::string& roomName);
 
-    void setTile(sf::RenderWindow* window);
-    void setInipos();
+
+
+
 
 };
 

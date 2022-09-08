@@ -26,6 +26,16 @@ public:
     sf::Vector2f getVelocity() const;
     sf::RectangleShape getCollisions() const;
 
+    const std::vector<std::shared_ptr<LevelTile>> &getBarriers() const;
+    void setBarriers(const std::vector<std::shared_ptr<LevelTile>>& newWalls){
+
+        barriers.clear();
+
+        for(auto &nw : newWalls){
+            barriers.push_back(nw);
+        }
+
+    }
 
 
 protected:
@@ -35,7 +45,7 @@ protected:
     float dt;
     sf::Vector2f velocity;
     sf::RectangleShape collisionBox;
-    const std::vector<std::shared_ptr<LevelTile>> barriers;
+    std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
 };
 

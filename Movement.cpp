@@ -134,6 +134,10 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
         collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
 }
 
+const std::vector<std::shared_ptr<LevelTile>> &Movement::getBarriers() const {
+    return barriers;
+}
+
 
 
 

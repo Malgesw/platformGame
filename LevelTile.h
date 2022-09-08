@@ -1,7 +1,3 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #ifndef LEVELTILE_H
 #define LEVELTILE_H
 #include <iostream>
@@ -15,19 +11,23 @@ class LevelTile {
 
 public:
 
-    LevelTile(unsigned short tile, float x, float y, sf::Vector2f size);
+    LevelTile(char tile, float x, float y, sf::Vector2f size);
 
-    bool getViable() const;
-    bool setupSprite(unsigned short tile);
+    bool setupSprite(char tile);
     void render(sf::RenderTarget &target);
+    bool isExit() const;
+
     sf::FloatRect getGlobalBounds() const;
+    unsigned short getTileType() const{
+        return tileType;
+    }
 
 private:
 
     sf::Texture texture;
     sf::RectangleShape body;
-    bool isViable;
-    bool isExit;
+    bool exit;
+    unsigned short tileType;
 
 };
 
