@@ -9,12 +9,12 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     sprite.width = texture.getSize().x / (float)imageCount.x;
     sprite.height = texture.getSize().y / (float)imageCount.y;
 
-    animationBox.setSize(sf::Vector2f(size.x * 1.8f, size.y * 1.1f));
+    animationBox.setSize(sf::Vector2f(size.x * 1.8f, size.y * 1.2f));
     animationBox.setPosition(position);
     animationBox.setTexture(&texture);
 
-    positionCorrection.x = -11.f;
-    positionCorrection.y = -6.f;
+    positionCorrection.x = -14.f;
+    positionCorrection.y = -11.7f;
 
 }
 
@@ -24,7 +24,7 @@ void Animation::update(int row, const float &dt) {
     totalTime += dt;
     float t = switchTime;
     if(row > 0) {
-        switchTime -= 0.2f;
+        switchTime -= 0.15f;
     }
 
     if(totalTime >= switchTime){
@@ -38,7 +38,7 @@ void Animation::update(int row, const float &dt) {
     }
 
     sprite.top = currentImage.y * sprite.height;
-    sprite.left = (currentImage.x) * sprite.width;
+    sprite.left = currentImage.x*sprite.width;
 
     switchTime = t;
 

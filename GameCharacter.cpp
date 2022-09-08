@@ -10,12 +10,12 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const
 
     movement=new WalkingMovement(80,startPosition,size,walls,200);
 
-    texture.loadFromFile("../images/sprite.png");
+    texture.loadFromFile("../images/playerSprite.png");
     texture.setSmooth(true);
 
     movement->getCollisions().setTexture(&texture);
 
-    animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 6), 0.3f, startPosition, size);
+    animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 3), 0.3f, startPosition, size);
 
 }
 
@@ -45,15 +45,17 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
         case IDLE_SPRITE:
             row = 0;
-            animationRect.height -= 20.f;
+            animationRect.height -= 125.f;
+            animationRect.width += 10.f;
             break;
         case MOVELEFT:
-            row = 1;
-            animationRect.height -= 15.f;
+            row = 2;
+            animationRect.height -= 120.f;
             break;
         case MOVERIGHT:
-            row = 2;
-            animationRect.height -= 10.f;
+            row = 1;
+            animationRect.height -= 120.f;
+            animationRect.width += 60.f;
             break;
         default:
             row = 0;
