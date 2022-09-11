@@ -1,18 +1,18 @@
 #include "TileMap.h"
 
-TileMap::TileMap(sf::RenderWindow *window) {
+TileMap::TileMap() {
 
-    addRoom(window, "room1.ini");
-    addRoom(window, "room2.ini");
-    addRoom(window, "room3.ini");
+    addRoom("room1.ini");
+    addRoom("room2.ini");
+    addRoom("room3.ini");
 
     currentRoom = 0;
 
 }
 
-void TileMap::update(const sf::RectangleShape &playerBody) {
+void TileMap::update(GameCharacter &player) {
 
-    rooms[currentRoom]->update(playerBody, currentRoom);
+    rooms[currentRoom]->update(player, currentRoom);
 
 }
 
@@ -22,8 +22,8 @@ void TileMap::render(sf::RenderTarget &target) {
 
 }
 
-void TileMap::addRoom(sf::RenderWindow *window, const std::string& roomName) {
+void TileMap::addRoom(const std::string& roomName) {
 
-    rooms.push_back(std::make_unique<Room>(window, roomName));
+    rooms.push_back(std::make_unique<Room>(roomName));
 
 }

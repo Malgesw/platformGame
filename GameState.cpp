@@ -14,8 +14,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
-    tileMap = std::make_unique<TileMap>(window);
-
+    tileMap = std::make_unique<TileMap>();
     player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (50.f,50.f),tileMap->getWalls());
 
 }
@@ -47,17 +46,13 @@ void GameState::update(const float &dt) {
 
     }
     else{
-        tileMap->update(player->getMovement()->getCollisions());
-
-        if(tileMap->getCurrentRoom() == 1) {
-            player->getMovement()->getCollisions().setPosition(100.f, 300.f);
-        }
+        tileMap->update(*player);
 
         updatePlayerPos();
         player->update(dt,tileMap->getWalls(), window);
         player->getMovement()->setBarriers(tileMap->getWalls());
 
-        std::cout << player->getMovement()->getBarriers().size() << std::endl;
+        std::cout << tileMap->getCurrentRoom() << std::endl;
 
     }
 

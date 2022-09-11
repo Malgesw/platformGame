@@ -1,14 +1,14 @@
 #include "Room.h"
 
-Room::Room(sf::RenderWindow* window, const std::string& roomName) {
+Room::Room(const std::string& roomName) {
     heightTiles = 8;
     widthTiles = 8;
     dimX = 800.f/widthTiles;
     dimY = 600.f/heightTiles;
-    initFloor(window, roomName);
+    initFloor(roomName);
 }
 
-void Room::initFloor(sf::RenderWindow* window, const std::string& roomName) {
+void Room::initFloor(const std::string& roomName) {
 
     sf::Vector2f size(dimX, dimY);
     tiles.clear();
@@ -55,14 +55,15 @@ void Room::render(sf::RenderTarget &target) {
 
 }
 
-void Room::update(const sf::RectangleShape& playerBody, unsigned int &currentRoom) {
+void Room::update(GameCharacter &player, unsigned int &currentRoom) {
 
     for(int i=0;i<heightTiles;i++){
         for(int j=0;j<widthTiles;j++){
 
-            if(tiles[i][j]->isExit() && tiles[i][j]->getGlobalBounds().intersects(playerBody.getGlobalBounds())){
+            if(tiles[i][j]->isExit() && tiles[i][j]->getGlobalBounds().intersects(player.getMovement()->getCollisions().getGlobalBounds())){
                 std::cout << "exit found" << std::endl;
                 currentRoom++;
+                player.getMovement()->getCollisions().setPosition(0.f, 0.f);
             }
 
         }

@@ -98,7 +98,7 @@ sf::Vector2f Movement::getVelocity() const{
     return velocity;
 }
 
-sf::RectangleShape Movement::getCollisions() const {
+sf::RectangleShape &Movement::getCollisions() {
     return collisionBox;
 }
 

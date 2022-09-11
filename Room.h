@@ -5,15 +5,16 @@
 #include "LevelTile.h"
 #include <vector>
 #include "Item.h"
+#include "GameCharacter.h"
 
 
 class Room {
 
 public:
 
-    explicit Room(sf::RenderWindow* window, const std::string& roomName);
+    explicit Room(const std::string& roomName);
     void render(sf::RenderTarget &target);
-    void update(const sf::RectangleShape& playerBody, unsigned int &currentRoom);
+    void update(GameCharacter &player, unsigned int &currentRoom);
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return walls;
@@ -37,7 +38,7 @@ private:
     float dimX;
     float dimY;
 
-    void initFloor(sf::RenderWindow* window, const std::string& roomName);
+    void initFloor(const std::string& roomName);
 
 };
 

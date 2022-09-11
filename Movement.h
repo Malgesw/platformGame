@@ -24,7 +24,7 @@ public:
     void setVelocity(float x, float y);
     void update(sf::RenderWindow *window, float deltaTime);
     sf::Vector2f getVelocity() const;
-    sf::RectangleShape getCollisions() const;
+    sf::RectangleShape &getCollisions();
 
     const std::vector<std::shared_ptr<LevelTile>> &getBarriers() const;
     void setBarriers(const std::vector<std::shared_ptr<LevelTile>>& newWalls){

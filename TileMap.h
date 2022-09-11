@@ -1,7 +1,6 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 #include "Room.h"
-#include "GameCharacter.h"
 
 
 
@@ -9,9 +8,9 @@ class TileMap {
 
 public:
 
-    explicit TileMap(sf::RenderWindow *window);
+    explicit TileMap();
 
-    void update(const sf::RectangleShape &playerBody);
+    void update(GameCharacter &player);
     void render(sf::RenderTarget &target);
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
@@ -30,7 +29,7 @@ private:
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
 
-    void addRoom(sf::RenderWindow *window, const std::string& roomName);
+    void addRoom(const std::string& roomName);
 
 
 
