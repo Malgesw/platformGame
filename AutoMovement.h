@@ -12,9 +12,9 @@ class AutoMovement {
 public:
 
     virtual void rest()=0;
-    virtual void aggro()=0;
+    virtual void aggro(const float &dt, sf::Vector2f playerPosition)=0;
 
-private:
+protected:
 
     bool isTriggered;
     std::unique_ptr<Pathfinder> pathfinder;

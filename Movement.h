@@ -23,7 +23,7 @@ public:
     virtual void checkCollisions();
 
     void setVelocity(float x, float y);
-    virtual void update(sf::RenderWindow *window, float deltaTime);
+    virtual void update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition);
     sf::Vector2f getVelocity() const;
     sf::RectangleShape getCollisions() const;
     sf::Vector2f getPosition() const;

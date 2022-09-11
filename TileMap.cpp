@@ -10,18 +10,21 @@ void TileMap::setInipos() {
     exitxy = sf::Vector2i(1,0);
     playerxy = sf::Vector2i(gridLength-1,gridLength-1);
 }
+
 TileMap::TileMap(sf::RenderWindow* window) {
     gridLength = 8;
     gridWidth = 8;
-    setTile(window);
+    initMap(window);
     //setInipos();
 }
 
-void TileMap::setTile(sf::RenderWindow* window) {
+void TileMap::initMap(sf::RenderWindow* window) {
 
     float dimX=800.f/gridWidth;
+    tileSize.x=dimX;
     std::cout<<"dimx vale "<<dimX<<std::endl;
     float dimY=600.f/gridLength;
+    tileSize.y=dimY;
     std::cout<<"dimy vale "<<dimY<<std::endl;
 
     sf::Vector2f size(dimX,dimY);
@@ -127,7 +130,6 @@ void TileMap::setTile(sf::RenderWindow* window) {
 
 }
 
-
 void TileMap::renderMap(sf::RenderTarget &target) {
     for(int i=0;i<gridWidth;i++){
         for(int j=0;j<gridLength;j++){
@@ -137,7 +139,6 @@ void TileMap::renderMap(sf::RenderTarget &target) {
 
 }
 
-
 void TileMap::addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id) {
     enemies.insert({id,enemy});
 }
@@ -146,19 +147,23 @@ void TileMap::removeEnemy(std::string &id) {
     enemies.erase(id);
 }
 
-
 void
-TileMap::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::RenderWindow *window) {
+TileMap::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
+                sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
 for(auto &e : enemies){
-    e.second->update(dt,objects,window);
-}
-}
+    e.second->update(dt,objects,window,mainCharacterPos);
 
+}
+}
 
 void TileMap::renderEnemies(sf::RenderTarget &target) {
     for(auto &e : enemies){
         e.second->render(target);
     }
+}
+
+const sf::Vector2f &TileMap::getTileSize() const {
+    return tileSize;
 }
 
 

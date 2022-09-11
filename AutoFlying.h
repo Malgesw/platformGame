@@ -11,10 +11,10 @@
 class AutoFlying : public FlyingMovement, public AutoMovement{
 
 public:
-    AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls);
+    AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>> &walls, sf::Vector2f wallSize);
     void rest() override;
-    void aggro() override;
-    void update(sf::RenderWindow *window, float deltaTime) override;
+    void aggro(const float &dt, sf::Vector2f playerPosition) override;
+    void update(sf::RenderWindow *window, const float &deltaTime, sf::Vector2f playerPosition);
 };
 
 

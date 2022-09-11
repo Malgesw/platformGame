@@ -11,8 +11,6 @@
 #include <list>
 #include "Item.h"
 
-
-
 class TileMap {
 
 public:
@@ -21,15 +19,14 @@ public:
     void renderMap(sf::RenderTarget &target);
     void addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id);
     void removeEnemy(std::string& id);
-    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>>& objects, sf::RenderWindow *window);
+    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
+                sf::RenderWindow* window, sf::Vector2f mainCharacterPos);
     void renderEnemies(sf::RenderTarget &target);
 
 
     std::vector<std::shared_ptr<LevelTile>> getWalls() const {
         return walls;
     }
-
-
 
 private:
 
@@ -40,10 +37,16 @@ private:
 
     int gridLength;
     int gridWidth;
+    sf::Vector2f tileSize;
+
+public:
+    const sf::Vector2f &getTileSize() const;
+
+private:
     sf::Vector2i playerxy;
     sf::Vector2i exitxy;
 
-    void setTile(sf::RenderWindow* window);
+    void initMap(sf::RenderWindow* window);
     void setInipos();
 
 };

@@ -22,9 +22,8 @@ public:
 
 private:
 
-
     std::unique_ptr<GameCharacter> player;
-
+    sf::Vector2f mainCharacterPos;
     sf::Font font;
     std::unique_ptr<PauseMenu> pauseMenu;
     bool isPaused;

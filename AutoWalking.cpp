@@ -16,29 +16,27 @@ void AutoWalking::rest() {
 
     if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2)) {
         moveRight();
-        velocity.x=0;
 
 
     }
     else if ( timeCounter.getElapsedTime().asSeconds()<turnbackTime){
         moveLeft();
-        velocity.x=0;
     }
     else{
         timeCounter.restart();
     }
     }
 
-void AutoWalking::aggro() {
+void AutoWalking::aggro(const float &dt, sf::Vector2f playerPosition) {
 
 }
 
 
-void AutoWalking::update(sf::RenderWindow *window, float deltaTime) {
+void AutoWalking::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
 
 
         rest();
-        Movement::update(window, deltaTime);
+        Movement::update(window, deltaTime, playerPosition);
 
 
 }

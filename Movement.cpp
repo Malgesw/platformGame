@@ -7,10 +7,14 @@
 
 void Movement::moveLeft() {
     velocity.x=velocity.x-speed;
+    if (velocity.x<=-10*speed)
+        velocity.x=-10*speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
 void Movement::moveRight() {
     velocity.x=velocity.x+speed;
+    if (velocity.x>=10*speed)
+        velocity.x=10*speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
 
@@ -105,7 +109,7 @@ sf::RectangleShape Movement::getCollisions() const {
 }
 
 
-void Movement::update( sf::RenderWindow *window, float deltaTime) {
+void Movement::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
 
     dt=deltaTime;
 
