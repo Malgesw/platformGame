@@ -22,6 +22,10 @@ public:
         return tileType;
     }
 
+    sf::Vector2f getPosition() const{
+        return body.getPosition();
+    }
+
 private:
 
     sf::Texture texture;

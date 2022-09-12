@@ -52,8 +52,6 @@ void GameState::update(const float &dt) {
         player->update(dt,tileMap->getWalls(), window);
         player->getMovement()->setBarriers(tileMap->getWalls());
 
-        std::cout << tileMap->getCurrentRoom() << std::endl;
-
     }
 
 

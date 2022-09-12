@@ -28,15 +28,22 @@ public:
         return dimY;
     }
 
+    const std::vector<std::shared_ptr<LevelTile>> &getDoors() const {
+        return doors;
+    }
+
 private:
+
     std::map< std:: string, std::unique_ptr<Item>> items;
     std::vector<std::vector<std::shared_ptr<LevelTile>>> tiles;
     std::vector<std::shared_ptr<LevelTile>> walls;
+    std::vector<std::shared_ptr<LevelTile>> doors;
     std::vector<std::string> numbers;
     int heightTiles;
     int widthTiles;
     float dimX;
     float dimY;
+
 
     void initFloor(const std::string& roomName);
 

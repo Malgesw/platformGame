@@ -12,6 +12,7 @@ void Room::initFloor(const std::string& roomName) {
 
     sf::Vector2f size(dimX, dimY);
     tiles.clear();
+    doors.clear();
 
     std::ifstream ifs;
     std::string n;
@@ -40,6 +41,8 @@ void Room::initFloor(const std::string& roomName) {
         for(int j=0;j<widthTiles;j++){
             if(tiles[i][j]->getTileType() == WALL)
                 walls.push_back(tiles[i][j]);
+            else if(tiles[i][j]->getTileType() == DOOR)
+                doors.push_back(tiles[i][j]);
         }
     }
 
@@ -61,9 +64,10 @@ void Room::update(GameCharacter &player, unsigned int &currentRoom) {
         for(int j=0;j<widthTiles;j++){
 
             if(tiles[i][j]->isExit() && tiles[i][j]->getGlobalBounds().intersects(player.getMovement()->getCollisions().getGlobalBounds())){
-                std::cout << "exit found" << std::endl;
-                currentRoom++;
-                player.getMovement()->getCollisions().setPosition(0.f, 0.f);
+                if(player.getMovement()->getVelocity().x >= 0.f)
+                    currentRoom++;
+                else
+                    currentRoom--;
             }
 
         }
