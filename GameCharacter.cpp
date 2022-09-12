@@ -14,7 +14,8 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const
 
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,walls,200);
 //movement= std::make_shared<FlyingMovement>(80,startPosition,size,walls);
-attack= std::make_shared<Attack>();
+attack= std::make_shared<Attack>(size*1.5f,0.5f,40);
+
 }
 
 void GameCharacter::setMovement(std::shared_ptr<Movement>& newMovement) {
@@ -63,4 +64,9 @@ const std::shared_ptr<Attack> &GameCharacter::getAttack() const {
 
 void GameCharacter::setAttack(const std::shared_ptr<Attack> &newAttack) {
     GameCharacter::attack = newAttack;
+}
+
+AttackTarget GameCharacter::generateTarget() {
+
+    return AttackTarget(movement->getCollisions(),attack->getHitBox());
 }

@@ -152,7 +152,6 @@ TileMap::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &
                 sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
 for(auto &e : enemies){
     e.second->update(dt,objects,window,mainCharacterPos);
-
 }
 }
 

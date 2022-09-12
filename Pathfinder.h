@@ -31,21 +31,14 @@ private:
     sf::Vector2f endPosition;
     std::vector<AStar::Vec2i> path;
     sf::Vector2f currentPosition;
-
-
-
     float updateTime;
     sf::Clock clock;
     float deltaTime;
     sf::Vector2f tileSize;
-
     void updatePath();
     void updateCurrentTarget();
     static sf::Vector2f tilesToPixels(AStar::Vec2i tilePos,sf::Vector2f tileSize);
     static AStar::Vec2i pixelToTiles(sf::Vector2f pixelPos ,sf::Vector2f tileSize);
-
-
-
 
 
 };

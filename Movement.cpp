@@ -19,13 +19,12 @@ void Movement::moveRight() {
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,std::vector<std::shared_ptr<LevelTile>>  walls)
-:speed(velocity),dt(0.01f),typeOfMovement(type),barriers(std::move(walls)){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>  &walls)
+:speed(velocity),dt(0.01f),typeOfMovement(type),barriers(walls){
 
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::Black);
-
 
 }
 
@@ -34,8 +33,6 @@ void Movement::checkCollisions() {
 
     float lateralTolerance=speed*dt*5;
 
-
-
     for (auto &o: barriers) {
 
         sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
@@ -43,8 +40,6 @@ void Movement::checkCollisions() {
         sf::FloatRect nextPlayerPos = playerBounds;
         nextPlayerPos.left += velocity.x * dt;
         nextPlayerPos.top += velocity.y * dt;
-        
-
 
         objectBounds = o->getGlobalBounds();
         if (objectBounds.intersects(nextPlayerPos)) {
@@ -104,7 +99,7 @@ sf::Vector2f Movement::getVelocity() const{
     return velocity;
 }
 
-sf::RectangleShape Movement::getCollisions() const {
+sf::RectangleShape& Movement::getCollisions() {
     return collisionBox;
 }
 

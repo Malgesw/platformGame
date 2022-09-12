@@ -39,8 +39,8 @@ sf::Vector2f Pathfinder::getMovement(sf::Vector2f end, sf::Vector2f position, fl
         clock.restart();
     }
     sf::Vector2f movement;
-    std::cout<<"target is "<<stepEndPosition.x<<"  "<<stepEndPosition.y<<std::endl;
-    std::cout<<"position is " <<stepStartPosition.x<<"  "<<stepStartPosition.y<<std::endl;
+    //std::cout<<"target is "<<stepEndPosition.x<<"  "<<stepEndPosition.y<<std::endl;
+    //std::cout<<"position is " <<stepStartPosition.x<<"  "<<stepStartPosition.y<<std::endl;
     movement.x= (stepEndPosition.x - stepStartPosition.x);
 
     movement.y= (stepEndPosition.y - stepStartPosition.y);
@@ -82,7 +82,7 @@ void Pathfinder::updatePath(){
 void Pathfinder::updateCurrentTarget(){
 
 
-    std::cout<<"current index is  "<<currentIndex<<std::endl;
+    //std::cout<<"current index is  "<<currentIndex<<std::endl;
     if(currentIndex<path.size()) {
         currentIndex++;
     }
