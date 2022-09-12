@@ -2,7 +2,6 @@
 // Created by alessio on 25/07/22.
 //
 #include "Movement.h"
-
 #include <utility>
 
 void Movement::moveLeft() {
@@ -141,6 +140,9 @@ sf::Vector2f Movement::getPosition() const {
 
 Movement::~Movement() = default;
 
+const std::vector<std::shared_ptr<LevelTile>> &Movement::getBarriers() const {
+    return barriers;
+}
 
 
 

@@ -17,7 +17,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
-    tileMap = std::make_unique<TileMap>(window);
+    tileMap = std::make_unique<TileMap>();
 
     player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (50,50),tileMap->getWalls(),50,50);
     auto enemy= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,50);
@@ -63,17 +63,13 @@ void GameState::update(const float &dt) {
 
     }
     else{
+        tileMap->update(dt,tileMap->getWalls(),window,mainCharacterPos,*player);
         mainCharacterPos=player->getMovement()->getPosition();
         updatePlayerPos();
         player->update(dt,tileMap->getWalls(), window,mainCharacterPos);
-        tileMap->update(dt,tileMap->getWalls(),window,mainCharacterPos);
+        player->getMovement()->setBarriers(tileMap->getWalls());
 
     }
-
-
-
-
-
 }
 
 void GameState::updatePlayerPos() {
@@ -93,7 +89,8 @@ void GameState::updatePlayerPos() {
 }
 
 void GameState::render(sf::RenderTarget &target) {
-    tileMap->renderMap(target);
+
+    tileMap->render(target);
     player->render(target);
     tileMap->renderEnemies(target);
 
