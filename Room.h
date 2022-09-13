@@ -6,15 +6,22 @@
 #include <vector>
 #include "Item.h"
 #include "GameCharacter.h"
+#include "AutoWalking.h"
+#include "AutoFlying.h"
 
 
 class Room {
 
 public:
 
-    explicit Room(const std::string& roomName);
+
+    Room(const std::string& roomName,GameCharacter &mainCharachter);
     void render(sf::RenderTarget &target);
-    void update(GameCharacter &player, unsigned int &currentRoom);
+    void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
+
+
+    void addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id);
+    void removeEnemy(std::string& id);
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return walls;
@@ -32,17 +39,23 @@ public:
         return doors;
     }
 
+    std::vector<AttackTarget> getTargets();
+
 private:
+
 
     std::map< std:: string, std::unique_ptr<Item>> items;
     std::vector<std::vector<std::shared_ptr<LevelTile>>> tiles;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::vector<std::shared_ptr<LevelTile>> doors;
+    std::map<std::string ,std::shared_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
+    GameCharacter player;
     int heightTiles;
     int widthTiles;
     float dimX;
     float dimY;
+
 
 
     void initFloor(const std::string& roomName);

@@ -17,21 +17,20 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
-    tileMap = std::make_unique<TileMap>();
 
-    player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (50,50),tileMap->getWalls(),50,50);
-    auto enemy= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,50);
-    auto enemy2= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,50);
-    std::string enemyName("enemy1");
-    std::string enemyName2("enemy2");
-    tileMap->addEnemy(enemy,enemyName);
-    tileMap->addEnemy(enemy2,enemyName2);
-    std::shared_ptr<Movement> autoMovement;
-    std::shared_ptr<Movement> autoMovement2;
-    autoMovement=std::make_shared<AutoWalking>( AutoWalking(10,sf::Vector2f (510.f,100.f),sf::Vector2f(50,50),tileMap->getWalls(),50,4));
-    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(10,sf::Vector2f (510.f,500.f),sf::Vector2f(50,50),tileMap->getWalls(),tileMap->getTileSize()));
-    enemy->setMovement(autoMovement);
-    enemy2->setMovement(autoMovement2);
+
+    player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (50,50),50,50);
+
+
+    tileMap = std::make_unique<TileMap>(*player);
+
+    player->getMovement()->addWalls(tileMap->getWalls());
+    player->getAttack()->addTargets(tileMap->getTargets());
+
+
+
+
+
 
 
 }
@@ -63,8 +62,8 @@ void GameState::update(const float &dt) {
 
     }
     else{
-        tileMap->update(dt,tileMap->getWalls(),window,mainCharacterPos,*player);
-        mainCharacterPos=player->getMovement()->getPosition();
+        tileMap->update(dt,*player,window);
+
         updatePlayerPos();
         player->update(dt,tileMap->getWalls(), window,mainCharacterPos);
         player->getMovement()->setBarriers(tileMap->getWalls());
@@ -92,7 +91,6 @@ void GameState::render(sf::RenderTarget &target) {
 
     tileMap->render(target);
     player->render(target);
-    tileMap->renderEnemies(target);
 
     
     if(isPaused)

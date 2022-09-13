@@ -18,8 +18,8 @@ void Movement::moveRight() {
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>  &walls)
-:speed(velocity),dt(0.01f),typeOfMovement(type),barriers(walls){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type)
+:speed(velocity),dt(0.01f),typeOfMovement(type){
 
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
@@ -143,6 +143,22 @@ Movement::~Movement() = default;
 const std::vector<std::shared_ptr<LevelTile>> &Movement::getBarriers() const {
     return barriers;
 }
+
+void Movement::addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls) {
+
+    for(auto &w : newWalls){
+        barriers.push_back(w);
+    }
+}
+
+void Movement::clearWalls() {
+
+        barriers.clear();
+}
+
+
+
+
 
 
 

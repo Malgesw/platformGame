@@ -8,19 +8,22 @@
 #
 #include "FlyingMovement.h"
 
-GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls, int healthPoints, int mana)
+GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int healthPoints, int mana)
 :hp(healthPoints),energy(mana)
 {
-
-movement= std::make_shared<WalkingMovement>(80,startPosition,size,walls,200);
-//movement= std::make_shared<FlyingMovement>(80,startPosition,size,walls);
-attack= std::make_shared<Attack>(size*1.5f,0.5f,40);
-
+//___________________________________________DEFAULT PARAMETERS
+movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
+attack= std::make_shared<Attack>(size*1.5f,0.5f,40.f,0.5f);
 }
 
 void GameCharacter::setMovement(std::shared_ptr<Movement>& newMovement) {
-movement=newMovement;
+    movement=newMovement;
 }
+
+void GameCharacter::setAttack( std::shared_ptr<Attack> &newAttack) {
+    attack = newAttack;
+}
+
 
 void GameCharacter::render(sf::RenderTarget &target) {
 
@@ -62,9 +65,6 @@ const std::shared_ptr<Attack> &GameCharacter::getAttack() const {
     return attack;
 }
 
-void GameCharacter::setAttack(const std::shared_ptr<Attack> &newAttack) {
-    GameCharacter::attack = newAttack;
-}
 
 AttackTarget GameCharacter::generateTarget() {
 

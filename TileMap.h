@@ -15,17 +15,18 @@ class TileMap {
 
 public:
 
-    explicit TileMap(sf::RenderWindow* window);
+    explicit TileMap(GameCharacter &player);
     void render(sf::RenderTarget &target);
-    void addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id);
-    void removeEnemy(std::string& id);
-    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
-                sf::RenderWindow* window, sf::Vector2f mainCharacterPos,GameCharacter &player);
-    void renderEnemies(sf::RenderTarget &target);
+
+    void update(const float &dt,GameCharacter &player, sf::RenderWindow *window);
 
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return rooms[currentRoom]->getWalls();
+    }
+
+    std::vector<AttackTarget> getTargets() const{
+        return rooms[currentRoom]->getTargets();
     }
 
     unsigned int getCurrentRoom() const {
@@ -40,7 +41,7 @@ private:
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
 
-    void addRoom(const std::string& roomName);
+    void addRoom(const std::string& roomName, GameCharacter& mainCharacter);
 
 };
 

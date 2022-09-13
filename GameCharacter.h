@@ -14,7 +14,7 @@
 class GameCharacter {
 
 public:
-    GameCharacter(sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls, int healthPoints, int mana);
+    GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int healthPoints, int mana);
     void setMovement(std::shared_ptr<Movement>& newMovement);
     void render(sf::RenderTarget &target);
     void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,sf::RenderWindow* window, sf::Vector2f mainCharacterPos);
@@ -24,6 +24,9 @@ public:
     int getEnergy() const;
     void setEnergy(int energy);
     AttackTarget generateTarget();
+    const std::shared_ptr<Attack> &getAttack() const;
+    void setAttack(std::shared_ptr<Attack> &attack);
+
 
 private:
 
@@ -34,8 +37,6 @@ private:
     std::shared_ptr<Attack> attack;
 public:
 
-    const std::shared_ptr<Attack> &getAttack() const;
-    void setAttack(const std::shared_ptr<Attack> &attack);
 
 };
 

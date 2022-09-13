@@ -6,8 +6,8 @@
 
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, float hitDamage, float knockback, std::vector<AttackTarget> enemies):
-attackSpeed(speed),damage(hitDamage),targets(std::move(enemies)),knockbackMultiplier(knockback) {
+Attack::Attack(sf::Vector2f size, float speed, float hitDamage, float knockback):
+attackSpeed(speed),damage(hitDamage),knockbackMultiplier(knockback) {
 
 hitBox=sf::RectangleShape(size);
 hitBox.setFillColor(sf::Color::Blue);
@@ -17,6 +17,8 @@ hitBox.setFillColor(sf::Color::Blue);
 sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
+
+
 
 void Attack::hit() {
     if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
@@ -31,4 +33,16 @@ void Attack::hit() {
             }
         }
     }
+}
+
+void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
+
+    for(auto &t : newTargets){
+        targets.push_back(t);
+    }
+}
+
+void Attack::clearTargets() {
+
+    targets.clear();
 }

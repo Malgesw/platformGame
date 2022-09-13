@@ -5,7 +5,7 @@
 #include "AutoFlying.h"
 
 AutoFlying::AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>> &walls, sf::Vector2f wallSize):
-        FlyingMovement(movementSpeed,startPosition,size,walls){
+        FlyingMovement(movementSpeed,startPosition,size){
 
     collisionBox.setFillColor(sf::Color::Red);
     pathfinder= std::make_unique<Pathfinder>(walls,wallSize, 0.5f,startPosition,startPosition,0.1f);

@@ -5,7 +5,7 @@
 #include "AutoWalking.h"
 
 AutoWalking::AutoWalking(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls,float jHeight,float turnTime):
-WalkingMovement(movementSpeed,startPosition,size,walls,jHeight),turnbackTime(turnTime) {
+WalkingMovement(movementSpeed,startPosition,size,jHeight),turnbackTime(turnTime) {
 
     collisionBox.setFillColor(sf::Color::Red);
     timeCounter.restart();

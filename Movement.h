@@ -12,7 +12,7 @@
 class Movement{
 
 public:
-    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,const std::vector<std::shared_ptr<LevelTile>>  &walls);
+    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type);
     virtual ~Movement();
 
     virtual void moveLeft();
@@ -27,6 +27,8 @@ public:
     sf::Vector2f getVelocity() const;
     sf::RectangleShape& getCollisions();
     sf::Vector2f getPosition() const;
+    void addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls);
+    void clearWalls();
 
 
     const std::vector<std::shared_ptr<LevelTile>> &getBarriers() const;
@@ -38,7 +40,6 @@ public:
         for(auto &nw : newWalls){
             barriers.push_back(nw);
         }
-
     }
 
 

@@ -15,9 +15,11 @@ class Attack {
 
 public:
 
-    Attack(sf::Vector2f size, float speed, float hitDamage, float knockback, std::vector<AttackTarget> enemies);
+    Attack(sf::Vector2f size, float speed, float hitDamage, float knockback);
     void hit();
     sf::RectangleShape& getHitBox();
+    void addTargets(const std::vector<AttackTarget>& newTargets);
+    void clearTargets();
 
 
 private:
