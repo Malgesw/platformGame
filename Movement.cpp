@@ -4,12 +4,18 @@
 #include "Movement.h"
 
 void Movement::moveLeft() {
-    typeOfSprite = MOVELEFT;
+    if(isOnGround)
+        typeOfSprite = MOVELEFT;
+    else
+        typeOfSprite = JUMPLEFT;
     velocity.x=velocity.x-speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
 void Movement::moveRight() {
-    typeOfSprite = MOVERIGHT;
+    if(isOnGround)
+        typeOfSprite = MOVERIGHT;
+    else
+        typeOfSprite = JUMPRIGHT;
     velocity.x=velocity.x+speed;
     collisionBox.move(velocity.x*dt,0.f);
 }
@@ -85,6 +91,8 @@ void Movement::checkCollisions() {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
             }
+            else
+                isOnGround = false;
 
         }
 
@@ -137,6 +145,10 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
     if(collisionBox.getGlobalBounds().top < 0.f)
         collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
 
+}
+
+bool Movement::onGround() const {
+    return isOnGround;
 }
 
 

@@ -34,10 +34,10 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                            sf::RenderWindow* window) {
 
     movement->update(window,dt);
-    //animation->getAnimationBox().setPosition(sf::Vector2f(movement->getCollisions().getPosition().x - 8.f, movement->getCollisions().getPosition().y));
     animation->getAnimationBox().setPosition(movement->getCollisions().getPosition() + animation->getPositionCorrection());
 
     int row;
+    bool jumpRight = true;
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
                               animation->getSprite().width, animation->getSprite().height);
 
@@ -45,17 +45,28 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
         case IDLE_SPRITE:
             row = 0;
-            animationRect.height -= 125.f;
-            animationRect.width += 10.f;
+            animationRect.height -= 50.f;
+            //animationRect.width += 20.f;
             break;
         case MOVELEFT:
-            row = 2;
-            animationRect.height -= 120.f;
+            row = 1;
+            animationRect.height -= 170.f;
+            //animationRect.width += 200.f;
+            jumpRight = false;
             break;
         case MOVERIGHT:
             row = 1;
-            animationRect.height -= 120.f;
+            animationRect.height -= 170.f;
             animationRect.width += 60.f;
+            break;
+        case JUMPRIGHT:
+            row = 2;
+            animationRect.height -= 60.f;
+            break;
+        case JUMPLEFT:
+            row = 2;
+            animationRect.height -= 60.f;
+            jumpRight = false;
             break;
         default:
             row = 0;
@@ -63,8 +74,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     }
 
-    animation->update(row, dt);
-    //movement->getCollisions().setTextureRect(animationRect);
+    animation->update(row, dt, jumpRight);
     animation->getAnimationBox().setTextureRect(animationRect);
 
 

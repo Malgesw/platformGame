@@ -4,7 +4,7 @@
 
 #include "LevelTile.h"
 
-enum spriteType {IDLE_SPRITE, MOVERIGHT, MOVELEFT};
+enum spriteType {IDLE_SPRITE, MOVERIGHT, MOVELEFT, JUMPRIGHT, JUMPLEFT};
 
 class Movement{
 
@@ -42,6 +42,10 @@ protected:
     sf::RectangleShape collisionBox;
     const std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
+public:
+    bool onGround() const;
+
+protected:
     unsigned short typeOfSprite;
 
 };

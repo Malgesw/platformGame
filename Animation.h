@@ -10,7 +10,7 @@ public:
     Animation(sf::Texture &texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size);
     ~Animation() = default;
 
-    void update(int row, const float &dt);
+    void update(int row, const float &dt, bool jumpRight);
     void render(sf::RenderTarget &target);
 
     sf::IntRect &getSprite() {
@@ -23,6 +23,10 @@ public:
 
     const sf::Vector2f &getPositionCorrection() const{
         return positionCorrection;
+    }
+
+    void setPositionCorrection(sf::Vector2f(newPos)){
+        positionCorrection = newPos;
     }
 
 

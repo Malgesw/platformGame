@@ -13,12 +13,11 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     animationBox.setPosition(position);
     animationBox.setTexture(&texture);
 
-    positionCorrection.x = -14.f;
-    positionCorrection.y = -11.7f;
-
+    positionCorrection.x = -10.f;
+    positionCorrection.y = -6.f;
 }
 
-void Animation::update(int row, const float &dt) {
+void Animation::update(int row, const float &dt, bool jumpRight) {
 
     currentImage.y = row;
     totalTime += dt;
@@ -30,15 +29,27 @@ void Animation::update(int row, const float &dt) {
     if(totalTime >= switchTime){
 
         totalTime -= switchTime;
-        currentImage.x++;
 
-        if(currentImage.x >= imageCount.x)
-            currentImage.x = 0;
+        if(row != 2) {
+            currentImage.x++;
+            if (currentImage.x == imageCount.x)
+                currentImage.x = 0;
+        }
+        else if(currentImage.x < imageCount.x-1)
+                currentImage.x++;
 
     }
 
     sprite.top = currentImage.y * sprite.height;
-    sprite.left = currentImage.x*sprite.width;
+
+    if(jumpRight) {
+        sprite.left = currentImage.x * sprite.width - 30.f;
+        sprite.width = std::abs(sprite.width);
+    }
+    else{
+        sprite.left = (currentImage.x+1) * std::abs(sprite.width);
+        sprite.width = -std::abs(sprite.width);
+    }
 
     switchTime = t;
 

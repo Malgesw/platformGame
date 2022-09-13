@@ -15,6 +15,7 @@ void WalkingMovement::moveUp() {
         isOnGround = false;
         velocity.y = -sqrtf(2.f * 981.f * jumpHeight);
         collisionBox.move(0.f, velocity.y * dt);
+        typeOfSprite = JUMPRIGHT;
     }
 }
 

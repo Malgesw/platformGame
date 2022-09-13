@@ -17,6 +17,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     tileMap = std::make_unique<TileMap>(window);
 
     player = std::make_unique<GameCharacter>(sf::Vector2f (300.f,100.f),sf::Vector2f(30,60),tileMap->getWalls());
+    jumped = false;
 
 }
 
@@ -57,7 +58,8 @@ void GameState::updatePlayerPos() {
 
     player->getMovement()->setVelocity(player->getMovement()->getVelocity().x * 0.5f, player->getMovement()->getVelocity().y);
 
-    player->getMovement()->setSpriteType(IDLE_SPRITE);
+    if(player->getMovement()->onGround())
+        player->getMovement()->setSpriteType(IDLE_SPRITE);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
         player->getMovement()->moveLeft();
@@ -68,6 +70,8 @@ void GameState::updatePlayerPos() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
 
         player->getMovement()->moveUp();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
+            player->getMovement()->setSpriteType(JUMPLEFT);
     }
 
 }
