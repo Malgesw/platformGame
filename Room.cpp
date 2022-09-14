@@ -8,24 +8,29 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
     initFloor(roomName);
 
 
+    if(roomName=="room1.ini") {
+        auto enemy = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 50, 50);
+        auto enemy2 = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 50, 50);
+        std::string enemyName("enemy1");
+        std::string enemyName2("enemy2");
+        addEnemy(enemy, enemyName);
+        addEnemy(enemy2, enemyName2);
+        std::shared_ptr<Movement> autoMovement;
+        std::shared_ptr<Movement> autoMovement2;
+        autoMovement = std::make_shared<AutoWalking>(
+                AutoWalking(10, sf::Vector2f(10*dimX, 3 * dimY), sf::Vector2f(35, 35), walls, 50, 4));
+        autoMovement2 = std::make_shared<AutoFlying>(
+                AutoFlying(7, sf::Vector2f(10 * dimX, 13 * dimY), sf::Vector2f(50, 37.5), walls,
+                           sf::Vector2f(dimX, dimY)));
+        enemy->setMovement(autoMovement);
+        enemy2->setMovement(autoMovement2);
+    }
+        for (auto &e: enemies) {
+            e.second->getMovement()->addWalls(walls);
+            std::vector<AttackTarget> targets;
+            targets.push_back(player.generateTarget());
+            e.second->getAttack()->addTargets(targets);
 
-    auto enemy= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,37.5),50,50);
-    auto enemy2= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,37.5),50,50);
-    std::string enemyName("enemy1");
-    std::string enemyName2("enemy2");
-    addEnemy(enemy,enemyName);
-    addEnemy(enemy2,enemyName2);
-    std::shared_ptr<Movement> autoMovement;
-    std::shared_ptr<Movement> autoMovement2;
-    autoMovement=std::make_shared<AutoWalking>( AutoWalking(10,sf::Vector2f (525.f,100.f),sf::Vector2f(35,35),walls,50,4));
-    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(7,sf::Vector2f (10*dimX,13*dimY),sf::Vector2f(50,37.5),walls,sf::Vector2f(dimX,dimY)));
-    enemy->setMovement(autoMovement);
-    enemy2->setMovement(autoMovement2);
-    for (auto &e : enemies){
-        e.second->getMovement()->addWalls(walls);
-        std::vector<AttackTarget> targets;
-        targets.push_back(player.generateTarget());
-        e.second->getAttack()->addTargets(targets);
     }
 
 }

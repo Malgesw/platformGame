@@ -33,8 +33,11 @@ target.draw(movement->getCollisions());
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
                            sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
 
+    sf::Vector2f collisionboxCenter(movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x,
+                                    movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y);
+
     movement->update(window,dt,mainCharacterPos);
-    attack->update(movement->getCollisions().getPosition());
+    attack->update(collisionboxCenter);
 
 }
 

@@ -6,4 +6,5 @@
 
 AutoAttack::AutoAttack(sf::Vector2f size, float speed, float hitDamage, float knockback) : Attack(size, speed,hitDamage,knockback){
 
+
 }

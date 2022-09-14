@@ -19,7 +19,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseClock.restart();
 
 
-    player = std::make_unique<GameCharacter>(sf::Vector2f (0.f,0.f),sf::Vector2f (35,35),50,50);
+    player = std::make_unique<GameCharacter>(sf::Vector2f (100.f,100.f),sf::Vector2f (35,35),50,50);
 
 
     tileMap = std::make_unique<TileMap>(*player);

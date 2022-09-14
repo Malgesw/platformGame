@@ -52,6 +52,7 @@ protected:
     sf::RectangleShape collisionBox;
     std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
+    bool inertia = true;
 };
 
 
