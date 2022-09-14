@@ -8,10 +8,10 @@ AutoFlying::AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vect
         FlyingMovement(movementSpeed,startPosition,size){
 
     collisionBox.setFillColor(sf::Color::Red);
-    pathfinder= std::make_unique<Pathfinder>(walls,wallSize, 0.5f,startPosition,startPosition,0.1f);
-    pathfinder->setWorldSize(sf::Vector2f(8, 8));
+    pathfinder= std::make_unique<Pathfinder>(walls,wallSize, 2.0f,startPosition,startPosition,0.1f);
+    pathfinder->setWorldSize(sf::Vector2f(16, 16));
     pathfinder->setHeuristic(AStar::Heuristic::manhattan);
-    pathfinder->setDiagonalMovement(false);
+    pathfinder->setDiagonalMovement(true);
 }
 
 void AutoFlying::rest() {
@@ -20,9 +20,21 @@ void AutoFlying::rest() {
 
 void AutoFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
 
-    sf::Vector2f movement= pathfinder->getMovement(playerPosition,collisionBox.getPosition(),dt);
+
+    sf::Vector2f movement= pathfinder->getMovement(playerPosition,sf::Vector2f (collisionBox.getPosition().x+collisionBox.getSize().x/2,collisionBox.getPosition().y+collisionBox.getSize().y/2),dt);
+    if (movement.x>1.f)
+        moveRight();
+    else if(movement.x<-1.f)
+        moveLeft();
+    if (movement.y>1.f)
+        FlyingMovement::moveDown();
+    else if(movement.y<-1.f)
+        FlyingMovement::moveUp();
+
+    velocity.x=velocity.x/1.2f;
+    velocity.y=velocity.y/1.2f;
     //std::cout<<"movement is "<<movement.x<<"  "<<movement.y<<std::endl;
-    collisionBox.move(movement*dt);
+    //collisionBox.move(movement*dt);
 
 }
 

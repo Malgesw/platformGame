@@ -20,6 +20,7 @@ public:
     sf::RectangleShape& getHitBox();
     void addTargets(const std::vector<AttackTarget>& newTargets);
     void clearTargets();
+    void update(sf::Vector2f position);
 
 
 private:

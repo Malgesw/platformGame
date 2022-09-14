@@ -7,8 +7,8 @@
 TileMap::TileMap(GameCharacter& player) {
 
     addRoom("room1.ini",player);
-    addRoom("room2.ini",player);
-    addRoom("room3.ini",player);
+    //addRoom("room2.ini",player);
+    //addRoom("room3.ini",player);
     currentRoom = 0;
 }
 

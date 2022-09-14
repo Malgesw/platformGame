@@ -34,6 +34,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                            sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
 
     movement->update(window,dt,mainCharacterPos);
+    attack->update(movement->getCollisions().getPosition());
 
 }
 

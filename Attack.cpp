@@ -11,23 +11,22 @@ attackSpeed(speed),damage(hitDamage),knockbackMultiplier(knockback) {
 
 hitBox=sf::RectangleShape(size);
 hitBox.setFillColor(sf::Color::Blue);
-
 }
 
 sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
 
-
-
 void Attack::hit() {
+
     if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
+
         cooldown.restart();
         for (auto &t: targets) {
             if (hitBox.getGlobalBounds().intersects(t.getHitbox().getGlobalBounds())) {
 
+                //std::cout<<cooldown.getElapsedTime().asSeconds()<<std::endl;
                 sf::Vector2f knockback((t.getHitbox().getPosition()-hitBox.getPosition())*knockbackMultiplier);
-
                 t.getCollisionbox().move(knockback);
 
             }
@@ -43,6 +42,9 @@ void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
 }
 
 void Attack::clearTargets() {
-
     targets.clear();
+}
+
+void Attack::update(sf::Vector2f position) {
+hitBox.setPosition(position);
 }

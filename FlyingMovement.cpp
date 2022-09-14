@@ -11,9 +11,15 @@ FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::V
 }
 
 void FlyingMovement::moveUp() {
-collisionBox.move(0,speed*dt*-1.f);
+    velocity.y=velocity.y-speed;
+    if (velocity.y<=-10*speed)
+        velocity.y=-10*speed;
+    collisionBox.move(0.f,velocity.y*dt);
 }
 
 void FlyingMovement::moveDown() {
-    collisionBox.move(0,speed*dt);
+    velocity.y=velocity.y+speed;
+    if (velocity.y>=10*speed)
+        velocity.y=10*speed;
+    collisionBox.move(0.f,velocity.y*dt);
 }

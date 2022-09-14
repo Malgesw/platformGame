@@ -1,24 +1,24 @@
 #include "Room.h"
 
 Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(mainCharacter) {
-    heightTiles = 8;
-    widthTiles = 8;
+    heightTiles = 16;
+    widthTiles = 16;
     dimX = 800.f/widthTiles;
     dimY = 600.f/heightTiles;
     initFloor(roomName);
 
 
 
-    auto enemy= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),50,50);
-    auto enemy2= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,50),50,50);
+    auto enemy= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,37.5),50,50);
+    auto enemy2= std::make_shared<GameCharacter>(sf::Vector2f(500.f,100.f),sf::Vector2f(50,37.5),50,50);
     std::string enemyName("enemy1");
     std::string enemyName2("enemy2");
     addEnemy(enemy,enemyName);
     addEnemy(enemy2,enemyName2);
     std::shared_ptr<Movement> autoMovement;
     std::shared_ptr<Movement> autoMovement2;
-    autoMovement=std::make_shared<AutoWalking>( AutoWalking(10,sf::Vector2f (510.f,100.f),sf::Vector2f(50,50),walls,50,4));
-    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(10,sf::Vector2f (510.f,500.f),sf::Vector2f(50,50),walls,sf::Vector2f(dimX,dimY)));
+    autoMovement=std::make_shared<AutoWalking>( AutoWalking(10,sf::Vector2f (525.f,100.f),sf::Vector2f(35,35),walls,50,4));
+    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(25,sf::Vector2f (10*dimX,13*dimY),sf::Vector2f(50,37.5),walls,sf::Vector2f(dimX,dimY)));
     enemy->setMovement(autoMovement);
     enemy2->setMovement(autoMovement2);
     for (auto &e : enemies){
@@ -41,7 +41,7 @@ void Room::initFloor(const std::string& roomName) {
 
     ifs.open("../Levels/"+roomName);
 
-    for(int i = 0; i < heightTiles; i++) {
+    for(int i = 0; i < widthTiles; i++) {
 
         while(ifs >> n){
             numbers.push_back(n);
@@ -54,7 +54,7 @@ void Room::initFloor(const std::string& roomName) {
     for(int i=0;i<heightTiles;i++){
         std::vector<std::shared_ptr<LevelTile>> row;
         for(int j=0;j<widthTiles;j++){
-            row.push_back(std::make_unique<LevelTile>(numbers[j][i], i*dimX , j*dimY,  size));
+            row.push_back(std::make_unique<LevelTile>(numbers[i][j], j*dimX , i*dimY,  size));
         }
         tiles.push_back(row);
     }
@@ -101,7 +101,7 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     }
     //________________________________UPDATING ENEMIES
     for (auto &e: enemies) {
-        e.second->update(dt, walls,window, player.getMovement()->getPosition());
+        e.second->update(dt, walls,window, sf::Vector2f (player.getMovement()->getPosition().x+player.getMovement()->getCollisions().getSize().x/2,player.getMovement()->getPosition().y+player.getMovement()->getCollisions().getSize().y/2));
     }
 }
 

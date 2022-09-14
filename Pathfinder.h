@@ -35,6 +35,8 @@ private:
     sf::Clock clock;
     float deltaTime;
     sf::Vector2f tileSize;
+    bool firstCall=true;
+
     void updatePath();
     void updateCurrentTarget();
     static sf::Vector2f tilesToPixels(AStar::Vec2i tilePos,sf::Vector2f tileSize);
