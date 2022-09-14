@@ -31,10 +31,8 @@ void AutoFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
     else if(movement.y<-1.f)
         FlyingMovement::moveUp();
 
-    velocity.x=velocity.x/1.2f;
-    velocity.y=velocity.y/1.2f;
-    //std::cout<<"movement is "<<movement.x<<"  "<<movement.y<<std::endl;
-    //collisionBox.move(movement*dt);
+    velocity.x=velocity.x/1.01f;
+    velocity.y=velocity.y/1.05f;
 
 }
 

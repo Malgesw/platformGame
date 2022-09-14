@@ -2,6 +2,7 @@
 // Created by alessio on 25/07/22.
 //
 #include "Movement.h"
+#include <cmath>
 #include <utility>
 
 void Movement::moveLeft() {
@@ -30,7 +31,7 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 
 void Movement::checkCollisions() {
 
-    float lateralTolerance=speed*dt*5;
+    float Tolerance=std::sqrt(speed)*dt*50;
 
     for (auto &o: barriers) {
 
@@ -47,8 +48,8 @@ void Movement::checkCollisions() {
             //Bottom
             if (playerBounds.top < objectBounds.top &&
                 playerBounds.top + playerBounds.height < objectBounds.top + objectBounds.height &&
-                playerBounds.left < objectBounds.left + objectBounds.width - lateralTolerance &&
-                playerBounds.left + playerBounds.width > objectBounds.left + lateralTolerance) {
+                playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
                 velocity.y = 0.f;
                 isOnGround = true;
                 collisionBox.setPosition(playerBounds.left, objectBounds.top - playerBounds.height);
@@ -57,8 +58,8 @@ void Movement::checkCollisions() {
                 //Top
             else if (playerBounds.top > objectBounds.top &&
                      playerBounds.top + playerBounds.height > objectBounds.top + objectBounds.height &&
-                     playerBounds.left < objectBounds.left + objectBounds.width - lateralTolerance &&
-                     playerBounds.left + playerBounds.width > objectBounds.left + lateralTolerance) {
+                     playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                     playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
                 velocity.y = 0.f;
                 collisionBox.setPosition(playerBounds.left, objectBounds.top + objectBounds.height);
             }
@@ -67,8 +68,8 @@ void Movement::checkCollisions() {
                 //Right
             else if (playerBounds.left < objectBounds.left &&
                      playerBounds.left + playerBounds.width < objectBounds.left + objectBounds.width &&
-                     playerBounds.top < objectBounds.top + objectBounds.height -lateralTolerance &&
-                     playerBounds.top + playerBounds.height > objectBounds.top +lateralTolerance) {
+                     playerBounds.top < objectBounds.top + objectBounds.height -Tolerance &&
+                     playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left - playerBounds.width, playerBounds.top);
             }
@@ -76,8 +77,8 @@ void Movement::checkCollisions() {
                 //Left
             else if (playerBounds.left > objectBounds.left &&
                      playerBounds.left + playerBounds.width > objectBounds.left + objectBounds.width &&
-                     playerBounds.top < objectBounds.top + objectBounds.height -lateralTolerance&&
-                     playerBounds.top + playerBounds.height > objectBounds.top +lateralTolerance) {
+                     playerBounds.top < objectBounds.top + objectBounds.height -Tolerance&&
+                     playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
             }

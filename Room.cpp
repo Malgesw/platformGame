@@ -18,7 +18,7 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
     std::shared_ptr<Movement> autoMovement;
     std::shared_ptr<Movement> autoMovement2;
     autoMovement=std::make_shared<AutoWalking>( AutoWalking(10,sf::Vector2f (525.f,100.f),sf::Vector2f(35,35),walls,50,4));
-    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(25,sf::Vector2f (10*dimX,13*dimY),sf::Vector2f(50,37.5),walls,sf::Vector2f(dimX,dimY)));
+    autoMovement2=std::make_shared<AutoFlying>( AutoFlying(7,sf::Vector2f (10*dimX,13*dimY),sf::Vector2f(50,37.5),walls,sf::Vector2f(dimX,dimY)));
     enemy->setMovement(autoMovement);
     enemy2->setMovement(autoMovement2);
     for (auto &e : enemies){

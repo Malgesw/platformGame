@@ -25,8 +25,8 @@ public:
 
 private:
 
-    sf::Vector2f stepEndPosition;
-    sf::Vector2f stepStartPosition;
+
+    sf::Vector2f currentDestination;
     int currentIndex;
     sf::Vector2f endPosition;
     std::vector<AStar::Vec2i> path;
@@ -35,7 +35,7 @@ private:
     sf::Clock clock;
     float deltaTime;
     sf::Vector2f tileSize;
-    bool firstCall=true;
+    bool checkPath=true;
 
     void updatePath();
     void updateCurrentTarget();
