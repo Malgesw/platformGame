@@ -46,5 +46,5 @@ void Attack::clearTargets() {
 }
 
 void Attack::update(sf::Vector2f centerPosition) {
-hitBox.setPosition(centerPosition.x-hitBox.getSize().x,centerPosition.y-hitBox.getSize().y);
+hitBox.setPosition(centerPosition.x-hitBox.getSize().x/2,centerPosition.y-hitBox.getSize().y/2);
 }

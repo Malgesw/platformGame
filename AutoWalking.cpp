@@ -35,6 +35,7 @@ void AutoWalking::aggro(const float &dt, sf::Vector2f playerPosition) {
 void AutoWalking::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
 
 
+        //std::cout<<"position is "<<collisionBox.getPosition().x<<"  "<<collisionBox.getPosition().y<<std::endl;
         rest();
         Movement::update(window, deltaTime, playerPosition);
 

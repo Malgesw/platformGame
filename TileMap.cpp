@@ -6,15 +6,18 @@
 
 TileMap::TileMap(GameCharacter& player) {
 
+
     addRoom("room1.ini",player);
-    //addRoom("room2.ini",player);
-    //addRoom("room3.ini",player);
+    addRoom("room2.ini",player);
+    addRoom("room3.ini",player);
     currentRoom = 0;
+
 }
 
 void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *window) {
 
     unsigned int room = currentRoom;
+
     rooms[currentRoom]->update(dt,currentRoom,window);
     std::vector<std::shared_ptr<LevelTile>> doors = rooms[currentRoom]->getDoors();
 
@@ -24,6 +27,7 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
     else if(currentRoom > room && currentRoom < 3){
         player.getMovement()->getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
     }
+
 
 }
 

@@ -20,10 +20,10 @@ public:
     sf::RectangleShape& getHitBox();
     void addTargets(const std::vector<AttackTarget>& newTargets);
     void clearTargets();
-    void update(sf::Vector2f centerPosition);
+    virtual void update(sf::Vector2f centerPosition);
 
 
-private:
+protected:
     sf::Clock cooldown;
     float attackSpeed;
     float damage;

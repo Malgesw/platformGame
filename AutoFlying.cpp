@@ -8,7 +8,6 @@ AutoFlying::AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vect
         FlyingMovement(movementSpeed,startPosition,size){
 
 
-
     collisionBox.setFillColor(sf::Color::Red);
     pathfinder= std::make_unique<Pathfinder>(walls,wallSize, 2.0f,startPosition,startPosition,0.1f);
     pathfinder->setWorldSize(sf::Vector2f(16, 16));

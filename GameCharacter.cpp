@@ -13,7 +13,7 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int 
 {
 //___________________________________________DEFAULT PARAMETERS
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
-attack= std::make_shared<Attack>(size*1.5f,0.5f,40.f,0.5f);
+attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,0.5f);
 }
 
 void GameCharacter::setMovement(std::shared_ptr<Movement>& newMovement) {
@@ -33,8 +33,8 @@ target.draw(movement->getCollisions());
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
                            sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
 
-    sf::Vector2f collisionboxCenter(movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x,
-                                    movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y);
+    sf::Vector2f collisionboxCenter(movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x/2,
+                                    movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
 
     movement->update(window,dt,mainCharacterPos);
     attack->update(collisionboxCenter);

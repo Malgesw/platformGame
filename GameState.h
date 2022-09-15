@@ -20,6 +20,7 @@ public:
 
 private:
 
+    bool firstframe=true;
     std::unique_ptr<GameCharacter> player;
     sf::Vector2f mainCharacterPos;
     sf::Font font;

@@ -11,27 +11,17 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
 
     font.loadFromFile("../Fonts/PAPYRUS.ttf");
-
     isPaused = false;
-
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
 
-
-    player = std::make_unique<GameCharacter>(sf::Vector2f (100.f,100.f),sf::Vector2f (35,35),50,50);
-
+    player = std::make_unique<GameCharacter>(sf::Vector2f (50.f,50.f),sf::Vector2f (35,35),50,50);
 
     tileMap = std::make_unique<TileMap>(*player);
 
     player->getMovement()->addWalls(tileMap->getWalls());
     player->getAttack()->addTargets(tileMap->getTargets());
-
-
-
-
-
-
 
 }
 
@@ -62,11 +52,19 @@ void GameState::update(const float &dt) {
 
     }
     else{
-        tileMap->update(dt,*player,window);
-
-        updatePlayerPos();
-        player->update(dt,tileMap->getWalls(), window,mainCharacterPos);
-        player->getMovement()->setBarriers(tileMap->getWalls());
+        if(firstframe) {
+            firstframe=false;
+            tileMap->update(0, *player, window);
+            updatePlayerPos();
+            player->update(0, tileMap->getWalls(), window, mainCharacterPos);
+            player->getMovement()->setBarriers(tileMap->getWalls());
+        }
+        else{
+            tileMap->update(dt, *player, window);
+            updatePlayerPos();
+            player->update(dt, tileMap->getWalls(), window, mainCharacterPos);
+            player->getMovement()->setBarriers(tileMap->getWalls());
+        }
 
     }
 }
@@ -93,10 +91,12 @@ void GameState::updatePlayerPos() {
 
 void GameState::render(sf::RenderTarget &target) {
 
+
     tileMap->render(target);
     player->render(target);
 
-    
+
+
     if(isPaused)
         pauseMenu->render(target);
 
