@@ -27,51 +27,56 @@ void GameState::update(const float &dt) {
 
     updateMousePosition();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()) {
 
         pauseClock.restart();
 
-        if(!isPaused)
+        if (!isPaused)
             isPaused = true;
         else
             isPaused = false;
 
     }
 
-    if(isPaused){
+    if (isPaused) {
 
         pauseMenu->update(mousePos);
 
-        if(pauseMenu->isButtonPressed("CONTINUE"))
+        if (pauseMenu->isButtonPressed("CONTINUE"))
             isPaused = false;
 
-        if(pauseMenu->isButtonPressed("EXIT_MENU"))
+        if (pauseMenu->isButtonPressed("EXIT_MENU"))
             states->pop();
 
-    }
-    else{
-        if(firstframe) {
-            firstframe=false;
+    } else {
+        if (firstframe) {
+            firstframe = false;
             tileMap->update(0, *player, window);
             updatePlayerPos();
             player->update(0, tileMap->getWalls(), window, mainCharacterPos);
             player->getMovement()->setBarriers(tileMap->getWalls());
-        }
-        else{
+        } else {
             tileMap->update(dt, *player, window);
             updatePlayerPos();
             player->update(dt, tileMap->getWalls(), window, mainCharacterPos);
             player->getMovement()->setBarriers(tileMap->getWalls());
         }
 
+    }
 }
 
 void GameState::updatePlayerPos() {
 
     player->getMovement()->setVelocity(player->getMovement()->getVelocity().x * 0.5f, player->getMovement()->getVelocity().y);
 
-    if(player->getMovement()->onGround())
-        player->getMovement()->setSpriteType(IDLE_SPRITE);
+    if(player->getMovement()->onGround()) {
+        if (player->isFacingRight()) {
+            player->getMovement()->setSpriteType(IDLERIGHT);
+        }
+        else{
+            player->getMovement()->setSpriteType(IDLELEFT);
+        }
+    }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
         player->getMovement()->moveLeft();

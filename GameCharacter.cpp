@@ -9,12 +9,11 @@
 GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int healthPoints, int mana)
 :hp(healthPoints),energy(mana)
 {
-    texture.loadFromFile("../images/playerSprite.png");
-    texture.setSmooth(true);
 
 //___________________________________________DEFAULT PARAMETERS
+texture.loadFromFile("../images/playerSprite.png");
+texture.setSmooth(true);
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
-movement->getCollisions().setTexture(&texture);
 attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,0.5f);
 animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 3), 0.3f, startPosition, size);
 }
@@ -47,36 +46,44 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
     animation->getAnimationBox().setPosition(movement->getCollisions().getPosition() + animation->getPositionCorrection());
 
     int row;
-    bool jumpRight = true;
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
                               animation->getSprite().width, animation->getSprite().height);
 
     switch (movement->getSpriteType()) {
 
-        case IDLE_SPRITE:
+        case IDLELEFT:
             row = 0;
             animationRect.height -= 50.f;
             //animationRect.width += 20.f;
+            faceRight= false;
+            break;
+        case IDLERIGHT:
+            row = 0;
+            animationRect.height -= 50.f;
+            //animationRect.width += 20.f;
+            faceRight= true;
             break;
         case MOVELEFT:
             row = 1;
             animationRect.height -= 170.f;
             //animationRect.width += 200.f;
-            jumpRight = false;
+            faceRight = false;
             break;
         case MOVERIGHT:
             row = 1;
             animationRect.height -= 170.f;
             animationRect.width += 60.f;
+            faceRight= true;
             break;
         case JUMPRIGHT:
             row = 2;
             animationRect.height -= 60.f;
+            faceRight= true;
             break;
         case JUMPLEFT:
             row = 2;
             animationRect.height -= 60.f;
-            jumpRight = false;
+            faceRight = false;
             break;
         default:
             row = 0;
@@ -84,7 +91,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     }
 
-    animation->update(row, dt, jumpRight);
+    animation->update(row, dt, faceRight);
     animation->getAnimationBox().setTextureRect(animationRect);
 
 
@@ -123,4 +130,8 @@ const std::shared_ptr<Attack> &GameCharacter::getAttack() const {
 AttackTarget GameCharacter::generateTarget() {
 
     return AttackTarget(movement->getCollisions(),attack->getHitBox());
+}
+
+bool GameCharacter::isFacingRight() const {
+    return faceRight;
 }

@@ -34,7 +34,7 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::White);
 
-    typeOfSprite = IDLE_SPRITE;
+    typeOfSprite = IDLERIGHT;
 
 
 }

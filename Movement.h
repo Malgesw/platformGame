@@ -8,7 +8,7 @@
 
 #include "LevelTile.h"
 
-enum spriteType {IDLE_SPRITE, MOVERIGHT, MOVELEFT, JUMPRIGHT, JUMPLEFT};
+enum spriteType {IDLELEFT,IDLERIGHT, MOVERIGHT, MOVELEFT, JUMPRIGHT, JUMPLEFT};
 
 class Movement{
 

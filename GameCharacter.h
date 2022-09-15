@@ -26,9 +26,12 @@ public:
     AttackTarget generateTarget();
     const std::shared_ptr<Attack> &getAttack() const;
     void setAttack(std::shared_ptr<Attack> &attack);
+    bool isFacingRight() const;
 
 
 private:
+
+    bool faceRight=true;
 
     void die();
     int hp;

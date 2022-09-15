@@ -51,7 +51,7 @@ private:
     std::vector<std::shared_ptr<LevelTile>> doors;
     std::map<std::string ,std::shared_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
-    GameCharacter player;
+    GameCharacter& player;
     int heightTiles;
     int widthTiles;
     float dimX;
