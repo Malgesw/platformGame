@@ -1,5 +1,8 @@
 #include "GameState.h"
 #include "WalkingMovement.h"
+#include "FlyingMovement.h"
+#include "AutoWalking.h"
+#include "AutoFlying.h"
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                      std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
@@ -8,17 +11,16 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
 
     font.loadFromFile("../Fonts/PAPYRUS.ttf");
-
     isPaused = false;
-
     pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
-    tileMap = std::make_unique<TileMap>(window);
+    player = std::make_unique<GameCharacter>(sf::Vector2f (50.f,50.f),sf::Vector2f (35,35),50,50);
 
-    player = std::make_unique<GameCharacter>(sf::Vector2f (300.f,100.f),sf::Vector2f(30,60),tileMap->getWalls());
-    jumped = false;
+    tileMap = std::make_unique<TileMap>(*player);
 
+    player->getMovement()->addWalls(tileMap->getWalls());
+    player->getAttack()->addTargets(tileMap->getTargets());
 }
 
 void GameState::update(const float &dt) {
@@ -48,9 +50,19 @@ void GameState::update(const float &dt) {
 
     }
     else{
-        updatePlayerPos();
-        player->update(dt,tileMap->getWalls(), window);
-    }
+        if(firstframe) {
+            firstframe=false;
+            tileMap->update(0, *player, window);
+            updatePlayerPos();
+            player->update(0, tileMap->getWalls(), window, mainCharacterPos);
+            player->getMovement()->setBarriers(tileMap->getWalls());
+        }
+        else{
+            tileMap->update(dt, *player, window);
+            updatePlayerPos();
+            player->update(dt, tileMap->getWalls(), window, mainCharacterPos);
+            player->getMovement()->setBarriers(tileMap->getWalls());
+        }
 
 }
 
@@ -73,14 +85,17 @@ void GameState::updatePlayerPos() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
             player->getMovement()->setSpriteType(JUMPLEFT);
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){
 
+        player->getAttack()->hit();
+    }
 }
 
 void GameState::render(sf::RenderTarget &target) {
-    tileMap->renderMap(target);
+
+    tileMap->render(target);
     player->render(target);
 
-    
     if(isPaused)
         pauseMenu->render(target);
 

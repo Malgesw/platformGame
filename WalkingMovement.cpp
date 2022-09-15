@@ -4,8 +4,8 @@
 
 #include "WalkingMovement.h"
 
-WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls,float height)
-: Movement(velocity,startPosition,size,'W',walls),jumpHeight(height){
+WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height)
+: Movement(velocity,startPosition,size,'W'),jumpHeight(height){
 
 
 }

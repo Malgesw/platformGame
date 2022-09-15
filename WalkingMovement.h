@@ -10,7 +10,7 @@
 class WalkingMovement : public Movement{
 
 public:
-    WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls,float height);
+    WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height);
     void moveUp() override;
     void moveDown() override;
     float getJumpHeight() const;

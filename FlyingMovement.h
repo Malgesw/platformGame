@@ -10,7 +10,7 @@
 class FlyingMovement : public Movement{
 
 public:
-    FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls);
+    FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size);
     void moveUp() override;
     void moveDown() override;
 };
