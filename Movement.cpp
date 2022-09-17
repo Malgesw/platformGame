@@ -24,9 +24,10 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 }
 
 
-void Movement::checkCollisions() {
+bool Movement::checkCollisions() {
 
     float lateralTolerance=speed*dt*5;
+    bool collided;
 
 
 
@@ -37,6 +38,7 @@ void Movement::checkCollisions() {
         sf::FloatRect nextPlayerPos = playerBounds;
         nextPlayerPos.left += velocity.x * dt;
         nextPlayerPos.top += velocity.y * dt;
+
         
 
 
@@ -81,11 +83,14 @@ void Movement::checkCollisions() {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
             }
-
+            //t
+            collided= true;
         }
+        else
+            collided = false;
 
     }
-
+     return collided;
     }
 
 
@@ -132,6 +137,10 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
 
     if(collisionBox.getGlobalBounds().top < 0.f)
         collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
+}
+
+bool Movement::getisOnGround() const {
+    return isOnGround;
 }
 
 

@@ -19,7 +19,7 @@ public:
     virtual void moveUp()=0;
     virtual void moveDown()=0;
 
-    virtual void checkCollisions();
+    virtual bool checkCollisions();
 
     void setVelocity(float x, float y);
     void update(sf::RenderWindow *window, float deltaTime);
@@ -37,6 +37,8 @@ protected:
     sf::RectangleShape collisionBox;
     const std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
+public:
+    bool getisOnGround() const;
 };
 
 
