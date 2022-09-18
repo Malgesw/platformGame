@@ -24,8 +24,8 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
         autoMovement2 = std::make_shared<AutoFlying>(
                 AutoFlying(7, sf::Vector2f(10 * dimX, 13 * dimY), sf::Vector2f(50, 37.5), walls,
                            sf::Vector2f(dimX, dimY)));
-        autoAttack= std::make_shared<AutoAttack>( sf::Vector2f(35,35),1.f,5.f,0.5f);
-        autoAttack2= std::make_shared<AutoAttack>( sf::Vector2f(50,37.5),1.f,5.f,0.5f);
+        autoAttack= std::make_shared<AutoAttack>( sf::Vector2f(35,35),1.f,5.f,40.f);
+        autoAttack2= std::make_shared<AutoAttack>( sf::Vector2f(50,37.5),1.f,5.f,40.f);
 
 
 

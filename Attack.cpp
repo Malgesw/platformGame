@@ -7,7 +7,7 @@
 #include <utility>
 
 Attack::Attack(sf::Vector2f size, float speed, float hitDamage, float knockback):
-attackSpeed(speed),damage(hitDamage),knockbackMultiplier(knockback) {
+        attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback) {
 
 hitBox=sf::RectangleShape(size);
 hitBox.setFillColor(sf::Color::Blue);
@@ -25,9 +25,11 @@ void Attack::hit() {
         for (auto &t: targets) {
             if (hitBox.getGlobalBounds().intersects(t.getHitbox().getGlobalBounds())) {
 
-                //std::cout<<cooldown.getElapsedTime().asSeconds()<<std::endl;
-                sf::Vector2f knockback((t.getHitbox().getPosition()-hitBox.getPosition())*knockbackMultiplier);
-                t.getCollisionbox().move(knockback);
+                sf::Vector2f knockbackDirection;
+                knockbackDirection.x=(t.getHitbox().getPosition().x-hitBox.getPosition().x)/std::abs(t.getHitbox().getPosition().x-hitBox.getPosition().x);
+                knockbackDirection.y=(t.getHitbox().getPosition().y-hitBox.getPosition().y)/std::abs(t.getHitbox().getPosition().y-hitBox.getPosition().y);
+
+                t.receiveDamage(knockbackDirection * knockbackDistance, 1);
 
             }
         }
