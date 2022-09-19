@@ -6,6 +6,7 @@
 #define PLATFORMGAME_GAMECHARACTER_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <utility>
 #include "Movement.h"
 #include "Attack.h"
 #include "AttackTarget.h"
