@@ -10,16 +10,17 @@
 class AttackTarget {
 public:
 
-    AttackTarget(sf::RectangleShape& newCollisionbox,sf::RectangleShape& newHitbox);
-     sf::RectangleShape &getCollisionbox() const;
-     sf::RectangleShape &getHitbox() const;
+    AttackTarget(sf::RectangleShape& newCollisionbox,sf::RectangleShape& newHitbox,sf::Vector2f& newKnockback, int& newHp);
+    sf::RectangleShape &getHitbox() const;
+    sf::RectangleShape &getCollisionbox() const;
+    void receiveDamage(sf::Vector2f newKnockback,int lifeRemoved) const;
+
 
 private:
-
-      sf::RectangleShape& collisionbox;
       sf::RectangleShape& hitbox;
-
-
+      sf::RectangleShape& collisionbox;
+      sf::Vector2f &knockback;
+      int &hp;
 
 };
 

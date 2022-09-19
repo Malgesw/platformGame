@@ -27,7 +27,7 @@ protected:
     sf::Clock cooldown;
     float attackSpeed;
     float damage;
-    float knockbackMultiplier;
+    float knockbackDistance;
     sf::RectangleShape hitBox;
     std::vector<AttackTarget> targets;
 };

@@ -14,7 +14,7 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int 
 texture.loadFromFile("../images/playerSprite.png");
 texture.setSmooth(true);
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
-attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,0.5f);
+attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,55.f);
 animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 3), 0.3f, startPosition, size);
 }
 
@@ -129,7 +129,7 @@ const std::shared_ptr<Attack> &GameCharacter::getAttack() const {
 
 AttackTarget GameCharacter::generateTarget() {
 
-    return AttackTarget(movement->getCollisions(),attack->getHitBox());
+    return AttackTarget(movement->getCollisions(),attack->getHitBox(),movement->getKnockback(),hp);
 }
 
 bool GameCharacter::isFacingRight() const {

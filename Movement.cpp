@@ -33,10 +33,8 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::White);
-
     typeOfSprite = IDLERIGHT;
-
-
+    knockback=sf::Vector2f (0,0);
 }
 
 
@@ -119,14 +117,14 @@ sf::RectangleShape& Movement::getCollisions() {
 
 void Movement::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
 
-    dt=deltaTime;
 
+    dt=deltaTime;
+    applyKnockback();
     if(collisionBox.getPosition().y + collisionBox.getSize().y < (float)(*window).getSize().y and typeOfMovement=='W')
 
         velocity.y+=981.f*dt;
 
     checkCollisions();
-
     collisionBox.move(0,velocity.y*dt);
 
     //MAP COLLISIONS
@@ -173,6 +171,17 @@ void Movement::addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls)
 void Movement::clearWalls() {
 
         barriers.clear();
+}
+
+void Movement::applyKnockback() {
+
+    collisionBox.move(knockback*dt*20.f);
+    knockback=knockback-knockback*dt*20.f;
+
+}
+
+sf::Vector2f &Movement::getKnockback() {
+    return knockback;
 }
 
 
