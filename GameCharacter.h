@@ -27,6 +27,10 @@ public:
     const std::shared_ptr<Attack> &getAttack() const;
     void setAttack(std::shared_ptr<Attack> &attack);
     bool isFacingRight() const;
+    sf::Vector2f getCenter(){
+        return {movement->getPosition().x+movement->getCollisions().getGlobalBounds().width/2.f,
+                movement->getPosition().y+ movement->getCollisions().getGlobalBounds().height/2.f};
+    }
 
 
 private:

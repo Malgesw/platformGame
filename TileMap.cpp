@@ -28,6 +28,30 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
         player.getMovement()->getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
     }
 
+    //____________________VIEW COLLISIONS
+
+    rooms[currentRoom]->setCameraCenter(player.getCenter().x, player.getCenter().y);
+
+
+    //_____RIGHT
+    if(rooms[currentRoom]->getCamera().getSize().x/2.f >= 16*rooms[currentRoom]->getDimX() - player.getCenter().x)
+        rooms[currentRoom]->setCameraCenter(16*rooms[currentRoom]->getDimX() - rooms[currentRoom]->getCamera().getSize().x/2.f,
+                                            rooms[currentRoom]->getCamera().getCenter().y);
+
+    //_____LEFT
+    if(rooms[currentRoom]->getCamera().getSize().x/2.f >= player.getCenter().x)
+        rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getSize().x/2.f,
+                                            rooms[currentRoom]->getCamera().getCenter().y);
+
+    //_____BOTTOM
+    if(rooms[currentRoom]->getCamera().getSize().y/2.f >= 16*rooms[currentRoom]->getDimY() - player.getCenter().y)
+        rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getCenter().x,
+                                            16*rooms[currentRoom]->getDimY() - rooms[currentRoom]->getCamera().getSize().y/2.f);
+
+    //_____TOP
+    if(rooms[currentRoom]->getCamera().getSize().y/2.f >= player.getCenter().y)
+        rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getCenter().x,
+                                            rooms[currentRoom]->getCamera().getSize().y/2.f);
 
 }
 

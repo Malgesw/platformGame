@@ -6,6 +6,9 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
     dimX = 800.f/widthTiles;
     dimY = 600.f/heightTiles;
     initFloor(roomName);
+    camera.setSize(400.f, 300.f);
+    camera.setCenter(player.getMovement()->getPosition().x+player.getMovement()->getCollisions().getGlobalBounds().width/2.f,
+                     player.getMovement()->getPosition().y+player.getMovement()->getCollisions().getGlobalBounds().height/2.f);
 
 
     if(roomName=="room1.ini") {
@@ -97,6 +100,8 @@ void Room::render(sf::RenderTarget &target) {
     for(auto &e : enemies){
         e.second->render(target);
     }
+
+    target.setView(camera);
 }
 
 void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window) {

@@ -41,6 +41,13 @@ public:
     }
 
     std::vector<AttackTarget> getTargets();
+    sf::View &getCamera(){
+        return camera;
+    }
+
+    void setCameraCenter(float x, float y){
+        camera.setCenter(x, y);
+    }
 
 private:
 
@@ -56,7 +63,7 @@ private:
     int widthTiles;
     float dimX;
     float dimY;
-
+    sf::View camera;
 
 
     void initFloor(const std::string& roomName);
