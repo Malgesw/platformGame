@@ -6,16 +6,20 @@
 
 
 
-FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls) : Movement(velocity,
-                                                                                                         startPosition,
-                                                                                                         size,'F',walls) {
+FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size) : Movement(velocity,startPosition,size,'F') {
 
 }
 
 void FlyingMovement::moveUp() {
-collisionBox.move(0,speed*dt*-1.f);
+    velocity.y=velocity.y-speed;
+    if (velocity.y<=-10*speed)
+        velocity.y=-10*speed;
+    collisionBox.move(0.f,velocity.y*dt);
 }
 
 void FlyingMovement::moveDown() {
-    collisionBox.move(0,speed*dt);
+    velocity.y=velocity.y+speed;
+    if (velocity.y>=10*speed)
+        velocity.y=10*speed;
+    collisionBox.move(0.f,velocity.y*dt);
 }

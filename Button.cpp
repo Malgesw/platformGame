@@ -2,7 +2,7 @@
 
 
 Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, const std::string& textString, sf::Font &textFont,
-               int textSize, sf::Color hoverColor, sf::Color pressedColor, sf::Color textColor) :
+               int textSize, sf::Color hoverColor, sf::Color pressedColor, char type, sf::Color textColor) :
                idleColor(idleColor), hoverColor(hoverColor), pressedColor(pressedColor) {
 
     button.setSize(size);
@@ -13,10 +13,16 @@ Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, co
     text.setFont(textFont);
     text.setFillColor(textColor);
     text.setCharacterSize(textSize);
-    text.setPosition(button.getGlobalBounds().left + button.getGlobalBounds().width/3.f,
-                     button.getGlobalBounds().top + button.getGlobalBounds().height/3.f);
+    text.setPosition(button.getGlobalBounds().left + button.getGlobalBounds().width/2.f - text.getGlobalBounds().width/2.f,
+                     button.getGlobalBounds().top + button.getGlobalBounds().height/2.f - text.getGlobalBounds().height/2.f);
 
     buttonState = IDLE;
+
+    if(type == 'B') {
+        texture.loadFromFile("../images/text box.png");
+        button.setTexture(&texture);
+        button.setTextureRect(sf::IntRect(500.f, 500.f, 2366.f, 799.f));
+    }
 
 }
 

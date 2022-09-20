@@ -71,7 +71,15 @@ void Game::run() {
 
 void Game::initWindow() {
 
-    window = new sf::RenderWindow(sf::VideoMode(800, 600), "Platform");
+    window = new sf::RenderWindow(sf::VideoMode(800, 600), "Steamrush");
+
+    std::ifstream ifs;
+    ifs.open("../Config/window_settings.ini");
+    std::string w,h;
+    while(ifs >> w >> h){
+        window->setSize(sf::Vector2u(std::stoi(w), std::stoi(h)));
+    }
+    ifs.close();
     window->setFramerateLimit(120);
 
 }

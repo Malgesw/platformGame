@@ -8,8 +8,8 @@ class TextField {
 public:
 
     TextField(sf::Vector2f size, sf::Vector2f position, int textSize, sf::Vector2f textPosition, const std::string& description,
-              sf::Vector2f descrPosition, sf::Font *font, sf::Color color, sf::Color textColor = sf::Color::Black,
-              sf::Color descrColor = sf::Color::Black);
+              sf::Vector2f descrPosition, sf::Font *font, sf::Color color, sf::Color textColor = sf::Color::White,
+              sf::Color descrColor = sf::Color::White);
 
     ~TextField() = default;
 

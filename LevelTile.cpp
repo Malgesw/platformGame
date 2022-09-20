@@ -1,26 +1,24 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #include "LevelTile.h"
 
 
-bool LevelTile::setupSprite(unsigned short tile) {
+bool LevelTile::setupSprite(char tile) {
 
     std::string textureName;
 
     switch(tile){
 
-        case TILES::DOOR:
+        case '2':
             textureName = "../images/door.png";
-            isExit = true;
+            exit = true;
+            tileType = DOOR;
             break;
-        case TILES::GROUND:
+        case '0':
             textureName = "../images/Ground.jpg";
+            tileType = GROUND;
             break;
-        case TILES::WALL:
+        case '1':
             textureName = "../images/wall.png";
-            isViable = false;
+            tileType = WALL;
             break;
         default:
             textureName = "";
@@ -39,11 +37,11 @@ bool LevelTile::setupSprite(unsigned short tile) {
 
 }
 
-LevelTile::LevelTile(unsigned short tile , float x, float y, sf::Vector2f size) {
+LevelTile::LevelTile(char tile , float x, float y, sf::Vector2f size) {
 
     body.setSize(size);
-    isViable = true;
-    isExit = false;
+    exit = false;
+    tileType = GROUND;
 
     if(!setupSprite(tile)){
         std::cout << "Sprite not loaded" << std::endl;
@@ -63,6 +61,6 @@ void LevelTile::render(sf::RenderTarget &target) {
     return body.getGlobalBounds();
 }
 
-bool LevelTile::getViable() const {
-    return isViable;
+bool LevelTile::isExit() const {
+    return exit;
 }

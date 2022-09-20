@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "Button.h"
 #include "TextField.h"
+#include "DropDownList.h"
 #include "headers.h"
 
 class SettingsState : public State {
@@ -26,11 +27,14 @@ private:
 
     std::map<std::string, std::unique_ptr<Button>> buttons;
     std::map<std::string, std::unique_ptr<TextField>> textFields;
+    std::unique_ptr<DropDownList> dropDownList;
     sf::Font font;
     sf::RectangleShape background;
+    sf::Texture bgTexture;
 
     void initButtons();
     void initTextFields();
+    void initDropDownList();
     void initKeys() override;
 
 

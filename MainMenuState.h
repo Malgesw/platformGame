@@ -24,6 +24,8 @@ private:
     std::map<std::string, std::unique_ptr<Button>> buttons;
     sf::Font font;
     sf::RectangleShape background;
+    sf::Texture bgTexture;
+    sf::Text title;
 
     void initButtons();
     void initKeys() override;
