@@ -103,7 +103,7 @@ sf::Vector2f Movement::getVelocity() const{
     return velocity;
 }
 
-sf::RectangleShape Movement::getCollisions() const {
+sf::RectangleShape &Movement::getCollisions() {
     return collisionBox;
 }
 
@@ -142,6 +142,7 @@ void Movement::update( sf::RenderWindow *window, float deltaTime) {
 bool Movement::getisOnGround() const {
     return isOnGround;
 }
+
 
 
 

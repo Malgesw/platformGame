@@ -24,7 +24,7 @@ public:
     void setVelocity(float x, float y);
     void update(sf::RenderWindow *window, float deltaTime);
     sf::Vector2f getVelocity() const;
-    sf::RectangleShape getCollisions() const;
+    sf::RectangleShape &getCollisions();
 
 
 
@@ -35,6 +35,8 @@ protected:
     float dt;
     sf::Vector2f velocity;
     sf::RectangleShape collisionBox;
+
+protected:
     const std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
 public:
