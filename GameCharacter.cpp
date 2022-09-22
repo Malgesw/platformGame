@@ -11,7 +11,10 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int 
 {
 
 //___________________________________________DEFAULT PARAMETERS
-texture.loadFromFile("../images/playerSprite.png");
+if(healthPoints == 30)
+    texture.loadFromFile("../images/flyingenemy2.png");
+else
+    texture.loadFromFile("../images/playerSprite.png");
 texture.setSmooth(true);
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
 attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,55.f);
@@ -134,4 +137,12 @@ AttackTarget GameCharacter::generateTarget() {
 
 bool GameCharacter::isFacingRight() const {
     return faceRight;
+}
+
+const std::unique_ptr<Animation> &GameCharacter::getAnimation() const {
+    return animation;
+}
+
+void GameCharacter::setAnimation(std::unique_ptr<Animation> &anim) {
+    animation = std::move(anim);
 }

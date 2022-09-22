@@ -44,6 +44,12 @@ private:
     std::shared_ptr<Movement> movement;
     std::shared_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
+public:
+    const std::unique_ptr<Animation> &getAnimation() const;
+
+    void setAnimation(std::unique_ptr<Animation> &animation);
+
+private:
     sf::Texture texture;
 
 

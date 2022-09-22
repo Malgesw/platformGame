@@ -29,7 +29,6 @@ private:
     float pauseTime;
     sf::Clock pauseClock;
     std::unique_ptr<TileMap> tileMap;
-    bool jumped;
 
     void initKeys() override;
 

@@ -5,19 +5,19 @@
 #include "AutoFlying.h"
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
-                     std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
+                     std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys){
 
     initKeys();
 
 
     font.loadFromFile("../Fonts/PAPYRUS.ttf");
     isPaused = false;
-    pauseMenu = std::make_unique<PauseMenu>(window, font);
     pauseTime = 0.5f;
     pauseClock.restart();
     player = std::make_unique<GameCharacter>(sf::Vector2f (50.f,50.f),sf::Vector2f (35,35),50,50);
 
     tileMap = std::make_unique<TileMap>(*player);
+    pauseMenu = std::make_unique<PauseMenu>(window, font);
 
     player->getMovement()->addWalls(tileMap->getWalls());
     player->getAttack()->addTargets(tileMap->getTargets());
@@ -41,6 +41,10 @@ void GameState::update(const float &dt) {
     if (isPaused) {
 
         pauseMenu->update(mousePos);
+        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x+90.f,
+                                                       tileMap->getRoom()->getCamera().getCenter().y-120.f));
+        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x+90.f,
+                                                        tileMap->getRoom()->getCamera().getCenter().y-60.f));
 
         if (pauseMenu->isButtonPressed("CONTINUE"))
             isPaused = false;

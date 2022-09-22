@@ -26,6 +26,7 @@ private:
     sf::RectangleShape background;
     sf::Texture bgTexture;
     sf::Text title;
+    sf::View view;
 
     void initButtons();
     void initKeys() override;

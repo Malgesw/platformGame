@@ -12,8 +12,10 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
 
 
     if(roomName=="room1.ini") {
+        sf::Texture enemyTexture;
+        enemyTexture.loadFromFile("../images/flyingenemy2.png");
         auto enemy = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 50, 50);
-        auto enemy2 = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 50, 50);
+        auto enemy2 = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 30, 50);
         std::string enemyName("enemy1");
         std::string enemyName2("enemy2");
         addEnemy(enemy, enemyName);
