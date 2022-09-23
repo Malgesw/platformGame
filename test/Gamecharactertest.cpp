@@ -13,11 +13,11 @@ public:
     Gamecharactertest(){
         tile=std::make_shared<LevelTile>('1',0.f,0.f, sf::Vector2f(50.f,50.f));
         walls.push_back(tile);
-        player= std::make_unique<GameCharacter>(sf::Vector2f(0.f,50.f), sf::Vector2f(50.f,50.f), walls);
+        player= std::make_unique<GameCharacter>(sf::Vector2f(0.f,50.f), sf::Vector2f(50.f,50.f),50, 50);
 
     }
 };
 TEST_F(Gamecharactertest, playeronground){
     player->getMovement()->getCollisions().setPosition(0.f,50.f);
-    EXPECT_TRUE(player->getMovement()->getisOnGround());
+    EXPECT_TRUE(player->getMovement()->onGround());
 }
