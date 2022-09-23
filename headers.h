@@ -5,6 +5,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
+#include <list>
 #include <map>
 #include <stack>
 #include <memory>

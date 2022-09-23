@@ -1,17 +1,17 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture &texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size) :
+Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size) :
 imageCount(imageCount), switchTime(switchTime), texture(texture) {
 
     totalTime = 0.f;
     currentImage.x = 0;
 
-    sprite.width = texture.getSize().x / (float)imageCount.x;
-    sprite.height = texture.getSize().y / (float)imageCount.y;
+    sprite.width = texture->getSize().x / (float)imageCount.x;
+    sprite.height = texture->getSize().y / (float)imageCount.y;
 
     animationBox.setSize(sf::Vector2f(size.x * 1.8f, size.y * 1.2f));
     animationBox.setPosition(position);
-    animationBox.setTexture(&texture);
+    animationBox.setTexture(texture);
 
     positionCorrection.x = -10.f;
     positionCorrection.y = -6.f;

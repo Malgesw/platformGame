@@ -175,8 +175,8 @@ void Movement::clearWalls() {
 
 void Movement::applyKnockback() {
 
-    collisionBox.move(knockback*dt*20.f);
-    knockback=knockback-knockback*dt*20.f;
+    collisionBox.move(knockback*dt*10.f);
+    knockback=knockback-knockback*dt*10.f;
 
 }
 

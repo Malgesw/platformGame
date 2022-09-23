@@ -10,7 +10,7 @@ AutoAttack::AutoAttack(sf::Vector2f size, float speed, float hitDamage, float kn
 }
 
 void AutoAttack::update(sf::Vector2f centerPosition) {
-    if (hitBox.getGlobalBounds().intersects(targets.front().getCollisionbox().getGlobalBounds())){
+    if (hitBox.getGlobalBounds().intersects(targets.front().getCollisionbox()->getGlobalBounds())){
         hit();
     }
     Attack::update(centerPosition);

@@ -15,18 +15,20 @@
 class GameCharacter {
 
 public:
-    GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int healthPoints, int mana);
-    void setMovement(std::shared_ptr<Movement>& newMovement);
+    GameCharacter(int healthPoints, int mana);
+    void setMovement(std::unique_ptr<Movement> newMovement);
+    void setAnimation(std::unique_ptr<Animation> animation);
+    void setAttack(std::unique_ptr<Attack> attack);
     void render(sf::RenderTarget &target);
     void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,sf::RenderWindow* window, sf::Vector2f mainCharacterPos);
-    std::shared_ptr<Movement> getMovement() const;
+    Movement& getMovement();
+    Attack& getAttack();
     int getHp() const;
     void setHp(int hp);
     int getEnergy() const;
     void setEnergy(int energy);
     AttackTarget generateTarget();
-    const std::shared_ptr<Attack> &getAttack() const;
-    void setAttack(std::shared_ptr<Attack> &attack);
+
     bool isFacingRight() const;
     sf::Vector2f getCenter(){
         return {movement->getPosition().x+movement->getCollisions().getGlobalBounds().width/2.f,
@@ -37,14 +39,12 @@ public:
 private:
 
     bool faceRight=true;
-
     void die();
     int hp;
     int energy;
-    std::shared_ptr<Movement> movement;
-    std::shared_ptr<Attack> attack;
+    std::unique_ptr<Movement> movement;
+    std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
-    sf::Texture texture;
 
 
 };

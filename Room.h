@@ -16,13 +16,13 @@ class Room {
 public:
 
 
-    Room(const std::string& roomName,GameCharacter &mainCharachter);
+    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures);
     void render(sf::RenderTarget &target);
     void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
 
 
-    void addEnemy(std::shared_ptr<GameCharacter>& enemy, std::string& id);
-    void removeEnemy(std::string& id);
+    void addEnemy(std::unique_ptr<GameCharacter>& enemy);
+
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return walls;
@@ -51,12 +51,12 @@ public:
 
 private:
 
-
+    enum enemyType{flying=0, walking=1};
     std::map< std:: string, std::unique_ptr<Item>> items;
     std::vector<std::vector<std::shared_ptr<LevelTile>>> tiles;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::vector<std::shared_ptr<LevelTile>> doors;
-    std::map<std::string ,std::shared_ptr<GameCharacter>> enemies;
+    std::list<std::unique_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
     GameCharacter& player;
     int heightTiles;

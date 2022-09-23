@@ -6,12 +6,14 @@
 
 TileMap::TileMap(GameCharacter& player) {
 
+    enum enemy{flying=0,walking=1};
+    textures.push_back(new sf::Texture);
+    textures[flying]->loadFromFile("../images/flyingenemy2.png");
 
     addRoom("room1.ini",player);
     addRoom("room2.ini",player);
     addRoom("room3.ini",player);
     currentRoom = 0;
-
 }
 
 void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *window) {
@@ -22,10 +24,10 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
     std::vector<std::shared_ptr<LevelTile>> doors = rooms[currentRoom]->getDoors();
 
     if(currentRoom < room){
-        player.getMovement()->getCollisions().setPosition(doors[doors.size()-1]->getPosition().x - rooms[currentRoom]->getDimX(), doors[doors.size()-1]->getPosition().y);
+        player.getMovement().getCollisions().setPosition(doors[doors.size()-1]->getPosition().x - rooms[currentRoom]->getDimX(), doors[doors.size()-1]->getPosition().y);
     }
     else if(currentRoom > room && currentRoom < 3){
-        player.getMovement()->getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
+        player.getMovement().getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
     }
 
     //____________________VIEW COLLISIONS
@@ -63,5 +65,11 @@ void TileMap::render(sf::RenderTarget &target) {
 
 void TileMap::addRoom(const std::string& roomName, GameCharacter &player) {
 
-    rooms.push_back(std::make_unique<Room>(roomName,player));
+    rooms.push_back(std::make_unique<Room>(roomName,player,textures));
+}
+
+TileMap::~TileMap() {
+for (auto& t: textures){
+    delete t;
+}
 }

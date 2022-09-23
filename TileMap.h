@@ -15,7 +15,8 @@ class TileMap {
 
 public:
 
-    explicit TileMap(GameCharacter &player);
+    TileMap(GameCharacter &player);
+    ~TileMap();
     void render(sf::RenderTarget &target);
 
     void update(const float &dt,GameCharacter &player, sf::RenderWindow *window);
@@ -38,6 +39,7 @@ public:
     }
 
 private:
+    std::vector<sf::Texture*> textures;
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
 

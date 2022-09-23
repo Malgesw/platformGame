@@ -7,7 +7,7 @@ class Animation {
 
 public:
 
-    Animation(sf::Texture &texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size);
+    Animation( sf::Texture* texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size);
     ~Animation() = default;
 
     void update(int row, const float &dt, bool jumpRight);
@@ -39,7 +39,7 @@ private:
     float totalTime;
     float switchTime;
 
-    sf::Texture texture;
+    sf::Texture* texture;
     sf::RectangleShape animationBox;
 
     sf::Vector2f positionCorrection;

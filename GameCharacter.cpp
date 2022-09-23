@@ -6,37 +6,39 @@
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"
 
-GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int healthPoints, int mana)
+GameCharacter::GameCharacter(int healthPoints, int mana)
 :hp(healthPoints),energy(mana)
 {
 
 //___________________________________________DEFAULT PARAMETERS
-texture.loadFromFile("../images/playerSprite.png");
-texture.setSmooth(true);
-movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
-attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,55.f);
-animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 3), 0.3f, startPosition, size);
+}
+
+void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
+    movement = std::move(newMovement);
 }
 
 
-void GameCharacter::setMovement(std::shared_ptr<Movement>& newMovement) {
-    movement = newMovement;
+void GameCharacter::setAttack( std::unique_ptr<Attack> newAttack) {
+    attack = std::move(newAttack);
 }
 
-
-void GameCharacter::setAttack( std::shared_ptr<Attack> &newAttack) {
-    attack = newAttack;
+void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
+    animation = std::move(newAnimation);
 }
+
 
 void GameCharacter::render(sf::RenderTarget &target) {
 
-//target.draw(movement->getCollisions());
 animation->render(target);
 
 }
 
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
                            sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
+
+    if(movement == nullptr or attack == nullptr or animation == nullptr){
+        throw std::runtime_error("character's components not valid");
+    }
 
     sf::Vector2f collisionboxCenter(movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x/2,
                                     movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
@@ -98,8 +100,12 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
 }
 
-std::shared_ptr<Movement> GameCharacter::getMovement() const {
-    return movement;
+Movement& GameCharacter::getMovement(){
+    return *movement;
+}
+
+Attack& GameCharacter::getAttack(){
+    return *attack;
 }
 
 void GameCharacter::die() {
@@ -122,16 +128,14 @@ void GameCharacter::setEnergy(int mana) {
     GameCharacter::energy = mana;
 }
 
-const std::shared_ptr<Attack> &GameCharacter::getAttack() const {
-    return attack;
-}
 
 
 AttackTarget GameCharacter::generateTarget() {
 
-    return AttackTarget(movement->getCollisions(),attack->getHitBox(),movement->getKnockback(),hp);
+    return AttackTarget(&movement->getCollisions(),&attack->getHitBox(),&movement->getKnockback(),&hp);
 }
 
 bool GameCharacter::isFacingRight() const {
     return faceRight;
 }
+

@@ -29,7 +29,7 @@ protected:
     float damage;
     float knockbackDistance;
     sf::RectangleShape hitBox;
-    std::vector<AttackTarget> targets;
+    std::list<AttackTarget> targets;
 };
 
 
