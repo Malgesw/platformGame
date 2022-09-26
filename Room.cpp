@@ -12,8 +12,8 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
 
 
     if(roomName=="room1.ini") {
-        auto enemy = std::make_unique<GameCharacter>(3, 50);
-        auto enemy2 = std::make_unique<GameCharacter>(3, 50);
+        auto enemy = std::make_unique<GameCharacter>(10, 50);
+        auto enemy2 = std::make_unique<GameCharacter>(15, 50);
 
         std::unique_ptr<Movement> autoMovement = std::make_unique<AutoWalking>(
                 AutoWalking(10, sf::Vector2f(10*dimX, 6 * dimY), sf::Vector2f(35, 35), walls, 50, 4));

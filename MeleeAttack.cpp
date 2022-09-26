@@ -22,7 +22,7 @@ void MeleeAttack::hit() {
             auto currentTarget=*i;
             bool enemyCancelled=false;
 
-            if (hitBox.getGlobalBounds().intersects(currentTarget.getHitbox().getGlobalBounds())) {
+            if (hitBox.getGlobalBounds().intersects(currentTarget.getCollisionbox().getGlobalBounds())) {
 
 
                 sf::Vector2f knockbackDirection;

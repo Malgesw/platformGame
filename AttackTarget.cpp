@@ -5,7 +5,11 @@
 #include "AttackTarget.h"
 
 AttackTarget::AttackTarget(sf::RectangleShape* newCollisionbox,sf::RectangleShape* newHitbox,sf::Vector2f *newKnockback,int *newhp):
-collisionbox(newCollisionbox),hitbox(newHitbox),knockback(newKnockback),hp(newhp) {}
+collisionbox(newCollisionbox),hitbox(newHitbox),knockback(newKnockback),hp(newhp) {
+    if(collisionbox== nullptr or hitbox== nullptr or knockback== nullptr or hp== nullptr){
+        throw std::runtime_error("target not valid");
+    }
+}
 
 const sf::RectangleShape& AttackTarget::getCollisionbox() const {
     return *collisionbox;

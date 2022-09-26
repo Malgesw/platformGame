@@ -43,11 +43,12 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
         throw std::runtime_error("character's components not valid");
     }
 
-    sf::Vector2f collisionboxCenter(movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x/2,
+
+    sf::Vector2f hitboxCenter(isFacingRight()?movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x:movement->getPosition().x,
                                     movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
 
     movement->update(window,dt,mainCharacterPos);
-    attack->update(collisionboxCenter);
+    attack->update(hitboxCenter);
     animation->getAnimationBox().setPosition(movement->getCollisions().getPosition() + animation->getPositionCorrection());
 
     int row;
