@@ -12,13 +12,13 @@ GameCharacter::GameCharacter(sf::Vector2f startPosition, sf::Vector2f size, int 
 
 //___________________________________________DEFAULT PARAMETERS
 if(healthPoints == 30)
-    texture.loadFromFile("../images/flyingenemy2.png");
+    texture.loadFromFile("../images/enemysheet.png");
 else
-    texture.loadFromFile("../images/playerSprite.png");
+    texture.loadFromFile("../images/playersheet.png");
 texture.setSmooth(true);
 movement= std::make_shared<WalkingMovement>(80,startPosition,size,200);
 attack= std::make_shared<Attack>(size*2.5f,0.5f,40.f,55.f);
-animation = std::make_unique<Animation>(texture, sf::Vector2u(5, 3), 0.3f, startPosition, size);
+animation = std::make_unique<Animation>(texture, sf::Vector2i(5, 3), 0.3f, startPosition, size);
 }
 
 
@@ -46,58 +46,14 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     movement->update(window,dt,mainCharacterPos);
     attack->update(collisionboxCenter);
-    animation->getAnimationBox().setPosition(movement->getCollisions().getPosition() + animation->getPositionCorrection());
+    animation->getAnimationBox().setPosition(movement->getCollisions().getPosition().x-movement->getCollisions().getSize().x/4.f,
+                                             movement->getCollisions().getPosition().y-movement->getCollisions().getSize().y/4.f);
 
-    int row;
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
                               animation->getSprite().width, animation->getSprite().height);
 
-    switch (movement->getSpriteType()) {
-
-        case IDLELEFT:
-            row = 0;
-            animationRect.height -= 50.f;
-            //animationRect.width += 20.f;
-            faceRight= false;
-            break;
-        case IDLERIGHT:
-            row = 0;
-            animationRect.height -= 50.f;
-            //animationRect.width += 20.f;
-            faceRight= true;
-            break;
-        case MOVELEFT:
-            row = 1;
-            animationRect.height -= 170.f;
-            //animationRect.width += 200.f;
-            faceRight = false;
-            break;
-        case MOVERIGHT:
-            row = 1;
-            animationRect.height -= 170.f;
-            animationRect.width += 60.f;
-            faceRight= true;
-            break;
-        case JUMPRIGHT:
-            row = 2;
-            animationRect.height -= 60.f;
-            faceRight= true;
-            break;
-        case JUMPLEFT:
-            row = 2;
-            animationRect.height -= 60.f;
-            faceRight = false;
-            break;
-        default:
-            row = 0;
-            break;
-
-    }
-
-    animation->update(row, dt, faceRight);
+    animation->update(*movement, dt);
     animation->getAnimationBox().setTextureRect(animationRect);
-
-
 
 }
 
@@ -136,7 +92,7 @@ AttackTarget GameCharacter::generateTarget() {
 }
 
 bool GameCharacter::isFacingRight() const {
-    return faceRight;
+    return animation->isFacingRight();
 }
 
 const std::unique_ptr<Animation> &GameCharacter::getAnimation() const {

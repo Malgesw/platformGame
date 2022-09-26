@@ -36,8 +36,6 @@ public:
 
 private:
 
-    bool faceRight=true;
-
     void die();
     int hp;
     int energy;

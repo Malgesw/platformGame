@@ -3,18 +3,15 @@
 Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(mainCharacter) {
     heightTiles = 16;
     widthTiles = 16;
-    dimX = 800.f/widthTiles;
-    dimY = 600.f/heightTiles;
+    dimX = 800.f/static_cast<float>(widthTiles);
+    dimY = 600.f/static_cast<float>(heightTiles);
     initFloor(roomName);
     camera.setSize(400.f, 300.f);
     camera.setCenter(player.getMovement()->getPosition().x+player.getMovement()->getCollisions().getGlobalBounds().width/2.f,
                      player.getMovement()->getPosition().y+player.getMovement()->getCollisions().getGlobalBounds().height/2.f);
 
-
     if(roomName=="room1.ini") {
-        sf::Texture enemyTexture;
-        enemyTexture.loadFromFile("../images/flyingenemy2.png");
-        auto enemy = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 50, 50);
+        auto enemy = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(35, 35), 50, 50);
         auto enemy2 = std::make_shared<GameCharacter>(sf::Vector2f(500.f, 100.f), sf::Vector2f(50, 37.5), 30, 50);
         std::string enemyName("enemy1");
         std::string enemyName2("enemy2");
@@ -31,8 +28,6 @@ Room::Room(const std::string& roomName,GameCharacter& mainCharacter):player(main
                            sf::Vector2f(dimX, dimY)));
         autoAttack= std::make_shared<AutoAttack>( sf::Vector2f(35,35),1.f,5.f,40.f);
         autoAttack2= std::make_shared<AutoAttack>( sf::Vector2f(50,37.5),1.f,5.f,40.f);
-
-
 
         enemy->setMovement(autoMovement);
         enemy2->setMovement(autoMovement2);
@@ -61,12 +56,11 @@ void Room::initFloor(const std::string& roomName) {
     std::ifstream ifs;
     std::string n;
     ifs.open("../Levels/"+roomName);
-    for(int i = 0; i < widthTiles; i++) {
 
+    for(int i = 0; i < widthTiles; i++) {
         while(ifs >> n){
             numbers.push_back(n);
         }
-
     }
 
     ifs.close();
@@ -111,7 +105,6 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     //________________________________UPDATING MAP
     for(int i=0;i<heightTiles;i++){
         for(int j=0;j<widthTiles;j++){
-
             if(tiles[i][j]->isExit() && tiles[i][j]->getGlobalBounds().intersects(player.getMovement()->getCollisions().getGlobalBounds())){
                 if(player.getMovement()->getVelocity().x >= 0.f)
                     currentRoom++;
@@ -122,7 +115,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     }
     //________________________________UPDATING ENEMIES
     for (auto &e: enemies) {
-        e.second->update(dt, walls,window, sf::Vector2f (player.getMovement()->getPosition().x+player.getMovement()->getCollisions().getSize().x/2,player.getMovement()->getPosition().y+player.getMovement()->getCollisions().getSize().y/2));
+        e.second->update(dt, walls,window, sf::Vector2f (player.getMovement()->getPosition().x+player.getMovement()->getCollisions().getSize().x/2,
+                                                         player.getMovement()->getPosition().y+player.getMovement()->getCollisions().getSize().y/2));
     }
 }
 
