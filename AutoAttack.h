@@ -6,11 +6,11 @@
 #define PLATFORMGAME_AUTOATTACK_H
 #include "Attack.h"
 
-class AutoAttack: public Attack{
+class AutoAttack{
 public:
 
-    AutoAttack(sf::Vector2f size, float speed, float hitDamage, float knockback);
-    void update(sf::Vector2f centerPosition) override;
+    virtual ~AutoAttack()=default;
+    virtual void attackPlayer(sf::Vector2f centerPosition)=0;
 };
 
 

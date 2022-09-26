@@ -7,7 +7,7 @@
 #include "WalkingMovement.h"
 #include "AutoMovement.h"
 
-class AutoWalking : public WalkingMovement, public AutoMovement{
+class AutoWalking : public WalkingMovement, AutoMovement{
 public:
     AutoWalking(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>>& walls,float jHeight,float turnTime);
     void rest() override;

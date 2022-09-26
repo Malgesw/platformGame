@@ -12,7 +12,7 @@ add_executable(platformGame main.cpp Game.cpp Game.h State.cpp State.h headers.h
         WalkingMovement.cpp WalkingMovement.h FlyingMovement.cpp FlyingMovement.h LevelTile.cpp LevelTile.h
         TileMap.cpp TileMap.h AutoWalking.cpp AutoWalking.h Attack.cpp Attack.h AStar.cpp AStar.h Pathfinder.cpp
         Pathfinder.h AutoFlying.cpp AutoFlying.h AutoMovement.h AttackTarget.cpp AttackTarget.h Room.cpp Room.h AutoAttack.cpp AutoAttack.h
-        Animation.cpp Animation.h DropDownList.cpp DropDownList.h)
+        Animation.cpp Animation.h DropDownList.cpp DropDownList.h MeleeAttack.cpp MeleeAttack.h AutoMelee.cpp AutoMelee.h)
 
 include_directories(/usr/local/include)
 

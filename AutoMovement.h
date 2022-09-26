@@ -11,14 +11,14 @@ class AutoMovement {
 
 public:
 
+    //virtual ~AutoMovement()=default;  //TODO understand why the virtual destructor gives back an error
     virtual void rest()=0;
     virtual void aggro(const float &dt, sf::Vector2f playerPosition)=0;
 
 protected:
 
-    bool isTriggered;
+    bool isTriggered= false;
     std::unique_ptr<Pathfinder> pathfinder;
-
 
 };
 

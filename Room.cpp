@@ -21,8 +21,8 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
                 AutoFlying(7, sf::Vector2f(10 * dimX, 13 * dimY), sf::Vector2f(50, 37.5), walls,
                            sf::Vector2f(dimX, dimY)));
 
-        std::unique_ptr<Attack> autoAttack= std::make_unique<AutoAttack>( sf::Vector2f(35,35),1.f,1,40.f);
-        std::unique_ptr<Attack> autoAttack2= std::make_unique<AutoAttack>( sf::Vector2f(50,37.5),1.f,1,40.f);
+        std::unique_ptr<Attack> autoAttack= std::make_unique<AutoMelee>( sf::Vector2f(35,35),1.f,1,40.f);
+        std::unique_ptr<Attack> autoAttack2= std::make_unique<AutoMelee>( sf::Vector2f(50,37.5),1.f,1,40.f);
         std::unique_ptr<Animation> enemyanimation= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 6 * dimY),sf::Vector2f(35, 35));
         std::unique_ptr<Animation> enemyanimation2= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 13 * dimY),sf::Vector2f(50, 37.5));
 

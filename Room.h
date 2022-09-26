@@ -8,7 +8,7 @@
 #include "GameCharacter.h"
 #include "AutoWalking.h"
 #include "AutoFlying.h"
-#include "AutoAttack.h"
+#include "AutoMelee.h"
 
 
 class Room {
