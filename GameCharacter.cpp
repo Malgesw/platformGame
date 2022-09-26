@@ -14,15 +14,18 @@ GameCharacter::GameCharacter(int healthPoints, int mana)
 }
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
+    if (newMovement== nullptr) throw std::runtime_error("Movement component not valid");
     movement = std::move(newMovement);
 }
 
 
 void GameCharacter::setAttack( std::unique_ptr<Attack> newAttack) {
+    if (newAttack== nullptr) throw std::runtime_error("Attack component not valid");
     attack = std::move(newAttack);
 }
 
 void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
+    if (newAnimation== nullptr) throw std::runtime_error("Animation component not valid");
     animation = std::move(newAnimation);
 }
 

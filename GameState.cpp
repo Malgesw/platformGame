@@ -24,7 +24,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player = std::make_unique<GameCharacter>(50,50);
 
     std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (35,35),200);
-    auto playerAttack=std::make_unique<Attack>(sf::Vector2f (50.f,50.f)*2.5f,0.5f,40.f,55.f);
+    auto playerAttack=std::make_unique<Attack>(sf::Vector2f (50.f,50.f)*2.5f,0.5f,1,40.f);
     auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2u(5, 3), 0.3f, sf::Vector2f (50.f,50.f), sf::Vector2f (35,35));
 
     player->setAttack(std::move(playerAttack));

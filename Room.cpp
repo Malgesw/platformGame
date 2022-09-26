@@ -12,27 +12,19 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
 
 
     if(roomName=="room1.ini") {
-        auto enemy = std::make_unique<GameCharacter>(80, 50);
-        auto enemy2 = std::make_unique<GameCharacter>(5, 50);
-        addEnemy(enemy);
-        addEnemy(enemy2);
-        std::unique_ptr<Movement> autoMovement;
-        std::unique_ptr<Movement> autoMovement2;
-        std::unique_ptr<Attack> autoAttack;
-        std::unique_ptr<Attack> autoAttack2;
-        autoMovement = std::make_unique<AutoWalking>(
+        auto enemy = std::make_unique<GameCharacter>(3, 50);
+        auto enemy2 = std::make_unique<GameCharacter>(3, 50);
+
+        std::unique_ptr<Movement> autoMovement = std::make_unique<AutoWalking>(
                 AutoWalking(10, sf::Vector2f(10*dimX, 6 * dimY), sf::Vector2f(35, 35), walls, 50, 4));
-        autoMovement2 = std::make_unique<AutoFlying>(
+        std::unique_ptr<Movement> autoMovement2= std::make_unique<AutoFlying>(
                 AutoFlying(7, sf::Vector2f(10 * dimX, 13 * dimY), sf::Vector2f(50, 37.5), walls,
                            sf::Vector2f(dimX, dimY)));
-        autoAttack= std::make_unique<AutoAttack>( sf::Vector2f(35,35),1.f,5.f,40.f);
-        autoAttack2= std::make_unique<AutoAttack>( sf::Vector2f(50,37.5),1.f,5.f,40.f);
 
-        std::unique_ptr<Animation> enemyanimation;
-        std::unique_ptr<Animation> enemyanimation2;
-        enemyanimation= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 6 * dimY),sf::Vector2f(35, 35));
-        enemyanimation2= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 13 * dimY),sf::Vector2f(50, 37.5));
-
+        std::unique_ptr<Attack> autoAttack= std::make_unique<AutoAttack>( sf::Vector2f(35,35),1.f,1,40.f);
+        std::unique_ptr<Attack> autoAttack2= std::make_unique<AutoAttack>( sf::Vector2f(50,37.5),1.f,1,40.f);
+        std::unique_ptr<Animation> enemyanimation= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 6 * dimY),sf::Vector2f(35, 35));
+        std::unique_ptr<Animation> enemyanimation2= std::make_unique<Animation>(textures[flying],sf::Vector2u (5,3),0.3f,sf::Vector2f (10 * dimX, 13 * dimY),sf::Vector2f(50, 37.5));
 
         enemy->setMovement(std::move(autoMovement));
         enemy2->setMovement(std::move(autoMovement2));
@@ -40,6 +32,9 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
         enemy2->setAttack(std::move(autoAttack2));
         enemy->setAnimation(std::move(enemyanimation));
         enemy2->setAnimation(std::move(enemyanimation2));
+
+        addEnemy(enemy);
+        addEnemy(enemy2);
 
     }
 
@@ -124,25 +119,31 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
         }
     }
     //________________________________UPDATING ENEMIES
+
     for(auto &e : enemies){
         e->update(dt, walls,window, player.getCenter());
     }
 
     auto i = enemies.begin();
     int j=0;
-    //std::cout<<j<<std::endl;
-    for (auto &e: enemies) {
 
-        std::cout<<"vita nemico "<<e->getHp()<<std::endl;
-        if(e->getHp()<=0){
-            enemies.erase(i);
+    while (i!= enemies.end()) {
+        //std::cout<<"nemico numero "<<j<<std::endl;
+
+        //std::cout<<"vita nemico "<<(*i)->getHp()<<std::endl;
+
+        if((*i)->getHp()<=0){
+            std::cout<<"nemico cancellato dalla mappa"<<std::endl;
+            enemies.erase(i++);
+
         }
 
         else{
             i++;
-            //j++;
+            j++;
         }
     }
+
 }
 
 void Room::addEnemy(std::unique_ptr<GameCharacter>& enemy) {

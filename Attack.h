@@ -15,7 +15,7 @@ class Attack {
 
 public:
 
-    Attack(sf::Vector2f size, float speed, float hitDamage, float knockback);
+    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback);
     void hit();
     sf::RectangleShape& getHitBox();
     void addTargets(const std::vector<AttackTarget>& newTargets);
@@ -26,7 +26,7 @@ public:
 protected:
     sf::Clock cooldown;
     float attackSpeed;
-    float damage;
+    int damage;
     float knockbackDistance;
     sf::RectangleShape hitBox;
     std::list<AttackTarget> targets;

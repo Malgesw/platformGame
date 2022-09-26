@@ -12,10 +12,10 @@ public:
 
     AttackTarget(sf::RectangleShape* newCollisionbox,sf::RectangleShape* newHitbox,sf::Vector2f* newKnockback, int* newHp);
 
-    sf::RectangleShape *getHitbox() const;
-    sf::RectangleShape *getCollisionbox() const;
+    const sf::RectangleShape& getHitbox() const;
+    const sf::RectangleShape& getCollisionbox() const;
     void receiveDamage(sf::Vector2f newKnockback,int lifeRemoved) const;
-    const int * getHp() const;
+    int getHp() const;
 
 
 private:

@@ -80,7 +80,7 @@ void Game::initWindow() {
         window->setSize(sf::Vector2u(std::stoi(w), std::stoi(h)));
     }
     ifs.close();
-    window->setFramerateLimit(30);
+    window->setFramerateLimit(120);
 
 }
 

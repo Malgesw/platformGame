@@ -3,10 +3,9 @@
 //
 
 #include "Attack.h"
-
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, float hitDamage, float knockback):
+Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback):
         attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback) {
 
 hitBox=sf::RectangleShape(size);
@@ -22,24 +21,35 @@ void Attack::hit() {
     if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
 
         cooldown.restart();
+
         auto i= targets.begin();
-        for (auto &t: targets) {
-            if (hitBox.getGlobalBounds().intersects(t.getHitbox()->getGlobalBounds())) {
+
+        while (i!=targets.end()) {
+            auto currentTarget=*i;
+            bool enemyCancelled=false;
+
+            if (hitBox.getGlobalBounds().intersects(currentTarget.getHitbox().getGlobalBounds())) {
+
 
                 sf::Vector2f knockbackDirection;
-                knockbackDirection.x=(t.getHitbox()->getPosition().x-hitBox.getPosition().x)/std::abs(t.getHitbox()->getPosition().x-hitBox.getPosition().x);
-                knockbackDirection.y=(t.getHitbox()->getPosition().y-hitBox.getPosition().y)/std::abs(t.getHitbox()->getPosition().y-hitBox.getPosition().y);
-                if(*(t.getHp())<=1){
-                    targets.erase(i);
+                knockbackDirection.x= (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                      std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
+                knockbackDirection.y= (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                      std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
+
+                if(currentTarget.getHp()<=damage){
+
+                    targets.erase(i++);
+                    enemyCancelled=true;
                 }
-                else{
-                    i++;
-                }
-                //std::cout<<targets.size()<<std::endl;
-                t.receiveDamage(knockbackDirection * knockbackDistance, 1);
-                //std::cout<<"hp is"<<t.getHp()<<std::endl;
+
+                currentTarget.receiveDamage(knockbackDirection * knockbackDistance, damage);
 
             }
+            if(not enemyCancelled){
+                i++;
+            }
+
         }
     }
 }
