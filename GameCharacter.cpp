@@ -32,6 +32,7 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 
 void GameCharacter::render(sf::RenderTarget &target) {
 
+//target.draw(movement->getCollisions());
 animation->render(target);
 
 }
@@ -49,58 +50,15 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     movement->update(window,dt,mainCharacterPos);
     attack->update(hitboxCenter);
-    animation->getAnimationBox().setPosition(movement->getCollisions().getPosition() + animation->getPositionCorrection());
+    animation->getAnimationBox().setPosition(movement->getCollisions().getPosition().x-movement->getCollisions().getSize().x/4.f,
+                                             movement->getCollisions().getPosition().y-movement->getCollisions().getSize().y/4.f);
 
-    int row;
+
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
                               animation->getSprite().width, animation->getSprite().height);
 
-    switch (movement->getSpriteType()) {
-
-        case IDLELEFT:
-            row = 0;
-            animationRect.height -= 50.f;
-            //animationRect.width += 20.f;
-            faceRight= false;
-            break;
-        case IDLERIGHT:
-            row = 0;
-            animationRect.height -= 50.f;
-            //animationRect.width += 20.f;
-            faceRight= true;
-            break;
-        case MOVELEFT:
-            row = 1;
-            animationRect.height -= 170.f;
-            //animationRect.width += 200.f;
-            faceRight = false;
-            break;
-        case MOVERIGHT:
-            row = 1;
-            animationRect.height -= 170.f;
-            animationRect.width += 60.f;
-            faceRight= true;
-            break;
-        case JUMPRIGHT:
-            row = 2;
-            animationRect.height -= 60.f;
-            faceRight= true;
-            break;
-        case JUMPLEFT:
-            row = 2;
-            animationRect.height -= 60.f;
-            faceRight = false;
-            break;
-        default:
-            row = 0;
-            break;
-
-    }
-
-    animation->update(row, dt, faceRight);
+    animation->update(*movement, dt);
     animation->getAnimationBox().setTextureRect(animationRect);
-
-
 
 }
 
@@ -140,6 +98,8 @@ AttackTarget GameCharacter::generateTarget() {
 }
 
 bool GameCharacter::isFacingRight() const {
-    return faceRight;
+    return animation->isFacingRight();
 }
+
+
 

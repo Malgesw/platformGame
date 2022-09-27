@@ -35,6 +35,12 @@ public:
         return text.getPosition();
     }
 
+    void setPosition(sf::Vector2f pos){
+        button.setPosition(pos);
+        text.setPosition(button.getGlobalBounds().left + button.getGlobalBounds().width/2.f - text.getGlobalBounds().width/2.f,
+                         button.getGlobalBounds().top + button.getGlobalBounds().height/2.f - text.getGlobalBounds().height/2.f);
+    }
+
 
 private:
 

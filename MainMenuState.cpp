@@ -10,9 +10,7 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
 
     bgTexture.loadFromFile("../images/bg2fixed.png");
 
-    //background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    background.setSize(sf::Vector2f(800, 600));
-    //background.setFillColor(sf::Color::Green);
+    background.setSize(sf::Vector2f(800.f,600.f));
     background.setTexture(&bgTexture);
 
     title.setFont(font);
@@ -21,12 +19,16 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
     title.setFillColor(sf::Color::White);
     title.setPosition(sf::Vector2f(270.f, 80.f));
 
+    view = window->getView();
+    view.setCenter(view.getSize()/2.f);
+
 }
 
 void MainMenuState::update(const float &dt) {
 
     checkForClose();
     if(!states->empty()) {
+        window->setView(view);
         updateMousePosition();
         updateButtons();
     }
