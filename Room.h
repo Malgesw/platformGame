@@ -39,7 +39,8 @@ public:
     const std::vector<std::shared_ptr<LevelTile>> &getDoors() const {
         return doors;
     }
-    std::map<std::string,std::shared_ptr<GameCharacter>> &getEnemies() {
+
+    std::list<std::unique_ptr<GameCharacter>> &getEnemies() {
         return enemies;
     }
 
