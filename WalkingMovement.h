@@ -13,6 +13,8 @@ public:
     WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height);
     void moveUp() override;
     void moveDown() override;
+    void moveLeft() override;
+    void moveRight() override;
     float getJumpHeight() const;
 
 

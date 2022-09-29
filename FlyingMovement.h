@@ -13,6 +13,8 @@ public:
     FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size);
     void moveUp() override;
     void moveDown() override;
+    void moveLeft() override;
+    void moveRight() override;
 };
 
 

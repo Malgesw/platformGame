@@ -23,3 +23,12 @@ void FlyingMovement::moveDown() {
         velocity.y=10*speed;
     collisionBox.move(0.f,velocity.y*dt);
 }
+
+void FlyingMovement::moveLeft() {
+    Movement::moveLeft();
+}
+
+void FlyingMovement::moveRight() {
+    Movement::moveRight();
+}
+

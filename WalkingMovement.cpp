@@ -27,3 +27,11 @@ void WalkingMovement::moveDown() {
 float WalkingMovement::getJumpHeight() const{
     return jumpHeight;
 }
+
+void WalkingMovement::moveLeft() {
+Movement::moveLeft();
+}
+
+void WalkingMovement::moveRight() {
+Movement::moveRight();
+}

@@ -15,8 +15,8 @@ class Movement{
 public:
     Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type);
     virtual ~Movement();
-    virtual void moveLeft();
-    virtual void moveRight();
+    virtual void moveLeft()=0;
+    virtual void moveRight()=0;
     virtual void moveUp()=0;
     virtual void moveDown()=0;
     bool onGround() const;
