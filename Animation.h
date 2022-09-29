@@ -8,7 +8,7 @@ class Animation {
 
 public:
 
-    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size);
+    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size);
     ~Animation() = default;
 
     void update(Movement &playerMovement, const float &dt);

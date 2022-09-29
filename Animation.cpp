@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f position, sf::Vector2f size) :
+Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size) :
 imageCount(imageCount), switchTime(switchTime), texture(texture) {
 
     totalTime = 0.f;
@@ -12,7 +12,6 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     sprite.height = texture->getSize().y / (float)imageCount.y;
 
     animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
-    animationBox.setPosition(position.x, position.y);
     animationBox.setTexture(texture);
     faceRight = true;
 

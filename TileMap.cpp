@@ -14,6 +14,8 @@ TileMap::TileMap(GameCharacter& player) {
     addRoom("room2.ini",player,sf::Vector2i(16,16));
     addRoom("room3.ini",player,sf::Vector2i(16,15));
     currentRoom = 0;
+
+    generateEnemy(2,"../Levels/FlyingEnemy.ini",sf::Vector2i(8,6),player);
 }
 
 void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *window) {
@@ -69,8 +71,90 @@ void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vec
     rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize));
 }
 
+void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i startPosition, GameCharacter& player) {
+
+    CSimpleIniA enemyIni;
+    SI_Error err=enemyIni.LoadFile(configFile.c_str());
+    if(err<0)throw std::runtime_error("path to enemy configuration file not valid");
+
+
+    //________________generating character
+
+    auto enemy= std::make_unique<GameCharacter>(std::stoi(enemyIni.GetValue("general","life")),
+                                                std::stoi(enemyIni.GetValue("general","energy")));
+
+
+    //________________generating movement
+    std::unique_ptr<Movement> enemyMovement;
+
+    if(strcmp(enemyIni.GetValue("movement","type"),"W") == 0){
+
+        enemyMovement= std::make_unique<AutoWalking>(std::stof(enemyIni.GetValue("movement","speed")),
+                                                     sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
+                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                     sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
+                                                                  std::stof(enemyIni.GetValue("general","sizeY"))),
+                                                                  rooms[roomNumber]->getWalls(),
+                                                                  std::stof(enemyIni.GetValue("movement","jHeight")),
+                                                     std::stof(enemyIni.GetValue("movement","turnBackTime")));
+    }
+    else if(strcmp(enemyIni.GetValue("movement","type"),"F") == 0){
+
+        enemyMovement= std::make_unique<AutoFlying>(std::stof(enemyIni.GetValue("movement","speed")),
+                                                     sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
+                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                     sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
+                                                                  std::stof(enemyIni.GetValue("general","sizeY"))),
+                                                     rooms[roomNumber]->getWalls(),
+                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimX()));
+
+    }
+    enemyMovement->addWalls(rooms[roomNumber]->getWalls());
+
+
+
+    //________________generating attack
+    std::unique_ptr<Attack> enemyAttack;
+
+    if(strcmp(enemyIni.GetValue("attack","type"),"M") == 0){
+
+        enemyAttack= std::make_unique<AutoMelee>(sf::Vector2f(std::stof(enemyIni.GetValue("attack","rangeX")),
+                                                              std::stof(enemyIni.GetValue("attack","rangeY"))),
+                                                            std::stof(enemyIni.GetValue("attack","speed")),
+                                                                 std::stof(enemyIni.GetValue("attack","damage")),
+                                                                    std::stof(enemyIni.GetValue("attack","knockback")));
+    }
+    std::vector<AttackTarget> targets;
+    targets.push_back(player.generateTarget());
+    enemyAttack->addTargets(targets);
+
+
+    //________________generating animation
+    std::unique_ptr<Animation> enemyAnimation;
+
+    enemyAnimation=std::make_unique<Animation>(textures[std::stoi(enemyIni.GetValue("animation","texture"))],
+                                               sf::Vector2i(std::stoi(enemyIni.GetValue("animation","imageCountX")),
+                                                            std::stoi(enemyIni.GetValue("animation","imageCountY"))),
+                                               std::stof(enemyIni.GetValue("animation","switchTime")),
+                                               sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
+                                                            std::stof(enemyIni.GetValue("general","sizeY"))));
+
+
+    //________________assigning enemy's components
+    enemy->setMovement(std::move(enemyMovement));
+    enemy->setAttack(std::move(enemyAttack));
+    enemy->setAnimation(std::move(enemyAnimation));
+
+
+    //________________adding enemy to the list
+    rooms[roomNumber]->addEnemy(enemy);
+
+}
+
+
 TileMap::~TileMap() {
 for (auto& t: textures){
     delete t;
 }
 }
+

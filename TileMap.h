@@ -10,6 +10,9 @@
 #include "headers.h"
 #include "Item.h"
 #include "Room.h"
+#include <string>
+
+
 
 class TileMap {
 
@@ -39,6 +42,7 @@ private:
     unsigned int currentRoom;
 
     void addRoom(const std::string& roomName, GameCharacter& mainCharacter,sf::Vector2i roomSize);
+    void generateEnemy(int roomNumber,std::string configFile, sf::Vector2i startPosition, GameCharacter& player);
 
 };
 
