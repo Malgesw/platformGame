@@ -10,9 +10,9 @@ TileMap::TileMap(GameCharacter& player) {
     textures.push_back(new sf::Texture);
     textures[flying]->loadFromFile("../images/flyingEnemySheet.png");
 
-    addRoom("room1.ini",player);
-    addRoom("room2.ini",player);
-    addRoom("room3.ini",player);
+    addRoom("room1.ini",player,sf::Vector2i(16,16));
+    addRoom("room2.ini",player,sf::Vector2i(16,16));
+    addRoom("room3.ini",player,sf::Vector2i(16,15));
     currentRoom = 0;
 }
 
@@ -36,8 +36,9 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
 
 
     //_____RIGHT
-    if(rooms[currentRoom]->getCamera().getSize().x/2.f >= 16*rooms[currentRoom]->getDimX() - player.getCenter().x)
-        rooms[currentRoom]->setCameraCenter(16*rooms[currentRoom]->getDimX() - rooms[currentRoom]->getCamera().getSize().x/2.f,
+    if(rooms[currentRoom]->getCamera().getSize().x/2.f >=
+            static_cast<float>(rooms[currentRoom]->getMapSize().x)*rooms[currentRoom]->getDimX() - player.getCenter().x)
+        rooms[currentRoom]->setCameraCenter(static_cast<float>(rooms[currentRoom]->getMapSize().x)*rooms[currentRoom]->getDimX() - rooms[currentRoom]->getCamera().getSize().x/2.f,
                                             rooms[currentRoom]->getCamera().getCenter().y);
 
     //_____LEFT
@@ -46,9 +47,9 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
                                             rooms[currentRoom]->getCamera().getCenter().y);
 
     //_____BOTTOM
-    if(rooms[currentRoom]->getCamera().getSize().y/2.f >= 16*rooms[currentRoom]->getDimY() - player.getCenter().y)
+    if(rooms[currentRoom]->getCamera().getSize().y/2.f >= static_cast<float>(rooms[currentRoom]->getMapSize().y)*rooms[currentRoom]->getDimY() - player.getCenter().y)
         rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getCenter().x,
-                                            16*rooms[currentRoom]->getDimY() - rooms[currentRoom]->getCamera().getSize().y/2.f);
+                                            static_cast<float>(rooms[currentRoom]->getMapSize().y)*rooms[currentRoom]->getDimY() - rooms[currentRoom]->getCamera().getSize().y/2.f);
 
     //_____TOP
     if(rooms[currentRoom]->getCamera().getSize().y/2.f >= player.getCenter().y)
@@ -63,9 +64,9 @@ void TileMap::render(sf::RenderTarget &target) {
 }
 
 
-void TileMap::addRoom(const std::string& roomName, GameCharacter &player) {
+void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vector2i roomSize) {
 
-    rooms.push_back(std::make_unique<Room>(roomName,player,textures));
+    rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize));
 }
 
 TileMap::~TileMap() {

@@ -40,7 +40,7 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 
 void Movement::checkCollisions() {
 
-    float Tolerance=std::sqrt(speed)*dt*50;
+    float Tolerance=std::sqrt(speed)*dt*100;
 
     for (auto &o: barriers) {
 

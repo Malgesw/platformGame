@@ -1,10 +1,9 @@
 #include "Room.h"
 
-Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ):player(mainCharacter) {
-    heightTiles = 16;
-    widthTiles = 16;
-    dimX = 800.f/static_cast<float>(widthTiles);
-    dimY = 600.f/static_cast<float>(heightTiles);
+Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize):player(mainCharacter),mapSize(mapSize){
+
+    dimX = 800.f/static_cast<float>(mapSize.x);
+    dimY = 600.f/static_cast<float>(mapSize.y);
     initFloor(roomName);
     camera.setSize(400.f, 300.f);
     camera.setCenter(player.getMovement().getPosition().x+player.getMovement().getCollisions().getGlobalBounds().width/2.f,
@@ -59,7 +58,7 @@ void Room::initFloor(const std::string& roomName) {
     std::string n;
     ifs.open("../Levels/"+roomName);
 
-    for(int i = 0; i < widthTiles; i++) {
+    for(int i = 0; i < mapSize.x; i++) {
         while(ifs >> n){
             numbers.push_back(n);
         }
@@ -67,16 +66,16 @@ void Room::initFloor(const std::string& roomName) {
 
     ifs.close();
 
-    for(int i=0;i<heightTiles;i++){
+    for(int i=0;i<mapSize.y;i++){
         std::vector<std::shared_ptr<LevelTile>> row;
-        for(int j=0;j<widthTiles;j++){
+        for(int j=0;j<mapSize.x;j++){
             row.push_back(std::make_unique<LevelTile>(numbers[i][j], j*dimX , i*dimY,  size));
         }
         tiles.push_back(row);
     }
 
-    for(int i=0;i<heightTiles;i++){
-        for(int j=0;j<widthTiles;j++){
+    for(int i=0;i<mapSize.y;i++){
+        for(int j=0;j<mapSize.x;j++){
             if(tiles[i][j]->getTileType() == WALL)
                 walls.push_back(tiles[i][j]);
             else if(tiles[i][j]->getTileType() == DOOR)
@@ -89,8 +88,8 @@ void Room::initFloor(const std::string& roomName) {
 void Room::render(sf::RenderTarget &target) {
 
     //________________________________RENDERING MAP
-    for(int i=0;i<heightTiles;i++){
-        for(int j=0;j<widthTiles;j++){
+    for(int i=0;i<mapSize.y;i++){
+        for(int j=0;j<mapSize.x;j++){
             tiles[i][j]->render(target);
         }
     }
@@ -105,8 +104,8 @@ void Room::render(sf::RenderTarget &target) {
 void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window) {
 
     //________________________________UPDATING MAP
-    for (int i = 0; i < heightTiles; i++) {
-        for (int j = 0; j < widthTiles; j++) {
+    for (int i = 0; i < mapSize.y; i++) {
+        for (int j = 0; j < mapSize.x; j++) {
             if (tiles[i][j]->isExit() &&
                 tiles[i][j]->getGlobalBounds().intersects(player.getMovement().getCollisions().getGlobalBounds())) {
                 if (player.getMovement().getVelocity().x >= 0.f)
@@ -145,4 +144,8 @@ std::vector<AttackTarget> Room::getTargets() {
         targets.push_back(e->generateTarget());
     }
     return targets;
+}
+
+const sf::Vector2i &Room::getMapSize() const {
+    return mapSize;
 }

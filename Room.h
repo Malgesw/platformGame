@@ -16,9 +16,10 @@ class Room {
 public:
 
 
-    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures);
+    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures,sf::Vector2i mapSize);
     void render(sf::RenderTarget &target);
     void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
+    const sf::Vector2i &getMapSize() const;
 
 
     void addEnemy(std::unique_ptr<GameCharacter>& enemy);
@@ -63,8 +64,7 @@ private:
     std::list<std::unique_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
     GameCharacter& player;
-    int heightTiles;
-    int widthTiles;
+    sf::Vector2i mapSize;
     float dimX;
     float dimY;
     sf::View camera;

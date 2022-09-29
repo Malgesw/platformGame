@@ -35,8 +35,7 @@ private:
     sf::Texture* texture;
     bool faceRight;
     sf::RectangleShape animationBox;
-
-
+    sf::Vector2f positionCorrection;
 };
 
 

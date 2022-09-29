@@ -5,6 +5,8 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
 
     totalTime = 0.f;
     currentImage.x = 0;
+    positionCorrection.x=25.f;
+    positionCorrection.y=0.f;
 
     sprite.width = texture->getSize().x / (float)imageCount.x;
     sprite.height = texture->getSize().y / (float)imageCount.y;
