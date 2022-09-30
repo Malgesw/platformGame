@@ -9,7 +9,6 @@ MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float kn
                                                                                                   knockback) {
 }
 
-
 void MeleeAttack::hit() {
 
     if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
@@ -26,10 +25,19 @@ void MeleeAttack::hit() {
 
 
                 sf::Vector2f knockbackDirection;
-                knockbackDirection.x= (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
-                                      std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
-                knockbackDirection.y= (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
-                                      std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
+
+                if( std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x)>1.f) {
+
+                    knockbackDirection.x = (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                           std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
+                }
+                else knockbackDirection.x=0;
+
+                if(std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y)>1.f) {
+                    knockbackDirection.y = (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                           std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
+                }
+                else knockbackDirection.y=0;
 
                 if(currentTarget.getHp()<=damage){
 
@@ -47,4 +55,11 @@ void MeleeAttack::hit() {
         }
     }
 }
+
+void MeleeAttack::update(sf::Vector2f centerPosition,bool facingRight) {
+
+    hitBox.setPosition(facingRight?centerPosition.x-hitBox.getSize().x/2-attackoffset:centerPosition.x-hitBox.getSize().x/2+attackoffset,
+                       centerPosition.y-hitBox.getSize().y/2);
+}
+
 

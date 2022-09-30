@@ -19,9 +19,9 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     pauseTime = 0.5f;
     pauseClock.restart();
     player = std::make_unique<GameCharacter>(50,50);
-    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (35,35),200);
-    std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (50.f,50.f)*1.5f,0.5f,1,49.f);
-    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35));
+    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
+    std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
+    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
     player->setMovement(std::move(playerMovement));
@@ -58,16 +58,13 @@ void GameState::update(const float &dt) {
         }
 
     } else {
-        if (firstframe) {
-            firstframe = false;
+        if (dt>0.15f) {
             tileMap->update(0, *player, window);
             updatePlayerPos();
             player->update(0, tileMap->getWalls(), window, mainCharacterPos);
-            player->getMovement().setBarriers(tileMap->getWalls());
         } else {
             updatePlayerPos();
             player->update(dt, tileMap->getWalls(), window, mainCharacterPos);
-            player->getMovement().setBarriers(tileMap->getWalls());
             tileMap->update(dt, *player, window);
 
         }

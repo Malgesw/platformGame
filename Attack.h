@@ -21,7 +21,7 @@ public:
     sf::RectangleShape& getHitBox();
     void addTargets(const std::vector<AttackTarget>& newTargets);
     void clearTargets();
-    virtual void update(sf::Vector2f centerPosition);
+    virtual void update(sf::Vector2f centerPosition, bool orientation)=0;
 
 
 protected:

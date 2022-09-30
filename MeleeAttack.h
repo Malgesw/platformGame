@@ -13,6 +13,10 @@ class MeleeAttack :public Attack{
 public:
     MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback);
     void hit() override;
+    void update(sf::Vector2f centerPosition, bool orientation) override;
+
+protected:
+    float attackoffset=0.f;
 };
 
 

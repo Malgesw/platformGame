@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size) :
+Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer) :
 imageCount(imageCount), switchTime(switchTime), texture(texture) {
 
     totalTime = 0.f;
@@ -14,10 +14,18 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
     animationBox.setTexture(texture);
     faceRight = true;
+    if(isplayer) {
+        animationLeftOffset = -12.f;
+        animationRightOffset=-4;
+    }
 
 }
 
 void Animation::update(Movement &playerMovement, const float &dt) {
+
+    animationBox.setPosition(faceRight?playerMovement.getCollisions().getPosition().x-playerMovement.getCollisions().getSize().x/4.f+animationLeftOffset:
+                             playerMovement.getCollisions().getPosition().x-playerMovement.getCollisions().getSize().x/4.f+animationRightOffset,
+                             playerMovement.getCollisions().getPosition().y-playerMovement.getCollisions().getSize().y/4.f);
 
     int row;
     switch (playerMovement.getSpriteType()) {

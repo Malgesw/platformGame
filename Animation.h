@@ -8,7 +8,7 @@ class Animation {
 
 public:
 
-    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size);
+    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer);
     ~Animation() = default;
 
     void update(Movement &playerMovement, const float &dt);
@@ -36,6 +36,8 @@ private:
     bool faceRight;
     sf::RectangleShape animationBox;
     sf::Vector2f positionCorrection;
+    float animationLeftOffset=0.f;
+    float animationRightOffset=0.f;
 };
 
 

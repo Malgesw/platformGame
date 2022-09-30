@@ -9,45 +9,9 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
     camera.setCenter(player.getMovement().getPosition().x+player.getMovement().getCollisions().getGlobalBounds().width/2.f,
                      player.getMovement().getPosition().y+player.getMovement().getCollisions().getGlobalBounds().height/2.f);
 
-    if(roomName=="room1.ini") {
-        auto enemy = std::make_unique<GameCharacter>(10, 50);
-        auto enemy2 = std::make_unique<GameCharacter>(15, 50);
-
-        std::unique_ptr<Movement> autoMovement = std::make_unique<AutoWalking>(
-                AutoWalking(10.f, sf::Vector2f(10*dimX, 6 * dimY), sf::Vector2f(35, 35), walls, 50, 4));
-        std::unique_ptr<Movement> autoMovement2= std::make_unique<AutoFlying>(
-                AutoFlying(7.f, sf::Vector2f(10 * dimX, 13 * dimY), sf::Vector2f(50, 37.5), walls,
-                           sf::Vector2f(dimX, dimY)));
-
-        std::unique_ptr<Attack> autoAttack= std::make_unique<AutoMelee>( sf::Vector2f(35,35),1.f,1,40.f);
-        std::unique_ptr<Attack> autoAttack2= std::make_unique<AutoMelee>( sf::Vector2f(50,37.5),1.f,1,40.f);
-        std::unique_ptr<Animation> enemyanimation= std::make_unique<Animation>(textures[flying],sf::Vector2i (5,3),0.3f,sf::Vector2f(35, 35));
-        std::unique_ptr<Animation> enemyanimation2= std::make_unique<Animation>(textures[flying],sf::Vector2i (5,3),0.3f,sf::Vector2f(50, 37.5));
-
-        enemy->setMovement(std::move(autoMovement));
-        enemy2->setMovement(std::move(autoMovement2));
-        enemy->setAttack(std::move(autoAttack));
-        enemy2->setAttack(std::move(autoAttack2));
-        enemy->setAnimation(std::move(enemyanimation));
-        enemy2->setAnimation(std::move(enemyanimation2));
-
-        addEnemy(enemy);
-        addEnemy(enemy2);
 
     }
 
-    for (auto &e: enemies) {
-
-        //____________________________ADDING WALLS
-        e->getMovement().addWalls(walls);
-        std::vector<AttackTarget> targets;
-        //____________________________ADDING ATTACK TARGETS
-        targets.push_back(player.generateTarget());
-        e->getAttack().addTargets(targets);
-
-    }
-
-}
 
 void Room::initFloor(const std::string& roomName) {
 
@@ -109,9 +73,12 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
             if (tiles[i][j]->isExit() &&
                 tiles[i][j]->getGlobalBounds().intersects(player.getMovement().getCollisions().getGlobalBounds())) {
                 if (player.getMovement().getVelocity().x >= 0.f)
+
                     currentRoom++;
+
                 else
                     currentRoom--;
+
             }
         }
     }

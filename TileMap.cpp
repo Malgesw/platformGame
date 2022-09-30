@@ -15,7 +15,10 @@ TileMap::TileMap(GameCharacter& player) {
     addRoom("room3.ini",player,sf::Vector2i(16,15));
     currentRoom = 0;
 
+    generateEnemy(0,"../Levels/WalkingEnemy.ini",sf::Vector2i(10,6),player);
+    generateEnemy(0,"../Levels/FlyingEnemy.ini",sf::Vector2i(10,13),player);
     generateEnemy(2,"../Levels/FlyingEnemy.ini",sf::Vector2i(8,6),player);
+
 }
 
 void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *window) {
@@ -27,9 +30,15 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
 
     if(currentRoom < room){
         player.getMovement().getCollisions().setPosition(doors[doors.size()-1]->getPosition().x - rooms[currentRoom]->getDimX(), doors[doors.size()-1]->getPosition().y);
+        player.getMovement().setBarriers(rooms[currentRoom]->getWalls());
+        player.getAttack().clearTargets();
+        player.getAttack().addTargets(rooms[currentRoom]->getTargets());
     }
     else if(currentRoom > room && currentRoom < 3){
         player.getMovement().getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
+        player.getMovement().setBarriers(rooms[currentRoom]->getWalls());
+        player.getAttack().clearTargets();
+        player.getAttack().addTargets(rooms[currentRoom]->getTargets());
     }
 
     //____________________VIEW COLLISIONS
@@ -106,7 +115,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                      rooms[roomNumber]->getWalls(),
-                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimX()));
+                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimY()));
 
     }
     enemyMovement->addWalls(rooms[roomNumber]->getWalls());
@@ -137,7 +146,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                             std::stoi(enemyIni.GetValue("animation","imageCountY"))),
                                                std::stof(enemyIni.GetValue("animation","switchTime")),
                                                sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
-                                                            std::stof(enemyIni.GetValue("general","sizeY"))));
+                                                            std::stof(enemyIni.GetValue("general","sizeY"))),false);
 
 
     //________________assigning enemy's components
