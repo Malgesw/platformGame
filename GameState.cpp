@@ -1,14 +1,9 @@
 #include "GameState.h"
-#include "WalkingMovement.h"
-#include "FlyingMovement.h"
-#include "AutoWalking.h"
-#include "AutoFlying.h"
-#include "MeleeAttack.h"
-
 
 
 GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                      std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys){
+
 
     initKeys();
     playerTexture=new sf::Texture;
@@ -18,10 +13,12 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     isPaused = false;
     pauseTime = 0.5f;
     pauseClock.restart();
+
     player = std::make_unique<GameCharacter>(50,50);
     std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
     std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
     auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
+    playerAttack->attach(&achievementCounter);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
     player->setMovement(std::move(playerMovement));
@@ -58,7 +55,9 @@ void GameState::update(const float &dt) {
         }
 
     } else {
-        if (dt>0.15f) {
+        //std::cout<<"fps is "<<1/dt<<std::endl;
+        achievementCounter.checkAchievements();
+        if (dt>0.1f) {
             tileMap->update(0, *player, window);
             updatePlayerPos();
             player->update(0, tileMap->getWalls(), window, mainCharacterPos);

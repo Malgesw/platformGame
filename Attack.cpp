@@ -17,7 +17,6 @@ sf::RectangleShape& Attack::getHitBox(){
 }
 
 
-
 void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
 
     for(auto &t : newTargets){
@@ -27,5 +26,32 @@ void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
 
 void Attack::clearTargets() {
     targets.clear();
+}
+
+bool Attack::checkDeath(const AttackTarget &target) const{
+
+    if(target.getHp()<=damage){
+
+        notify('k');
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+void Attack::attach(Observer *o) {
+    observers.push_back(o);
+}
+
+void Attack::detach(Observer *o) {
+    observers.remove(o);
+}
+
+void Attack::notify(char category) const {
+    for(auto &o : observers){
+        o->update(category);
+    }
 }
 

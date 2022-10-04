@@ -39,7 +39,7 @@ void MeleeAttack::hit() {
                 }
                 else knockbackDirection.y=0;
 
-                if(currentTarget.getHp()<=damage){
+                if(checkDeath(currentTarget)){
 
                     targets.erase(i++);
                     enemyCancelled=true;

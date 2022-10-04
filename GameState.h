@@ -5,6 +5,10 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "GameCharacter.h"
+#include "WalkingMovement.h"
+#include "FlyingMovement.h"
+#include "MeleeAttack.h"
+#include "Achievement.h"
 
 
 class GameState : public State {
@@ -31,6 +35,8 @@ private:
     sf::Clock pauseClock;
     std::unique_ptr<TileMap> tileMap;
     sf::Texture* playerTexture;
+    Achievement achievementCounter;
+
 
     void initKeys() override;
 
