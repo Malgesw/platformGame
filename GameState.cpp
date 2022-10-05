@@ -50,7 +50,7 @@ void GameState::update(const float &dt) {
             isPaused = false;
 
         if (pauseMenu->isButtonPressed("EXIT_MENU")) {
-            sf::sleep(sf::seconds(0.1f));
+            sf::sleep(sf::seconds(0.15f));
             states->pop();
         }
 
