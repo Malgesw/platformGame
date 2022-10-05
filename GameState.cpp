@@ -72,6 +72,10 @@ void GameState::update(const float &dt) {
 
 void GameState::updatePlayerPos() {
 
+    if(textEvent.type==sf::Event::KeyReleased and textEvent.key.code==(sf::Keyboard::Key(keyBinds.at("Jump")))){
+        keyReleased=true;
+    }
+
     player->getMovement().setVelocity(player->getMovement().getVelocity().x * 0.5f, player->getMovement().getVelocity().y);
 
     //WHEN PLAYER IS ON GROUND
@@ -84,26 +88,34 @@ void GameState::updatePlayerPos() {
         }
     }
 
-    //WHEN PLAYER MOVES LEFT/RIGHT
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
-        player->getMovement().moveLeft();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
+    //WHEN PLAYER MOVES LEFT/RIGHT
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
+        player->getMovement().moveLeft();
+    }
+
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
         player->getMovement().moveRight();
+    }
+
 
     //WHEN PLAYER JUMPS
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
+    if(keyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
+        keyReleased=false;
         player->getMovement().moveUp();
         //JUMP AFTER IDLELEFT
         if (!player->isFacingRight()) {
             player->getMovement().setSpriteType(JUMPLEFT);
         }
         //MOVEMENT LEFT/RIGHT WHILE IN AIR
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left"))))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
             player->getMovement().setSpriteType(JUMPLEFT);
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right"))))
-            player->getMovement().setSpriteType(JUMPRIGHT);;
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
+            player->getMovement().setSpriteType(JUMPRIGHT);
+        }
     }
+
     //WHEN PLAYER SHOOTS
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){
         player->getAttack().hit();
@@ -139,7 +151,12 @@ void GameState::initKeys() {
     file2.open("../Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key)
-        keyBinds[keyName] = supportedKeys->at(key);
+        try {
+            keyBinds[keyName] = supportedKeys->at(key);
+        }
+        catch (std::exception& problem){
+            throw std::runtime_error("unsupported_keys");
+        }
 
     file2.close();
 }

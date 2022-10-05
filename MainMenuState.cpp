@@ -40,8 +40,16 @@ void MainMenuState::updateButtons() {
     for(auto &b : buttons)
         b.second->update(mousePos);
 
-    if(buttons["PLAY"]->isPressed())
-        states->push(std::make_unique<GameState>(window, states, textEvent, supportedKeys));
+    if(buttons["PLAY"]->isPressed()) {
+        try {
+            states->push(std::make_unique<GameState>(window, states, textEvent, supportedKeys));
+        }
+        catch (std::runtime_error& error){
+           if (strcmp(error.what(),"unsupported_keys")==0){
+               std::cout<<"unsupported keys"<<std::endl;
+           }
+        }
+    }
 
     if(buttons["SETTINGS"]->isPressed())
         states->push(std::make_unique<SettingsState>(window, states, textEvent, supportedKeys));

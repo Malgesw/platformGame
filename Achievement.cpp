@@ -10,9 +10,7 @@ void Achievement::update(char category) {
         newAchievement=true;
     }
     else{
-
     }
-
 }
 
 void Achievement::checkAchievements(){
