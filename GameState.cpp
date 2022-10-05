@@ -150,13 +150,33 @@ void GameState::initKeys() {
     std::ifstream file2;
     file2.open("../Config/settingsState_keys.ini");
 
-    while(file2 >> keyName >> key)
+    while(file2 >> keyName >> key) {
         try {
             keyBinds[keyName] = supportedKeys->at(key);
         }
-        catch (std::exception& problem){
+        catch (std::exception &problem) {
             throw std::runtime_error("unsupported_keys");
         }
+    }
+
+        bool noMisMatchFound=true;
+        auto i= keyBinds.begin();
+        auto j= keyBinds.begin();
+        while(noMisMatchFound and i!=--keyBinds.end()){
+            j=i;
+            j++;
+            while(noMisMatchFound and j!=keyBinds.end()){
+                if((*i).second==(*j).second)
+                    noMisMatchFound=false;
+                else
+                    j++;
+            }
+            i++;
+        }
+
+        if(!noMisMatchFound)
+            throw std::runtime_error("unsupported_keys");
+
 
     file2.close();
 }

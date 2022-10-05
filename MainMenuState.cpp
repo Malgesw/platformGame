@@ -22,6 +22,12 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
     view = window->getView();
     view.setCenter(view.getSize()/2.f);
 
+    errorMessage.setFont(font);
+    errorMessage.setCharacterSize(25);
+    errorMessage.setString("One or more keys selected are not valid");
+    errorMessage.setFillColor(sf::Color::Red);
+    errorMessage.setPosition(view.getSize().x/2.f-errorMessage.getGlobalBounds().width/2,3.f*view.getSize().y/4.f-errorMessage.getGlobalBounds().height/2);
+
 }
 
 void MainMenuState::update(const float &dt) {
@@ -46,13 +52,16 @@ void MainMenuState::updateButtons() {
         }
         catch (std::runtime_error& error){
            if (strcmp(error.what(),"unsupported_keys")==0){
-               std::cout<<"unsupported keys"<<std::endl;
+
+               renderError=true;
            }
         }
     }
 
-    if(buttons["SETTINGS"]->isPressed())
+    if(buttons["SETTINGS"]->isPressed()) {
         states->push(std::make_unique<SettingsState>(window, states, textEvent, supportedKeys));
+        renderError=false;
+    }
 
     if(buttons["EXIT"]->isPressed())
         states->pop();
@@ -63,6 +72,8 @@ void MainMenuState::render(sf::RenderTarget &target) {
 
     target.draw(background);
     target.draw(title);
+    if (renderError)
+        target.draw(errorMessage);
 
     for(auto &b : buttons)
         b.second->render(target);
