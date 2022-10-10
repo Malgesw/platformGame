@@ -12,12 +12,12 @@ TileMap::TileMap(GameCharacter& player) {
 
     addRoom("room1.ini",player,sf::Vector2i(16,16));
     addRoom("room2.ini",player,sf::Vector2i(16,16));
-    addRoom("room3.ini",player,sf::Vector2i(16,15));
+    addRoom("room3.ini",player,sf::Vector2i(16,3));
     currentRoom = 0;
 
     generateEnemy(0,"../Levels/WalkingEnemy.ini",sf::Vector2i(10,6),player);
     generateEnemy(0,"../Levels/FlyingEnemy.ini",sf::Vector2i(10,13),player);
-    generateEnemy(2,"../Levels/FlyingEnemy.ini",sf::Vector2i(8,6),player);
+    generateEnemy(2,"../Levels/FlyingEnemy.ini",sf::Vector2i(8,1),player);
 
 }
 
@@ -100,7 +100,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
         enemyMovement= std::make_unique<AutoWalking>(std::stof(enemyIni.GetValue("movement","speed")),
                                                      sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
-                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                                   static_cast<float>(startPosition.y)*rooms[roomNumber]->getDimY()),
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                                   rooms[roomNumber]->getWalls(),
@@ -111,7 +111,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
         enemyMovement= std::make_unique<AutoFlying>(std::stof(enemyIni.GetValue("movement","speed")),
                                                      sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
-                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                                   static_cast<float>(startPosition.y)*rooms[roomNumber]->getDimY()),
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                      rooms[roomNumber]->getWalls(),

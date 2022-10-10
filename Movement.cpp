@@ -44,55 +44,59 @@ void Movement::checkCollisions() {
 
     for (auto &o: barriers) {
 
-        sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
-        sf::FloatRect objectBounds;
-        sf::FloatRect nextPlayerPos = playerBounds;
-        nextPlayerPos.left += velocity.x * dt;
-        nextPlayerPos.top += velocity.y * dt;
+        if (std::abs(o->getGlobalBounds().top-collisionBox.getGlobalBounds().top)<400 and
+        std::abs(o->getGlobalBounds().left-collisionBox.getGlobalBounds().left)<600) {
 
-        objectBounds = o->getGlobalBounds();
-        if (objectBounds.intersects(nextPlayerPos)) {
+            sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
+            sf::FloatRect objectBounds;
+            sf::FloatRect nextPlayerPos = playerBounds;
+            nextPlayerPos.left += velocity.x * dt;
+            nextPlayerPos.top += velocity.y * dt;
+
+            objectBounds = o->getGlobalBounds();
+            if (objectBounds.intersects(nextPlayerPos)) {
 
 
-            //Bottom
-            if (playerBounds.top < objectBounds.top &&
-                playerBounds.top + playerBounds.height < objectBounds.top + objectBounds.height &&
-                playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
-                playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
-                velocity.y = 0.f;
-                isOnGround = true;
-                collisionBox.setPosition(playerBounds.left, objectBounds.top - playerBounds.height);
+                //Bottom
+                if (playerBounds.top < objectBounds.top &&
+                    playerBounds.top + playerBounds.height < objectBounds.top + objectBounds.height &&
+                    playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                    playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
+                    velocity.y = 0.f;
+                    isOnGround = true;
+                    collisionBox.setPosition(playerBounds.left, objectBounds.top - playerBounds.height);
+                }
+
+                    //Top
+                else if (playerBounds.top > objectBounds.top &&
+                         playerBounds.top + playerBounds.height > objectBounds.top + objectBounds.height &&
+                         playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                         playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
+                    velocity.y = 0.f;
+                    collisionBox.setPosition(playerBounds.left, objectBounds.top + objectBounds.height);
+                }
+
+
+                    //Right
+                else if (playerBounds.left < objectBounds.left &&
+                         playerBounds.left + playerBounds.width < objectBounds.left + objectBounds.width &&
+                         playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                         playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
+                    velocity.x = 0.f;
+                    collisionBox.setPosition(objectBounds.left - playerBounds.width, playerBounds.top);
+                }
+
+                    //Left
+                else if (playerBounds.left > objectBounds.left &&
+                         playerBounds.left + playerBounds.width > objectBounds.left + objectBounds.width &&
+                         playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                         playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
+                    velocity.x = 0.f;
+                    collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
+                } else
+                    isOnGround = false;
+
             }
-
-                //Top
-            else if (playerBounds.top > objectBounds.top &&
-                     playerBounds.top + playerBounds.height > objectBounds.top + objectBounds.height &&
-                     playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
-                     playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
-                velocity.y = 0.f;
-                collisionBox.setPosition(playerBounds.left, objectBounds.top + objectBounds.height);
-            }
-
-
-                //Right
-            else if (playerBounds.left < objectBounds.left &&
-                     playerBounds.left + playerBounds.width < objectBounds.left + objectBounds.width &&
-                     playerBounds.top < objectBounds.top + objectBounds.height -Tolerance &&
-                     playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
-                velocity.x = 0.f;
-                collisionBox.setPosition(objectBounds.left - playerBounds.width, playerBounds.top);
-            }
-
-                //Left
-            else if (playerBounds.left > objectBounds.left &&
-                     playerBounds.left + playerBounds.width > objectBounds.left + objectBounds.width &&
-                     playerBounds.top < objectBounds.top + objectBounds.height -Tolerance&&
-                     playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
-                velocity.x = 0.f;
-                collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
-            }
-            else
-                isOnGround = false;
 
         }
 
@@ -127,23 +131,6 @@ void Movement::update(sf::RenderWindow *window,const float &deltaTime, sf::Vecto
     checkCollisions();
     collisionBox.move(0,velocity.y*dt);
 
-    //MAP COLLISIONS
-
-    if(collisionBox.getPosition().y + collisionBox.getSize().y >= 600.f) {
-        collisionBox.setPosition(collisionBox.getPosition().x, 600.f - collisionBox.getSize().y);
-        if(typeOfMovement=='W') {
-            isOnGround=true;
-        }
-    }
-
-    if(collisionBox.getPosition().x < 0.f)
-        collisionBox.setPosition(0, collisionBox.getPosition().y);
-
-    if(collisionBox.getPosition().x + collisionBox.getSize().x >= 800.f)
-        collisionBox.setPosition(800.f - collisionBox.getSize().x, collisionBox.getPosition().y);
-
-    if(collisionBox.getGlobalBounds().top < 0.f)
-        collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
 
 }
 

@@ -55,7 +55,7 @@ void GameState::update(const float &dt) {
         }
 
     } else {
-        //std::cout<<"fps is "<<1/dt<<std::endl;
+        std::cout<<"fps is "<<1/dt<<std::endl;
         achievementCounter.checkAchievements();
         if (dt>0.1f) {
             tileMap->update(0, *player, window);
@@ -78,24 +78,21 @@ void GameState::updatePlayerPos() {
 
     player->getMovement().setVelocity(player->getMovement().getVelocity().x * 0.5f, player->getMovement().getVelocity().y);
 
-    //WHEN PLAYER IS ON GROUND
-    if(player->getMovement().onGround()) {
-        if (player->isFacingRight()) {
-            player->getMovement().setSpriteType(IDLERIGHT);
-        }
-        else{
-            player->getMovement().setSpriteType(IDLELEFT);
-        }
-    }
-
-
-    //WHEN PLAYER MOVES LEFT/RIGHT
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
         player->getMovement().moveLeft();
     }
 
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
         player->getMovement().moveRight();
+    }
+
+    else if(player->getMovement().onGround()) {
+        if (player->isFacingRight()) {
+            player->getMovement().setSpriteType(IDLERIGHT);
+        }
+        else{
+            player->getMovement().setSpriteType(IDLELEFT);
+        }
     }
 
 

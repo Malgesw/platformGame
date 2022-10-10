@@ -2,10 +2,19 @@
 
 Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize):player(mainCharacter),mapSize(mapSize){
 
-    dimX = 800.f/static_cast<float>(mapSize.x);
-    dimY = 600.f/static_cast<float>(mapSize.y);
+
+    dimX=50.f;
+    dimY=50.f;
     initFloor(roomName);
     camera.setSize(400.f, 300.f);
+    if(dimY* static_cast<float>(mapSize.y)<400){
+        camera.setSize(3*dimY* static_cast<float>(mapSize.y)/2,dimY* static_cast<float>(mapSize.y));
+    }
+
+    if(dimX* static_cast<float>(mapSize.x)<600){
+        camera.setSize(dimX* static_cast<float>(mapSize.x),2*dimX* static_cast<float>(mapSize.x)/3);
+    }
+
     camera.setCenter(player.getMovement().getPosition().x+player.getMovement().getCollisions().getGlobalBounds().width/2.f,
                      player.getMovement().getPosition().y+player.getMovement().getCollisions().getGlobalBounds().height/2.f);
 
@@ -66,6 +75,9 @@ void Room::render(sf::RenderTarget &target) {
 }
 
 void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window) {
+
+    //________________________________UPDATING WIEW
+
 
     //________________________________UPDATING MAP
     for (int i = 0; i < mapSize.y; i++) {
