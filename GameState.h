@@ -35,6 +35,10 @@ private:
     sf::Clock pauseClock;
     std::unique_ptr<TileMap> tileMap;
     sf::Texture* playerTexture;
+    sf::Texture* statusBarTexture;
+    sf::RectangleShape statusBar;
+    sf::RectangleShape hpBar;
+    sf::RectangleShape energyBar;
     Achievement achievementCounter;
 
 
