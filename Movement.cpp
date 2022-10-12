@@ -38,10 +38,10 @@ Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size
 }
 
 
-void Movement::checkCollisions() {
+bool Movement::checkCollisions() {
 
     float Tolerance=std::sqrt(speed)*dt*100;
-
+    bool collided = false;
     for (auto &o: barriers) {
 
         sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
@@ -49,6 +49,7 @@ void Movement::checkCollisions() {
         sf::FloatRect nextPlayerPos = playerBounds;
         nextPlayerPos.left += velocity.x * dt;
         nextPlayerPos.top += velocity.y * dt;
+
 
         objectBounds = o->getGlobalBounds();
         if (objectBounds.intersects(nextPlayerPos)) {
@@ -62,6 +63,7 @@ void Movement::checkCollisions() {
                 velocity.y = 0.f;
                 isOnGround = true;
                 collisionBox.setPosition(playerBounds.left, objectBounds.top - playerBounds.height);
+                collided= true;
             }
 
                 //Top
@@ -71,6 +73,7 @@ void Movement::checkCollisions() {
                      playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
                 velocity.y = 0.f;
                 collisionBox.setPosition(playerBounds.left, objectBounds.top + objectBounds.height);
+                collided= true;
             }
 
 
@@ -81,6 +84,7 @@ void Movement::checkCollisions() {
                      playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left - playerBounds.width, playerBounds.top);
+                collided= true;
             }
 
                 //Left
@@ -90,14 +94,19 @@ void Movement::checkCollisions() {
                      playerBounds.top + playerBounds.height > objectBounds.top +Tolerance) {
                 velocity.x = 0.f;
                 collisionBox.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
+                collided= true;
             }
+
             else
                 isOnGround = false;
 
         }
+        else
+            collided= false;
+
 
     }
-
+     return collided;
     }
 
 
