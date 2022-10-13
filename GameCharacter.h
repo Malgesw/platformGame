@@ -20,7 +20,7 @@ public:
     void setAnimation(std::unique_ptr<Animation> animation);
     void setAttack(std::unique_ptr<Attack> attack);
     void render(sf::RenderTarget &target);
-    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,sf::RenderWindow* window, sf::Vector2f mainCharacterPos);
+    void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos);
     Movement& getMovement();
     Attack& getAttack();
     int getHp() const;

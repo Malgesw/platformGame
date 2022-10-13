@@ -22,7 +22,7 @@ public:
     bool onGround() const;
     virtual bool checkCollisions();
     void setVelocity(float x, float y);
-    virtual void update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition);
+    virtual void update(const float &deltaTime, sf::Vector2f playerPosition);
     sf::Vector2f getVelocity() const;
     sf::RectangleShape& getCollisions();
     sf::Vector2f& getKnockback();

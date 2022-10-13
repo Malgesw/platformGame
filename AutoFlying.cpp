@@ -51,7 +51,7 @@ void AutoFlying::update(sf::RenderWindow *window,const float &deltaTime, sf::Vec
 
 
     aggro(deltaTime,playerPosition);
-    Movement::update(window, deltaTime,playerPosition);
+    Movement::update(deltaTime,playerPosition);
 
 
 }

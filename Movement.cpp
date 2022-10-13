@@ -124,35 +124,17 @@ sf::RectangleShape& Movement::getCollisions() {
 }
 
 
-void Movement::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
+void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
 
 
     dt=deltaTime;
     applyKnockback();
-    if(collisionBox.getPosition().y + collisionBox.getSize().y < (float)(*window).getSize().y and typeOfMovement=='W')
+    if(typeOfMovement=='W')
 
         velocity.y+=981.f*dt;
 
     checkCollisions();
     collisionBox.move(0,velocity.y*dt);
-
-    //MAP COLLISIONS
-
-    if(collisionBox.getPosition().y + collisionBox.getSize().y >= 600.f) {
-        collisionBox.setPosition(collisionBox.getPosition().x, 600.f - collisionBox.getSize().y);
-        if(typeOfMovement=='W') {
-            isOnGround=true;
-        }
-    }
-
-    if(collisionBox.getPosition().x < 0.f)
-        collisionBox.setPosition(0, collisionBox.getPosition().y);
-
-    if(collisionBox.getPosition().x + collisionBox.getSize().x >= 800.f)
-        collisionBox.setPosition(800.f - collisionBox.getSize().x, collisionBox.getPosition().y);
-
-    if(collisionBox.getGlobalBounds().top < 0.f)
-        collisionBox.setPosition(collisionBox.getGlobalBounds().left, 0.f);
 
 }
 

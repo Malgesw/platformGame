@@ -60,10 +60,10 @@ void GameState::update(const float &dt) {
         if (dt>0.1f) {
             tileMap->update(0, *player, window);
             updatePlayerPos();
-            player->update(0, tileMap->getWalls(), window, mainCharacterPos);
+            player->update(0, tileMap->getWalls(), mainCharacterPos);
         } else {
             updatePlayerPos();
-            player->update(dt, tileMap->getWalls(), window, mainCharacterPos);
+            player->update(dt, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(dt, *player, window);
 
         }
