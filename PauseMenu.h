@@ -9,7 +9,7 @@ class PauseMenu {
 
 public:
 
-    PauseMenu(sf::RenderWindow *window, sf::Font &font);
+    PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu);
     ~PauseMenu() = default;
 
     void update(sf::Vector2f &mousePos);
@@ -22,6 +22,7 @@ private:
     std::map<std::string, std::unique_ptr<Button>> buttons;
     sf::Font &font;
     sf::RectangleShape background;
+    bool isDeathMenu = false;
 
     void initButtons();
 

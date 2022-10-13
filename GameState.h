@@ -26,10 +26,12 @@ public:
 private:
 
     bool keyReleased=true;
+    bool death = false;
     std::unique_ptr<GameCharacter> player;
     sf::Vector2f mainCharacterPos;
     sf::Font font;
     std::unique_ptr<PauseMenu> pauseMenu;
+    std::unique_ptr<PauseMenu> deathMenu;
     bool isPaused;
     float pauseTime;
     sf::Clock pauseClock;
@@ -39,6 +41,8 @@ private:
     sf::RectangleShape statusBar;
     sf::RectangleShape hpBar;
     sf::RectangleShape energyBar;
+    sf::RectangleShape deathScreen;
+    sf::Text deathMessage;
     Achievement achievementCounter;
 
 

@@ -1,6 +1,6 @@
 #include "PauseMenu.h"
 
-PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font) : font(font) {
+PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu) : font(font), isDeathMenu(isDeathMenu) {
 
     initButtons();
 
@@ -36,7 +36,13 @@ bool PauseMenu::isButtonPressed(const std::string &button) {
 
 void PauseMenu::initButtons() {
 
-    buttons["CONTINUE"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
+    if(isDeathMenu)
+        buttons["RESTART"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
+                                                       sf::Color(70, 70, 70, 200), "Restart", font, 14,
+                                                       sf::Color(150, 150, 150, 255),
+                                                       sf::Color(20, 20, 20, 200));
+    else
+        buttons["CONTINUE"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
                                                sf::Color(70, 70, 70, 200), "Continue", font, 14,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));

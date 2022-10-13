@@ -32,7 +32,17 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     tileMap = std::make_unique<TileMap>(*player);
     player->getMovement().addWalls(tileMap->getWalls());
     player->getAttack().addTargets(tileMap->getTargets());
-    pauseMenu = std::make_unique<PauseMenu>(window, font);
+    pauseMenu = std::make_unique<PauseMenu>(window, font, false);
+    deathMenu = std::make_unique<PauseMenu>(window, font, true);
+    //deathScreen.setSize(tileMap->getRoom()->getCamera().getSize());
+    //deathScreen.setPosition(tileMap->getRoom()->getCamera().getCenter()-tileMap->getRoom()->getCamera().getSize()/2.f);
+    //deathScreen.setFillColor(sf::Color(20, 20, 20, 100));
+    deathMessage.setFont(font);
+    deathMessage.setString("You died, little sussy baka!");
+    deathMessage.setCharacterSize(20);
+    deathMessage.setFillColor(sf::Color::White);
+    deathMessage.setPosition(tileMap->getRoom()->getCamera().getSize()/3.f);
+
 }
 
 void GameState::update(const float &dt) {
@@ -49,10 +59,10 @@ void GameState::update(const float &dt) {
 
     if (isPaused) {
         pauseMenu->update(mousePos);
-        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y-120.f));
-        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
-                                                        tileMap->getRoom()->getCamera().getCenter().y-60.f));
+        //pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
+                                                     //  tileMap->getRoom()->getCamera().getCenter().y-120.f));
+        //pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
+                                                     //   tileMap->getRoom()->getCamera().getCenter().y-60.f));
 
         if (pauseMenu->isButtonPressed("CONTINUE"))
             isPaused = false;
@@ -62,11 +72,32 @@ void GameState::update(const float &dt) {
             states->pop();
         }
 
-    } else {
+    }
+    else if(death){
+        deathMenu->update(mousePos);
+        deathMenu->moveButton("RESTART", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
+                                                       tileMap->getRoom()->getCamera().getCenter().y-120.f));
+        deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
+                                                        tileMap->getRoom()->getCamera().getCenter().y-60.f));
 
+        if (deathMenu->isButtonPressed("RESTART")) {
+            death = false;
+            tileMap->setCurrentRoom(0);
+            player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(), tileMap->getRoom()->getDimY());
+            hpBar.setSize(sf::Vector2f (statusBar.getSize().x/1.5f,statusBar.getSize().y/4.6f));
+            player->setHp(50);
+            std::cout << "new HP bar size: " << hpBar.getSize().x << std::endl;
 
+        }
 
-        std::cout<<"fps is "<<1/dt<<std::endl;
+        if (deathMenu->isButtonPressed("EXIT_MENU")) {
+            sf::sleep(sf::seconds(0.1f));
+            states->pop();
+        }
+
+    }
+    else {
+
         achievementCounter.checkAchievements();
         if (dt>0.1f) {
             tileMap->update(0, *player, window);
@@ -85,7 +116,22 @@ void GameState::update(const float &dt) {
             hpBar.setSize(sf::Vector2f (statusBar.getSize().x/1.5f,statusBar.getSize().y/4.6f));
             energyBar.setPosition(statusBar.getPosition().x+statusBar.getSize().x/6.5f,statusBar.getPosition().y+statusBar.getSize().y/2.5f);
             energyBar.setSize(sf::Vector2f (statusBar.getSize().x/2.5f,statusBar.getSize().y/10.f));
-
+            if(player->getHp() < 50) {
+                if(hpBar.getSize().x > 0.f) {
+                    death = false;
+                    hpBar.setSize(sf::Vector2f(hpBar.getSize().x - (50 - player->getHp()) * hpBar.getSize().x / 8.f,
+                                               hpBar.getSize().y));
+                }
+                if(hpBar.getSize().x <= 0.f) {
+                    death = true;
+                    deathScreen.setPosition(tileMap->getRoom()->getCamera().getCenter()-tileMap->getRoom()->getCamera().getSize()/2.f);
+                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/4.f,
+                                             tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/4.f);
+                }
+            }
+            std::cout << "current HP: " << player->getHp() << std::endl;
+            std::cout << "current HP bar size: " << hpBar.getSize().x << std::endl;
+            std::cout << "death : " << death << std::endl;
         }
     }
 }
@@ -143,11 +189,16 @@ void GameState::render(sf::RenderTarget &target) {
 
     tileMap->render(target);
     target.draw(energyBar);
-    target.draw(hpBar);
+    if(!death)
+        target.draw(hpBar);
     target.draw(statusBar);
     player->render(target);
 
-    if(isPaused)
+    if(death) {
+        deathMenu->render(target);
+        target.draw(deathMessage);
+    }
+    else if(isPaused)
         pauseMenu->render(target);
 }
 

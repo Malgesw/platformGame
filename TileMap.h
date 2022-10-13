@@ -31,6 +31,9 @@ public:
     unsigned int getCurrentRoom() const {
         return currentRoom;
     }
+    void setCurrentRoom(unsigned int newCurrent) {
+        currentRoom = newCurrent;
+    }
 
     const std::unique_ptr<Room> &getRoom() const {
         return rooms[currentRoom];
