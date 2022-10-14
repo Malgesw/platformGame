@@ -100,7 +100,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
         enemyMovement= std::make_unique<AutoWalking>(std::stof(enemyIni.GetValue("movement","speed")),
                                                      sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
-                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                                   static_cast<float>(startPosition.y)*rooms[roomNumber]->getDimY()),
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                                   rooms[roomNumber]->getWalls(),
@@ -111,7 +111,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
         enemyMovement= std::make_unique<AutoFlying>(std::stof(enemyIni.GetValue("movement","speed")),
                                                      sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
-                                                                   static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimY()),
+                                                                   static_cast<float>(startPosition.y)*rooms[roomNumber]->getDimY()),
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                      rooms[roomNumber]->getWalls(),
