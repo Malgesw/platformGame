@@ -10,6 +10,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     playerTexture->loadFromFile("../images/playerSheet.png");
     playerTexture->setSmooth(true);
     font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    achievementCounter.setFont(font);
     isPaused = false;
     pauseTime = 0.5f;
     pauseClock.restart();
@@ -41,10 +42,10 @@ void GameState::update(const float &dt) {
 
     if (isPaused) {
         pauseMenu->update(mousePos);
-        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y-120.f));
-        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-20.f,
-                                                        tileMap->getRoom()->getCamera().getCenter().y-60.f));
+        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - 20.f,
+                                                       tileMap->getRoom()->getCamera().getCenter().y - 120.f));
+        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - 20.f,
+                                                        tileMap->getRoom()->getCamera().getCenter().y - 60.f));
 
         if (pauseMenu->isButtonPressed("CONTINUE"))
             isPaused = false;
@@ -56,20 +57,19 @@ void GameState::update(const float &dt) {
 
     } else {
         //std::cout<<"fps is "<<1/dt<<std::endl;
-        achievementCounter.checkAchievements();
-        if (dt>0.1f) {
+        if (dt > 0.2f) {
             tileMap->update(0, *player, window);
+            achievementCounter.update(window->getView(), dt);
             updatePlayerPos();
             player->update(0, tileMap->getWalls(), mainCharacterPos);
         } else {
             updatePlayerPos();
+            achievementCounter.update(window->getView(), dt);
             player->update(dt, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(dt, *player, window);
-
         }
     }
 }
-
 void GameState::updatePlayerPos() {
 
     if(textEvent.type==sf::Event::KeyReleased and textEvent.key.code==(sf::Keyboard::Key(keyBinds.at("Jump")))){
