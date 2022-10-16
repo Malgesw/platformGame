@@ -8,8 +8,7 @@ TileMap::TileMap(GameCharacter& player) {
 
     enum enemy{flying=0,walking=1};
     textures.push_back(new sf::Texture);
-    textures[flying]->loadFromFile("../images/flyingEnemySheet.png");
-
+    textures[flying]->loadFromFile("../images/flyingEnemySheetfixed.png");
     addRoom("room1.ini",player,sf::Vector2i(16,16));
     addRoom("room2.ini",player,sf::Vector2i(16,16));
     addRoom("room3.ini",player,sf::Vector2i(16,15));
