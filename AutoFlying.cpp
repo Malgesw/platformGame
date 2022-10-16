@@ -47,11 +47,8 @@ void AutoFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
 
 void AutoFlying::update(const float &deltaTime, sf::Vector2f playerPosition) {
 
-
-
     aggro(deltaTime,playerPosition);
     Movement::update(deltaTime,playerPosition);
-
 
 }
 
