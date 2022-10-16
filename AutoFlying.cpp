@@ -25,7 +25,6 @@ void AutoFlying::rest() {
 
 void AutoFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
 
-
     sf::Vector2f movement= pathfinder->getMovement(playerPosition,sf::Vector2f (collisionBox.getPosition().x+collisionBox.getSize().x/2,collisionBox.getPosition().y+collisionBox.getSize().y/2),dt);
     if (movement.x>1.f)
         moveRight();
@@ -46,7 +45,7 @@ void AutoFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
     }
 }
 
-void AutoFlying::update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition) {
+void AutoFlying::update(const float &deltaTime, sf::Vector2f playerPosition) {
 
 
 

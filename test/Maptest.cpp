@@ -34,7 +34,7 @@ public:
         player->getMovement().addWalls(walls);
         enemy= std::make_unique<GameCharacter>(50, 50);
         std::unique_ptr<Movement> enemyMovement=std::make_unique<AutoFlying>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),walls,sf::Vector2f(tile->getGlobalBounds().width,tile->getGlobalBounds().height));
-        std::unique_ptr<Attack> enemyAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
+        std::unique_ptr<Attack> enemyAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,35.f);
         auto enemyAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),false);
         enemy->setMovement(std::move(enemyMovement));
         enemy->setAttack(std::move(enemyAttack));
@@ -47,9 +47,8 @@ TEST_F(Maptest, Boundariestest) {
     auto bounds = player->getMovement().getCollisions().getGlobalBounds();
     auto objectbounds = tile->getGlobalBounds();
     player->getMovement().getCollisions().setPosition(101.f,0.f);
-    //player->getMovement().getCollisions().move(51.f,0.f);
     EXPECT_TRUE(player->getMovement().checkCollisions());
-    EXPECT_TRUE(player->getMovement().getCollisions().getPosition().x - objectbounds.left - bounds.width <= 0.1f);
+    EXPECT_TRUE(std::abs(player->getMovement().getCollisions().getPosition().x - objectbounds.left - bounds.width) <= 0.1f);
     player->getMovement().getCollisions().setPosition(130.f,0.f);
     EXPECT_TRUE(player->getMovement().checkCollisions());
 }
@@ -63,14 +62,14 @@ TEST_F(Maptest, Enemytest){
     player->getMovement().getCollisions().setPosition(50.f,0.f);
     enemy->getMovement().getCollisions().setPosition(400.f,250.f);
    targets.push_back(player->generateTarget());
-   sf::Clock maxTime;
-   while(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x > 20.f and
-   player->getMovement().getPosition().y -enemy->getMovement().getPosition().y> 20.f and maxTime.getElapsedTime().asSeconds()<25){
+   sf::Clock time;
+   while((std::abs(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x) > 20.f or
+   std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)> 20.f) and time.getElapsedTime().asSeconds()<25){
        enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
    }
 
 
-   EXPECT_TRUE(player->getMovement().getPosition().x -enemy->getMovement().getPosition().x<= 20.f);
-   EXPECT_TRUE(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y<= 20.1f);
+   EXPECT_TRUE(std::abs(player->getMovement().getPosition().x -enemy->getMovement().getPosition().x)<= 25.f);
+   EXPECT_TRUE(std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)<= 25.f);
 }
 
