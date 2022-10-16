@@ -124,6 +124,7 @@ void GameState::updatePlayerPos() {
 
 void GameState::render(sf::RenderTarget &target) {
     tileMap->render(target);
+    achievementCounter.render(target);
     player->render(target);
 
     if(isPaused)

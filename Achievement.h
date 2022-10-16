@@ -11,7 +11,7 @@
 class Achievement: public Observer{
 
 public:
-    explicit Achievement(float showTime);
+    explicit Achievement();
     ~Achievement() override= default;
     void setFont(const sf::Font& font);
     void getNews(char category) override;
@@ -22,7 +22,6 @@ public:
 private:
     int enemiesKilled=0;
     bool newAchievement= false;
-    float showTime=1.5f;
     sf::Clock timeCounter;
     sf::Text text;
     int fontOpacity=0;

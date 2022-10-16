@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-Achievement::Achievement(float showTime) {
+Achievement::Achievement() {
     text.setCharacterSize(18);
     text.setString("prova");
     text.setFillColor(sf::Color::Red);
