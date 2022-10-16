@@ -35,7 +35,7 @@ private:
     sf::Clock pauseClock;
     std::unique_ptr<TileMap> tileMap;
     sf::Texture* playerTexture;
-    Achievement achievementCounter=Achievement(1.5f);
+    Achievement achievementCounter;
 
 
     void initKeys() override;
