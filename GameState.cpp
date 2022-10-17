@@ -42,10 +42,10 @@ void GameState::update(const float &dt) {
 
     if (isPaused) {
         pauseMenu->update(mousePos);
-        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - 20.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y - 120.f));
-        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - 20.f,
-                                                        tileMap->getRoom()->getCamera().getCenter().y - 60.f));
+        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
+                                                       tileMap->getRoom()->getCamera().getCenter().y - 2.f*tileMap->getRoom()->getCamera().getSize().y/5.f));
+        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
+                                                        tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/5.f));
 
         if (pauseMenu->isButtonPressed("CONTINUE"))
             isPaused = false;
