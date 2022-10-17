@@ -18,7 +18,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player = std::make_unique<GameCharacter>(50,50);
     std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
     std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
-    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
+    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.27f, sf::Vector2f (35,35),true);
     playerAttack->attach(&achievementCounter);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
@@ -57,16 +57,18 @@ void GameState::update(const float &dt) {
 
     } else {
         //std::cout<<"fps is "<<1/dt<<std::endl;
-        if (dt > 0.2f) {
-            tileMap->update(0, *player, window);
-            achievementCounter.update(window->getView(), dt);
+        if (dt > 0.1f) {
             updatePlayerPos();
-            player->update(0, tileMap->getWalls(), mainCharacterPos);
+            player->update(0.1f, tileMap->getWalls(), mainCharacterPos);
+            tileMap->update(0.1f, *player, window);
+            achievementCounter.update(tileMap->getRoom()->getCamera(), 0.1f);
+
         } else {
             updatePlayerPos();
-            achievementCounter.update(window->getView(), dt);
             player->update(dt, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(dt, *player, window);
+            achievementCounter.update(tileMap->getRoom()->getCamera(), dt);
+
         }
     }
 }
