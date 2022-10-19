@@ -3,14 +3,14 @@
 SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                              std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
-    font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    font.loadFromFile("./Fonts/PAPYRUS.ttf");
 
     initKeys();
     initButtons();
     initTextFields();
     initDropDownList();
 
-    bgTexture.loadFromFile("../images/OPTIONS.png");
+    bgTexture.loadFromFile("./images/OPTIONS.png");
 
     //background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
     background.setSize(sf::Vector2f(800, 600));
@@ -93,7 +93,7 @@ void SettingsState::updateKeys() {
 
     std::ofstream file;
 
-    file.open("../Config/settingsState_keys.ini");
+    file.open("./Config/settingsState_keys.ini");
 
     for(auto &t : textFields)
         file << t.second->getDescription() << " " << static_cast<std::string>(t.second->getString()) << std::endl;
@@ -131,7 +131,7 @@ void SettingsState::initTextFields() {
 
     std::ifstream file;
 
-    file.open("../Config/settingsState_keys.ini");
+    file.open("./Config/settingsState_keys.ini");
 
     std::string keyName;
     std::string key;
@@ -163,7 +163,7 @@ void SettingsState::initDropDownList() {
                                                   sf::Color(20, 20, 20, 200));
 
     std::ifstream file;
-    file.open("../Config/window_settings.ini");
+    file.open("./Config/window_settings.ini");
     std::string first;
     std::string second;
     while(file >> first >> second) {
@@ -179,7 +179,7 @@ void SettingsState::initKeys() {
 
     std::ifstream file;
 
-    file.open("../Config/mainMenuState_keys.ini");
+    file.open("./Config/mainMenuState_keys.ini");
 
     std::string keyName;
     std::string key;

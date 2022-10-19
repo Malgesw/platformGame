@@ -14,7 +14,7 @@ public:
         tile=std::make_shared<LevelTile>('1',0.f,0.f, sf::Vector2f(50.f,50.f));
         walls.push_back(tile);
         sf::Texture* playerTexture=new sf::Texture;
-        playerTexture->loadFromFile("../images/playerSheet.png");
+        playerTexture->loadFromFile("./images/playerSheet.png");
         player= std::make_unique<GameCharacter>(50, 50);
         std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
         std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);

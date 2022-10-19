@@ -7,9 +7,9 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
     initKeys();
     playerTexture=new sf::Texture;
-    playerTexture->loadFromFile("../images/playerSheet.png");
+    playerTexture->loadFromFile("./images/playerSheet.png");
     playerTexture->setSmooth(true);
-    font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    font.loadFromFile("./Fonts/PAPYRUS.ttf");
     achievementCounter.setFont(font);
     isPaused = false;
     pauseTime = 0.5f;
@@ -142,7 +142,7 @@ bool GameState::isReady() const {
 
 void GameState::initKeys() {
     std::ifstream file;
-    file.open("../Config/mainMenuState_keys.ini");
+    file.open("./Config/mainMenuState_keys.ini");
     std::string keyName;
     std::string key;
 
@@ -151,7 +151,7 @@ void GameState::initKeys() {
 
     file.close();
     std::ifstream file2;
-    file2.open("../Config/settingsState_keys.ini");
+    file2.open("./Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key) {
         try {

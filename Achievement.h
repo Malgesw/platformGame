@@ -14,7 +14,7 @@ public:
     explicit Achievement();
     ~Achievement() override= default;
     void setFont(const sf::Font& font);
-    void getNews(char category) override;
+    void getNews(char category) override;//enum
     void checkAchievements();
     void update(const sf::View& view, const float& dt);
     void render(sf::RenderTarget &target);

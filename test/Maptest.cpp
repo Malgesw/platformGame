@@ -24,7 +24,7 @@ public:
         tile2=std::make_shared<LevelTile>('0', 300.f,0.f,sf::Vector2f(50.f,50.f));
         player= std::make_unique<GameCharacter>(50, 50);
         sf::Texture* playerTexture=new sf::Texture;
-        playerTexture->loadFromFile("../images/playerSheet.png");
+        playerTexture->loadFromFile("./images/playerSheet.png");
         std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (50,50),200);
         std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
         auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
@@ -61,15 +61,13 @@ TEST_F(Maptest, Tiletest){
 TEST_F(Maptest, Enemytest){
     player->getMovement().getCollisions().setPosition(50.f,0.f);
     enemy->getMovement().getCollisions().setPosition(400.f,250.f);
-   targets.push_back(player->generateTarget());
-   sf::Clock time;
-   while((std::abs(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x) > 20.f or
-   std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)> 20.f) and time.getElapsedTime().asSeconds()<25){
-       enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
-   }
-
-
-   EXPECT_TRUE(std::abs(player->getMovement().getPosition().x -enemy->getMovement().getPosition().x)<= 25.f);
-   EXPECT_TRUE(std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)<= 25.f);
+    targets.push_back(player->generateTarget());
+    sf::Clock time;
+    while((std::abs(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x) > 20.f or
+    std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)> 20.f) and time.getElapsedTime().asSeconds()<25){
+        enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
+    }
+    EXPECT_TRUE(std::abs(player->getMovement().getPosition().x -enemy->getMovement().getPosition().x)<= 25.f);
+    EXPECT_TRUE(std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)<= 25.f);
 }
 

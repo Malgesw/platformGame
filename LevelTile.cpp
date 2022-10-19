@@ -8,16 +8,16 @@ bool LevelTile::setupSprite(char tile) {
     switch(tile){
 
         case '2':
-            textureName = "../images/door.png";
+            textureName = "./images/door.png";
             exit = true;
             tileType = DOOR;
             break;
         case '0':
-            textureName = "../images/Ground.jpg";
+            textureName = "./images/Ground.jpg";
             tileType = GROUND;
             break;
         case '1':
-            textureName = "../images/wall.png";
+            textureName = "./images/wall.png";
             tileType = WALL;
             break;
         default:
