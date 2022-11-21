@@ -8,12 +8,12 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     initKeys();
     statusBarTexture= new sf::Texture;
     playerTexture=new sf::Texture;
-    playerTexture->loadFromFile("../images/playerSheet.png");
+    playerTexture->loadFromFile("./images/playerSheet.png");
     playerTexture->setSmooth(true);
-    statusBarTexture->loadFromFile("../images/hp bar.png");
+    statusBarTexture->loadFromFile("./images/hp bar.png");
     statusBarTexture->setSmooth(true);
 
-    font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    font.loadFromFile("./Fonts/PAPYRUS.ttf");
     isPaused = false;
     pauseTime = 0.5f;
     pauseClock.restart();
@@ -72,9 +72,9 @@ void GameState::update(const float &dt) {
     }
     else if(death){
         deathMenu->update(mousePos);
-        deathMenu->moveButton("RESTART", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/20.f,
+        deathMenu->moveButton("RESTART", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
                                                        tileMap->getRoom()->getCamera().getCenter().y-tileMap->getRoom()->getCamera().getSize().y/5.f));
-        deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/20.f,
+        deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
                                                         tileMap->getRoom()->getCamera().getCenter().y));
 
         if (deathMenu->isButtonPressed("RESTART")) {
@@ -202,7 +202,7 @@ bool GameState::isReady() const {
 
 void GameState::initKeys() {
     std::ifstream file;
-    file.open("../Config/mainMenuState_keys.ini");
+    file.open("./Config/mainMenuState_keys.ini");
     std::string keyName;
     std::string key;
 
@@ -211,7 +211,7 @@ void GameState::initKeys() {
 
     file.close();
     std::ifstream file2;
-    file2.open("../Config/settingsState_keys.ini");
+    file2.open("./Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key) {
         try {

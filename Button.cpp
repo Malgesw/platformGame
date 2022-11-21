@@ -19,7 +19,7 @@ Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, co
     buttonState = IDLE;
 
     if(type == 'B') {
-        texture.loadFromFile("../images/text box.png");
+        texture.loadFromFile("./images/text box.png");
         button.setTexture(&texture);
         button.setTextureRect(sf::IntRect(500.f, 500.f, 2366.f, 799.f));
     }
