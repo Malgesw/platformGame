@@ -97,7 +97,7 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     //________________________________UPDATING ENEMIES
 
     for (auto &e: enemies) {
-        e->update(dt, walls, window, player.getCenter());
+        e->update(dt, walls, player.getCenter());
     }
 
     auto i = enemies.begin();

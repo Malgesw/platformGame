@@ -51,7 +51,7 @@ void Attack::detach(Observer *o) {
 
 void Attack::notify(char category) const {
     for(auto &o : observers){
-        o->update(category);
+        o->getNews(category);
     }
 }
 

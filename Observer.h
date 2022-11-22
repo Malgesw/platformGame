@@ -9,6 +9,6 @@ class Observer{
 public:
 
     virtual ~Observer()=default;
-    virtual void update(char category)=0;
+    virtual void getNews(char category)=0;
 };
 #endif //PLATFORMGAME_OBSERVER_H

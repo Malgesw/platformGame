@@ -8,8 +8,8 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     positionCorrection.x=25.f;
     positionCorrection.y=0.f;
 
-    sprite.width = texture->getSize().x / (float)imageCount.x;
-    sprite.height = texture->getSize().y / (float)imageCount.y;
+        sprite.width = texture->getSize().x / (float) imageCount.x;
+        sprite.height = texture->getSize().y / (float) imageCount.y;
 
     animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
     animationBox.setTexture(texture);

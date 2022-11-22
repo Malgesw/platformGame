@@ -20,9 +20,9 @@ public:
     virtual void moveUp()=0;
     virtual void moveDown()=0;
     bool onGround() const;
-    virtual void checkCollisions();
+    virtual bool checkCollisions();
     void setVelocity(float x, float y);
-    virtual void update(sf::RenderWindow *window,const float &deltaTime, sf::Vector2f playerPosition);
+    virtual void update(const float &deltaTime, sf::Vector2f playerPosition);
     sf::Vector2f getVelocity() const;
     sf::RectangleShape& getCollisions();
     sf::Vector2f& getKnockback();

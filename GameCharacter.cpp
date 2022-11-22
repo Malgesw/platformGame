@@ -14,18 +14,18 @@ GameCharacter::GameCharacter(int healthPoints, int mana)
 }
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
-    if (newMovement== nullptr) throw std::runtime_error("Movement component not valid");
+    if (newMovement== nullptr) throw std::runtime_error("Movement passed is not valid");
     movement = std::move(newMovement);
 }
 
 
 void GameCharacter::setAttack( std::unique_ptr<Attack> newAttack) {
-    if (newAttack== nullptr) throw std::runtime_error("Attack component not valid");
+    if (newAttack== nullptr) throw std::runtime_error("Attack passed is not valid");
     attack = std::move(newAttack);
 }
 
 void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
-    if (newAnimation== nullptr) throw std::runtime_error("Animation component not valid");
+    if (newAnimation== nullptr) throw std::runtime_error("Animation passed is not valid");
     animation = std::move(newAnimation);
 }
 
@@ -40,8 +40,7 @@ void GameCharacter::render(sf::RenderTarget &target) {
 
 }
 
-void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects,
-                           sf::RenderWindow* window, sf::Vector2f mainCharacterPos) {
+void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos) {
 
     if(movement == nullptr or attack == nullptr or animation == nullptr){
         throw std::runtime_error("character's components not valid");
@@ -51,7 +50,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
     sf::Vector2f hitboxCenter(isFacingRight()?movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x:movement->getPosition().x,
                                     movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
 
-    movement->update(window,dt,mainCharacterPos);
+    movement->update(dt,mainCharacterPos);
     attack->update(hitboxCenter,isFacingRight());
 
 

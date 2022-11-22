@@ -11,14 +11,20 @@
 class Achievement: public Observer{
 
 public:
-    Achievement()=default;
+    explicit Achievement();
     ~Achievement() override= default;
-    void update(char category) override;
+    void setFont(const sf::Font& font);
+    void getNews(char category) override;
     void checkAchievements();
+    void update(const sf::View& view, const float& dt);
+    void render(sf::RenderTarget &target);
 
 private:
     int enemiesKilled=0;
     bool newAchievement= false;
+    sf::Clock timeCounter;
+    sf::Text text;
+    int fontOpacity=0;
 };
 
 
