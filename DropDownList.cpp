@@ -69,7 +69,7 @@ void DropDownList::update(sf::Vector2f mousePos, sf::RenderWindow *window) {
                 window->setSize(sf::Vector2u(std::stoi(w), std::stoi(h)));
 
                 first.replace(first.find('x'), 1, " ");
-                ofs.open("../Config/window_settings.ini");
+                ofs.open("./Config/window_settings.ini");
                 ofs << first;
                 ofs.close();
 

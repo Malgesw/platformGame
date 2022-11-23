@@ -8,12 +8,12 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     initKeys();
     statusBarTexture= new sf::Texture;
     playerTexture=new sf::Texture;
-    playerTexture->loadFromFile("../images/playerSheet.png");
+    playerTexture->loadFromFile("./images/playerSheet.png");
     playerTexture->setSmooth(true);
-    statusBarTexture->loadFromFile("../images/hp bar.png");
+    statusBarTexture->loadFromFile("./images/hp bar.png");
     statusBarTexture->setSmooth(true);
 
-    font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    font.loadFromFile("./Fonts/PAPYRUS.ttf");
     achievementCounter.setFont(font);
     isPaused = false;
     pauseTime = 0.5f;
@@ -25,7 +25,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player = std::make_unique<GameCharacter>(50,50);
     std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
     std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
-    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.27f, sf::Vector2f (35,35),true);
+    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
     playerAttack->attach(&achievementCounter);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
@@ -35,9 +35,6 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player->getAttack().addTargets(tileMap->getTargets());
     pauseMenu = std::make_unique<PauseMenu>(window, font, false);
     deathMenu = std::make_unique<PauseMenu>(window, font, true);
-    //deathScreen.setSize(tileMap->getRoom()->getCamera().getSize());
-    //deathScreen.setPosition(tileMap->getRoom()->getCamera().getCenter()-tileMap->getRoom()->getCamera().getSize()/2.f);
-    //deathScreen.setFillColor(sf::Color(20, 20, 20, 100));
     deathMessage.setFont(font);
     deathMessage.setString("You died, little sussy baka!");
     deathMessage.setCharacterSize(20);
@@ -75,11 +72,10 @@ void GameState::update(const float &dt) {
     }
     else if(death){
         deathMenu->update(mousePos);
-        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y - 2.f*tileMap->getRoom()->getCamera().getSize().y/5.f));
-        pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
-                                                        tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/5.f));
-
+        deathMenu->moveButton("RESTART", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
+                                                       tileMap->getRoom()->getCamera().getCenter().y-tileMap->getRoom()->getCamera().getSize().y/5.f));
+        deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
+                                                        tileMap->getRoom()->getCamera().getCenter().y));
 
         if (deathMenu->isButtonPressed("RESTART")) {
             death = false;
@@ -87,8 +83,6 @@ void GameState::update(const float &dt) {
             player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(), tileMap->getRoom()->getDimY());
             hpBar.setSize(sf::Vector2f (statusBar.getSize().x/1.5f,statusBar.getSize().y/4.6f));
             player->setHp(50);
-            std::cout << "new HP bar size: " << hpBar.getSize().x << std::endl;
-
         }
 
         if (deathMenu->isButtonPressed("EXIT_MENU")) {
@@ -97,7 +91,6 @@ void GameState::update(const float &dt) {
         }
 
     }
-
     else {
         //std::cout<<"fps is "<<1/dt<<std::endl;
         if (dt > 0.1f) {
@@ -123,19 +116,15 @@ void GameState::update(const float &dt) {
             if(player->getHp() < 50) {
                 if(hpBar.getSize().x > 0.f) {
                     death = false;
-                    hpBar.setSize(sf::Vector2f(hpBar.getSize().x - (50 - player->getHp()) * hpBar.getSize().x / 8.f,
+                    hpBar.setSize(sf::Vector2f(hpBar.getSize().x - static_cast<float>(50 - player->getHp()) * hpBar.getSize().x / 8.f,
                                                hpBar.getSize().y));
                 }
                 if(hpBar.getSize().x <= 0.f) {
                     death = true;
-                    deathScreen.setPosition(tileMap->getRoom()->getCamera().getCenter()-tileMap->getRoom()->getCamera().getSize()/2.f);
                     deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/4.f,
-                                             tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/4.f);
+                                             tileMap->getRoom()->getCamera().getCenter().y- tileMap->getRoom()->getCamera().getSize().y/3.f);
                 }
             }
-            std::cout << "current HP: " << player->getHp() << std::endl;
-            std::cout << "current HP bar size: " << hpBar.getSize().x << std::endl;
-            std::cout << "death : " << death << std::endl;
         }
     }
 }
@@ -215,7 +204,7 @@ bool GameState::isReady() const {
 
 void GameState::initKeys() {
     std::ifstream file;
-    file.open("../Config/mainMenuState_keys.ini");
+    file.open("./Config/mainMenuState_keys.ini");
     std::string keyName;
     std::string key;
 
@@ -224,7 +213,7 @@ void GameState::initKeys() {
 
     file.close();
     std::ifstream file2;
-    file2.open("../Config/settingsState_keys.ini");
+    file2.open("./Config/settingsState_keys.ini");
 
     while(file2 >> keyName >> key) {
         try {

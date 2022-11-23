@@ -41,7 +41,6 @@ private:
     sf::RectangleShape statusBar;
     sf::RectangleShape hpBar;
     sf::RectangleShape energyBar;
-    sf::RectangleShape deathScreen;
     sf::Text deathMessage;
     Achievement achievementCounter;
 

@@ -29,7 +29,7 @@ void Room::initFloor(const std::string& roomName) {
     doors.clear();
     std::ifstream ifs;
     std::string n;
-    ifs.open("../Levels/"+roomName);
+    ifs.open("./Levels/"+roomName);
 
     for(int i = 0; i < mapSize.x; i++) {
         while(ifs >> n){

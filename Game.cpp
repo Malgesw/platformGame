@@ -74,7 +74,7 @@ void Game::initWindow() {
     window = new sf::RenderWindow(sf::VideoMode(800, 600), "Steamrush");
 
     std::ifstream ifs;
-    ifs.open("../Config/window_settings.ini");
+    ifs.open("./Config/window_settings.ini");
     std::string w,h;
     while(ifs >> w >> h){
         window->setSize(sf::Vector2u(std::stoi(w), std::stoi(h)));
@@ -94,7 +94,7 @@ void Game::initKeys() {
 
     std::ifstream file;
 
-    file.open("../Config/supported_keys.ini");
+    file.open("./Config/supported_keys.ini");
     std::string key;
     int keyValue = 0;
 

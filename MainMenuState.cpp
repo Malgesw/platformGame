@@ -3,12 +3,12 @@
 MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>> *states, const sf::Event &ev,
                              std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
-    font.loadFromFile("../Fonts/PAPYRUS.ttf");
+    font.loadFromFile("./Fonts/PAPYRUS.ttf");
 
     initKeys();
     initButtons();
 
-    bgTexture.loadFromFile("../images/bg2fixed.png");
+    bgTexture.loadFromFile("./images/bg2fixed.png");
 
     background.setSize(sf::Vector2f(800.f,600.f));
     background.setTexture(&bgTexture);
@@ -103,7 +103,7 @@ void MainMenuState::initKeys() {
 
     std::ifstream file;
 
-    file.open("../Config/mainMenuState_keys.ini");
+    file.open("./Config/mainMenuState_keys.ini");
     std::string keyName;
     std::string key;
 
