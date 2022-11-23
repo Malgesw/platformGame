@@ -109,10 +109,10 @@ bool Movement::checkCollisions() {
 
 
     }
-     return collided;
-    }
 
     }
+    return collided;
+   }
 
 
 void Movement::setVelocity(float x, float y){

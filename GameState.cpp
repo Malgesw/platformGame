@@ -77,6 +77,8 @@ void GameState::update(const float &dt) {
         deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
                                                         tileMap->getRoom()->getCamera().getCenter().y));
 
+
+
         if (deathMenu->isButtonPressed("RESTART")) {
             death = false;
             tileMap->setCurrentRoom(0);
