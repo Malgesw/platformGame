@@ -136,7 +136,7 @@ void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
     applyKnockback();
     if(typeOfMovement=='W')
 
-        velocity.y+=981.f*dt;
+        velocity.y+=3200.f*dt;
 
     checkCollisions();
     collisionBox.move(0,velocity.y*dt);

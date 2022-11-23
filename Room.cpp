@@ -3,15 +3,15 @@
 Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize):player(mainCharacter),mapSize(mapSize){
 
 
-    dimX=50.f;
-    dimY=50.f;
+    dimX=240.f;
+    dimY=180.f;
     initFloor(roomName);
-    camera.setSize(400.f, 300.f);
-    if(dimY* static_cast<float>(mapSize.y)<400){
+    camera.setSize(1920.f, 1080.f);
+    if(dimY* static_cast<float>(mapSize.y)<1080.f){
         camera.setSize(3*dimY* static_cast<float>(mapSize.y)/2,dimY* static_cast<float>(mapSize.y));
     }
 
-    if(dimX* static_cast<float>(mapSize.x)<600){
+    if(dimX* static_cast<float>(mapSize.x)<1920.f){
         camera.setSize(dimX* static_cast<float>(mapSize.x),2*dimX* static_cast<float>(mapSize.x)/3);
     }
 

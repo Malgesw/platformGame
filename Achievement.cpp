@@ -51,10 +51,11 @@ void Achievement::checkAchievements(){
 void Achievement::update(const sf::View& view, const float& dt ) {
     text.setFillColor(sf::Color(255,0,0,fontOpacity));
     text.setPosition(view.getCenter().x-text.getGlobalBounds().width/2.f,view.getCenter().y-view.getSize().y/3.f-text.getGlobalBounds().height/2.f);
+    text.setCharacterSize(static_cast<unsigned int>(4.f*view.getSize().y/65.f));
     checkAchievements();
     //_____________________________TEXT FADE OUT EFFECT
     if (fontOpacity>0){
-        fontOpacity= fontOpacity- std::round(dt*100);
+        fontOpacity= fontOpacity- static_cast<int>(std::round(dt * 100));
     }
     if (fontOpacity<0) {
         fontOpacity = 0;

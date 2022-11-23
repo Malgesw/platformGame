@@ -15,8 +15,8 @@ imageCount(imageCount), switchTime(switchTime), texture(texture) {
     animationBox.setTexture(texture);
     faceRight = true;
     if(isplayer) {
-        animationLeftOffset = -12.f;
-        animationRightOffset=-4;
+        animationLeftOffset = -57.6f;
+        animationRightOffset=-19.2f;
     }
 
 }

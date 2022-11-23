@@ -4,22 +4,25 @@ MainMenuState::MainMenuState(sf::RenderWindow *window, std::stack<std::unique_pt
                              std::map<std::string, int> *supportedKeys) : State(window, states, ev, supportedKeys) {
 
     font.loadFromFile("./Fonts/PAPYRUS.ttf");
+    view = window->getView();
 
     initKeys();
     initButtons();
 
     bgTexture.loadFromFile("./images/bg2fixed.png");
 
-    background.setSize(sf::Vector2f(800.f,600.f));
+    background.setSize(sf::Vector2f (1920.f,1080.f));
     background.setTexture(&bgTexture);
 
+
     title.setFont(font);
-    title.setCharacterSize(50);
+    title.setCharacterSize(static_cast<unsigned int>((view.getSize().x / 17.f)));
     title.setString("Steamrush");
     title.setFillColor(sf::Color::White);
-    title.setPosition(sf::Vector2f(270.f, 80.f));
+    title.setPosition(sf::Vector2f(27.f*view.getSize().x/75.f, 2.f*view.getSize().y/15.f));
 
-    view = window->getView();
+
+
     view.setCenter(view.getSize()/2.f);
 
     errorMessage.setFont(font);
@@ -82,18 +85,18 @@ void MainMenuState::render(sf::RenderTarget &target) {
 
 void MainMenuState::initButtons() {
 
-    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 200.f),
-                                               sf::Color(130, 130, 130, 200), "Play", font, 16,
+    buttons["PLAY"] = std::make_unique<Button>(sf::Vector2f(view.getSize().x/4.f, view.getSize().y/12.f), sf::Vector2f(59.f*view.getSize().x/160.f,view.getSize().y/3.f),
+                                               sf::Color(130, 130, 130, 200), "Play", font, static_cast<unsigned int>(2.f*view.getSize().y/65.f),
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 260.f),
-                                               sf::Color(130, 130, 130, 200), "Settings", font, 16,
+    buttons["SETTINGS"] = std::make_unique<Button>(sf::Vector2f(view.getSize().x/4.f, view.getSize().y/12.f), sf::Vector2f(59.f*view.getSize().x/160.f,13.f*view.getSize().y/30.f),
+                                               sf::Color(130, 130, 130, 200), "Settings", font, static_cast<unsigned int>(2.f*view.getSize().y/65.f),
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(295.f, 320.f),
-                                               sf::Color(130, 130, 130, 200), "Exit", font, 16,
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(view.getSize().x/4.f, view.getSize().y/12.f), sf::Vector2f(59.f*view.getSize().x/160.f,8.f*view.getSize().y/15.f),
+                                               sf::Color(130, 130, 130, 200), "Exit", font, static_cast<unsigned int>(2.f*view.getSize().y/65.f),
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 

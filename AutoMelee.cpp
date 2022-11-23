@@ -7,7 +7,7 @@
 AutoMelee::AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback) : MeleeAttack(size, speed,
                                                                                                    hitDamage,
                                                                                                    knockback) {
-    attackoffset=20.f;
+    attackoffset=96.f;
 
 }
 

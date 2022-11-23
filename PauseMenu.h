@@ -16,6 +16,7 @@ public:
     void render(sf::RenderTarget &target);
     bool isButtonPressed(const std::string &button);
     void moveButton(const std::string& buttonName, sf::Vector2f newPos);
+    void resizeButton(const std::string& buttonName, sf::Vector2f newSize);
 
 private:
 

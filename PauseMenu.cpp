@@ -4,34 +4,27 @@ PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu)
 
     initButtons();
 
-    background.setSize(static_cast<sf::Vector2f>(window->getSize()));
+    background.setSize(static_cast<sf::Vector2f>(3.f*window->getView().getSize()));
     background.setFillColor(sf::Color(sf::Color(20, 20, 20, 100)));
 
 }
 
 void PauseMenu::update(sf::Vector2f &mousePos) {
-
     for(auto &b : buttons)
         b.second->update(mousePos);
-
 }
 
 void PauseMenu::render(sf::RenderTarget &target) {
-
     target.draw(background);
-
     for(auto &b : buttons)
         b.second->render(target);
-
 }
 
 bool PauseMenu::isButtonPressed(const std::string &button) {
-
     if(buttons[button]->isPressed())
         return true;
     else
         return false;
-
 }
 
 void PauseMenu::initButtons() {
@@ -55,7 +48,9 @@ void PauseMenu::initButtons() {
 }
 
 void PauseMenu::moveButton(const std::string& buttonName, sf::Vector2f newPos) {
-
     buttons[buttonName]->setPosition(newPos);
+}
 
+void PauseMenu::resizeButton(const std::string& buttonName, sf::Vector2f newSize) {
+    buttons[buttonName]->setSize(newSize);
 }
