@@ -18,6 +18,7 @@ void MeleeAttack::hit() {
         auto i= targets.begin();
 
         while (i!=targets.end()) {
+
             auto currentTarget=*i;
             bool enemyCancelled=false;
 
