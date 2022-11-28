@@ -1,11 +1,12 @@
 #include "Room.h"
 
-Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize):player(mainCharacter),mapSize(mapSize){
+Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize,std::vector<sf::Texture*> &tilesTextures)
+:player(mainCharacter),mapSize(mapSize){
 
 
     dimX=240.f;
     dimY=180.f;
-    initFloor(roomName);
+    initFloor(roomName,tilesTextures);
     camera.setSize(1920.f, 1080.f);
     if(dimY* static_cast<float>(mapSize.y)<1080.f){
         camera.setSize(3*dimY* static_cast<float>(mapSize.y)/2,dimY* static_cast<float>(mapSize.y));
@@ -22,7 +23,7 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
     }
 
 
-void Room::initFloor(const std::string& roomName) {
+void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tilesTextures) {
 
     sf::Vector2f size(dimX, dimY);
     tiles.clear();
@@ -30,6 +31,8 @@ void Room::initFloor(const std::string& roomName) {
     std::ifstream ifs;
     std::string n;
     ifs.open("./Levels/"+roomName);
+
+
 
     for(int i = 0; i < mapSize.x; i++) {
         while(ifs >> n){
@@ -42,7 +45,23 @@ void Room::initFloor(const std::string& roomName) {
     for(int i=0;i<mapSize.y;i++){
         std::vector<std::shared_ptr<LevelTile>> row;
         for(int j=0;j<mapSize.x;j++){
-            row.push_back(std::make_unique<LevelTile>(numbers[i][j], j*dimX , i*dimY,  size));
+
+            switch(numbers[i][j]){
+
+                case '2':
+
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[2], j*dimX , i*dimY,  size,2));
+                    break;
+                case '0':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j*dimX , i*dimY,  size,0));
+                    break;
+                case '1':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[1], j*dimX , i*dimY,  size,1));
+                    break;
+                default:
+                    throw std::runtime_error("invalid tile");
+
+            }
         }
         tiles.push_back(row);
     }

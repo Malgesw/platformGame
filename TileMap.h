@@ -41,6 +41,7 @@ public:
 
 private:
     std::vector<sf::Texture*> textures;
+    std::vector<sf::Texture*> tilesTextures;
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
 

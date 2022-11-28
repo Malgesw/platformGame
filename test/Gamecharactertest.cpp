@@ -10,10 +10,13 @@ public:
     std::unique_ptr<GameCharacter> player;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::shared_ptr<LevelTile> tile;
+
     Gamecharactertest(){
-        tile=std::make_shared<LevelTile>('1',0.f,0.f, sf::Vector2f(50.f,50.f));
+        auto tileTexture=new sf::Texture;
+        tileTexture->loadFromFile("../images/playerSheet.png");
+        tile=std::make_shared<LevelTile>(tileTexture,0.f,0.f, sf::Vector2f(50.f,50.f),1);
         walls.push_back(tile);
-        sf::Texture* playerTexture=new sf::Texture;
+        auto playerTexture=new sf::Texture;
         playerTexture->loadFromFile("../images/playerSheet.png");
         player= std::make_unique<GameCharacter>(50, 50);
         std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);

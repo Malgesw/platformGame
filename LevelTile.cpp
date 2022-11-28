@@ -1,6 +1,6 @@
 #include "LevelTile.h"
 
-
+/*
 bool LevelTile::setupSprite(char tile) {
 
     std::string textureName;
@@ -36,17 +36,20 @@ bool LevelTile::setupSprite(char tile) {
     return true;
 
 }
+ */
 
-LevelTile::LevelTile(char tile , float x, float y, sf::Vector2f size) {
+LevelTile::LevelTile(sf::Texture* text  , float x, float y, sf::Vector2f size, unsigned short type) {
 
     body.setSize(size);
-    exit = false;
-    tileType = GROUND;
+    exit = type==DOOR;
+    tileType =type;
 
-    if(!setupSprite(tile)){
+    /*if(!setupSprite(tile)){
         std::cout << "Sprite not loaded" << std::endl;
     }
-
+     */
+    body.setTexture(text);
+    body.setTextureRect(sf::IntRect(0,0,50,50));
     body.setPosition( sf:: Vector2f(x,y));
 
 }

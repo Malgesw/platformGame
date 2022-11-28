@@ -11,9 +11,9 @@ class LevelTile {
 
 public:
 
-    LevelTile(char tile, float x, float y, sf::Vector2f size);
+    LevelTile(sf::Texture* text, float x, float y, sf::Vector2f size, unsigned short tiletype);
 
-    bool setupSprite(char tile);
+    //bool setupSprite(char tile);
     void render(sf::RenderTarget &target);
     bool isExit() const;
 

@@ -16,7 +16,7 @@ class Room {
 public:
 
 
-    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures,sf::Vector2i mapSize);
+    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures,sf::Vector2i mapSize, std::vector<sf::Texture*> &tilesTextures);
     void render(sf::RenderTarget &target);
     void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
     const sf::Vector2i &getMapSize() const;
@@ -70,7 +70,9 @@ private:
     sf::View camera;
 
 
-    void initFloor(const std::string& roomName);
+
+
+    void initFloor(const std::string& roomName,std::vector<sf::Texture*> &tilesTextures);
 
 };
 

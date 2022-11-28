@@ -10,6 +10,15 @@ TileMap::TileMap(GameCharacter& player) {
     textures.push_back(new sf::Texture);
     textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
 
+    tilesTextures.push_back(new sf::Texture);
+    tilesTextures.push_back(new sf::Texture);
+    tilesTextures.push_back(new sf::Texture);
+
+    tilesTextures[0]->loadFromFile("./images/Ground.jpg");
+    tilesTextures[1]->loadFromFile("./images/wall.png");
+    tilesTextures[2]->loadFromFile("./images/door.png");
+
+
     addRoom("room1.ini",player,sf::Vector2i(16,16));
     addRoom("room2.ini",player,sf::Vector2i(16,16));
     addRoom("room3.ini",player,sf::Vector2i(16,3));
@@ -77,7 +86,7 @@ void TileMap::render(sf::RenderTarget &target) {
 
 void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vector2i roomSize) {
 
-    rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize));
+    rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize,tilesTextures));
 }
 
 void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i startPosition, GameCharacter& player) {
