@@ -4,8 +4,8 @@
 
 #include "AutoFlying.h"
 
-AutoFlying::AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>> &walls, sf::Vector2f wallSize):
-        FlyingMovement(movementSpeed,startPosition,size){
+AutoFlying::AutoFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,const std::vector<std::shared_ptr<LevelTile>> &walls, sf::Vector2f wallSize, unsigned short * typeOfSprite):
+        FlyingMovement(movementSpeed,startPosition,size,typeOfSprite){
 
 
     collisionBox.setFillColor(sf::Color::Red);

@@ -12,6 +12,7 @@
 #include "AttackTarget.h"
 #include "Animation.h"
 
+
 class GameCharacter {
 
 public:
@@ -35,16 +36,27 @@ public:
                 movement->getPosition().y+ movement->getCollisions().getGlobalBounds().height/2.f};
     }
 
+    unsigned short &getSpriteType(){
+        return typeOfSprite;
+    }
+
+    unsigned short *spritePointer(){
+        return &typeOfSprite;
+    }
+
+    void setSpriteType(unsigned short type){
+        typeOfSprite = type;
+    }
+
 
 private:
 
-
-    void die();
     int hp;
     int energy;
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
+    unsigned short typeOfSprite;
 
 
 };

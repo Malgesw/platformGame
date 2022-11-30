@@ -4,8 +4,8 @@
 
 #include "WalkingMovement.h"
 
-WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height)
-: Movement(velocity,startPosition,size,'W'),jumpHeight(height){
+WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height, unsigned short * typeOfSprite)
+: Movement(velocity,startPosition,size,'W',typeOfSprite),jumpHeight(height){
 
 
 }
@@ -15,7 +15,7 @@ void WalkingMovement::moveUp() {
         isOnGround = false;
         velocity.y = -sqrtf(2.f * 981.f * jumpHeight);
         collisionBox.move(0.f, velocity.y * dt);
-        typeOfSprite = JUMPRIGHT;
+        *typeOfSprite = JUMPRIGHT;
     }
 }
 

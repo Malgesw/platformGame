@@ -33,8 +33,8 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-    target.draw(attack->getHitBox());
-    target.draw(movement->getCollisions());
+    //target.draw(attack->getHitBox());
+    //target.draw(movement->getCollisions());
     animation->render(target);
 
 
@@ -72,9 +72,6 @@ Attack& GameCharacter::getAttack(){
     return *attack;
 }
 
-void GameCharacter::die() {
-
-}
 
 int GameCharacter::getHp() const {
     return hp;

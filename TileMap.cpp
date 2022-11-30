@@ -7,8 +7,12 @@
 TileMap::TileMap(GameCharacter& player) {
 
     enum enemy{flying=0,walking=1};
+
     textures.push_back(new sf::Texture);
     textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
+    textures.push_back(new sf::Texture);
+    textures[walking]->loadFromFile("./images/cyberMonkey.png");
+
 
     tilesTextures.push_back(new sf::Texture);
     tilesTextures.push_back(new sf::Texture);
@@ -114,7 +118,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                                   rooms[roomNumber]->getWalls(),
                                                                   std::stof(enemyIni.GetValue("movement","jHeight")),
-                                                     std::stof(enemyIni.GetValue("movement","turnBackTime")));
+                                                     std::stof(enemyIni.GetValue("movement","turnBackTime")),enemy->spritePointer());
     }
     else if(strcmp(enemyIni.GetValue("movement","type"),"F") == 0){
 
@@ -124,7 +128,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                      sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
                                                                   std::stof(enemyIni.GetValue("general","sizeY"))),
                                                      rooms[roomNumber]->getWalls(),
-                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimY()));
+                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimY()),enemy->spritePointer());
 
     }
     enemyMovement->addWalls(rooms[roomNumber]->getWalls());
@@ -140,7 +144,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                               std::stof(enemyIni.GetValue("attack","rangeY"))),
                                                             std::stof(enemyIni.GetValue("attack","speed")),
                                                                  std::stof(enemyIni.GetValue("attack","damage")),
-                                                                    std::stof(enemyIni.GetValue("attack","knockback")));
+                                                                    std::stof(enemyIni.GetValue("attack","knockback")),enemy->spritePointer());
     }
     std::vector<AttackTarget> targets;
     targets.push_back(player.generateTarget());
@@ -155,7 +159,7 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
                                                             std::stoi(enemyIni.GetValue("animation","imageCountY"))),
                                                std::stof(enemyIni.GetValue("animation","switchTime")),
                                                sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
-                                                            std::stof(enemyIni.GetValue("general","sizeY"))),false);
+                                                            std::stof(enemyIni.GetValue("general","sizeY"))),false,enemy->spritePointer());
 
 
     //________________assigning enemy's components

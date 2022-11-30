@@ -5,8 +5,8 @@
 #include "Attack.h"
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback):
-        attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback) {
+Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short* typeOfSprite):
+        attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback),typeOfSprite(typeOfSprite) {
 
 hitBox=sf::RectangleShape(size);
 hitBox.setFillColor(sf::Color::Blue);
@@ -15,6 +15,8 @@ hitBox.setFillColor(sf::Color::Blue);
 sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
+
+
 
 
 void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
@@ -52,6 +54,15 @@ void Attack::detach(Observer *o) {
 void Attack::notify(char category) const {
     for(auto &o : observers){
         o->getNews(category);
+    }
+}
+
+void Attack::hit() {
+    if(*typeOfSprite==MOVERIGHT or *typeOfSprite==JUMPRIGHT or *typeOfSprite==IDLERIGHT) {
+        *typeOfSprite = ATTACKRIGHT;
+    }
+    else {
+        *typeOfSprite = ATTACKLEFT;
     }
 }
 

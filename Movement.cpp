@@ -7,9 +7,9 @@
 
 void Movement::moveLeft() {
     if(isOnGround)
-        typeOfSprite = MOVELEFT;
+        *typeOfSprite = MOVELEFT;
     else
-        typeOfSprite = JUMPLEFT;
+        *typeOfSprite = JUMPLEFT;
     velocity.x=velocity.x-speed;
     if (velocity.x<=-10*speed)
         velocity.x=-10*speed;
@@ -17,9 +17,9 @@ void Movement::moveLeft() {
 }
 void Movement::moveRight() {
     if(isOnGround)
-        typeOfSprite = MOVERIGHT;
+        *typeOfSprite = MOVERIGHT;
     else
-        typeOfSprite = JUMPRIGHT;
+        *typeOfSprite = JUMPRIGHT;
     velocity.x=velocity.x+speed;
     if (velocity.x>=10*speed)
         velocity.x=10*speed;
@@ -27,13 +27,13 @@ void Movement::moveRight() {
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type)
-:speed(velocity),dt(0.01f),typeOfMovement(type){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,unsigned short *typeOfSprite)
+:speed(velocity),dt(0.01f),typeOfMovement(type),typeOfSprite(typeOfSprite){
 
     collisionBox=sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::White);
-    typeOfSprite = IDLERIGHT;
+    *typeOfSprite = IDLERIGHT;
     knockback=sf::Vector2f (0,0);
 }
 

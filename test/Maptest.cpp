@@ -66,17 +66,18 @@ TEST_F(Maptest, Enemytest){
     player->getMovement().getCollisions().setPosition(50.f,0.f);
     enemy->getMovement().getCollisions().setPosition(400.f,250.f);
     int startLife=player->getHp();
-   targets.push_back(player->generateTarget());
-   enemy->getAttack().addTargets(targets);
-   sf::Clock time;
-   while((std::abs(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x) > 20.f or
-   std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)> 20.f) and time.getElapsedTime().asSeconds()<25){
+    targets.push_back(player->generateTarget());
+    enemy->getAttack().addTargets(targets);
+    sf::Clock time;
+    while((std::abs(player->getMovement().getPosition().x - enemy->getMovement().getPosition().x) > 20.f or
+    std::abs(player->getMovement().getPosition().y -enemy->getMovement().getPosition().y)> 20.f) and time.getElapsedTime().asSeconds()<25){
        enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
    }
 
-   enemy->getAttack().hit();
    enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
    player->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
+   enemy->getAttack().update(player->getMovement().getCollisions().getPosition()+player->getMovement().getCollisions().getSize()/2.f,true);
+
 
 
    EXPECT_TRUE(enemy->getAttack().getHitBox().getGlobalBounds().intersects(player->getMovement().getCollisions().getGlobalBounds()));

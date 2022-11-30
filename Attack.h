@@ -10,15 +10,15 @@
 #include "headers.h"
 #include "AttackTarget.h"
 #include "Subject.h"
-
+#include "spriteType.h"
 
 class Attack :public Subject{
 
 public:
 
-    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback);
+    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short* typeOfSprite);
     ~Attack() override= default;
-    virtual void hit()=0;
+    virtual void hit();
     sf::RectangleShape& getHitBox();
     void addTargets(const std::vector<AttackTarget>& newTargets);
     void clearTargets();
@@ -37,6 +37,7 @@ protected:
     sf::RectangleShape hitBox;
     std::list<AttackTarget> targets;
     std::list<Observer *> observers;
+    unsigned short *typeOfSprite;
 
     bool checkDeath(const AttackTarget& target) const;
 };

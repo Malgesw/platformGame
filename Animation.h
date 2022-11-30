@@ -8,7 +8,7 @@ class Animation {
 
 public:
 
-    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer);
+    Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer, unsigned short* typeOfSprite);
     ~Animation() = default;
 
     void update(Movement &playerMovement, const float &dt);
@@ -38,6 +38,7 @@ private:
     sf::Vector2f positionCorrection;
     float animationLeftOffset=0.f;
     float animationRightOffset=0.f;
+    unsigned short *typeOfSprite;
 };
 
 

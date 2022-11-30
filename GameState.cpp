@@ -23,9 +23,9 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     hpBar.setFillColor(sf::Color(40,223,90));
     energyBar.setFillColor(sf::Color(123,234,209));
     player = std::make_unique<GameCharacter>(50,50);
-    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(380,sf::Vector2f (240.f,180.f),sf::Vector2f (120,126),1300);
-    std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f);
-    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (168,126),true);
+    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(380,sf::Vector2f (240.f,180.f),sf::Vector2f (120,126),1500,player->spritePointer());
+    std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
+    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (168,126),true,player->spritePointer());
     playerAttack->attach(&achievementCounter);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
@@ -132,8 +132,11 @@ void GameState::update(const float &dt) {
                 }
                 if(hpBar.getSize().x <= 0.f) {
                     death = true;
-                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/4.f,
-                                             tileMap->getRoom()->getCamera().getCenter().y- tileMap->getRoom()->getCamera().getSize().y/3.f);
+                    //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/5.f,
+                                             //tileMap->getRoom()->getCamera().getCenter().y- tileMap->getRoom()->getCamera().getSize().y/3.f);
+                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
+                                             tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
+                    deathMessage.setCharacterSize(static_cast<unsigned int>(2.f*tileMap->getRoom()->getCamera().getSize().y/45.f));
                 }
             }
         }
@@ -157,10 +160,10 @@ void GameState::updatePlayerPos() {
 
     else if(player->getMovement().onGround()) {
         if (player->isFacingRight()) {
-            player->getMovement().setSpriteType(IDLERIGHT);
+            player->setSpriteType(IDLERIGHT);
         }
         else{
-            player->getMovement().setSpriteType(IDLELEFT);
+            player->setSpriteType(IDLELEFT);
         }
     }
 
@@ -171,14 +174,14 @@ void GameState::updatePlayerPos() {
         player->getMovement().moveUp();
         //JUMP AFTER IDLELEFT
         if (!player->isFacingRight()) {
-            player->getMovement().setSpriteType(JUMPLEFT);
+            player->setSpriteType(JUMPLEFT);
         }
         //MOVEMENT LEFT/RIGHT WHILE IN AIR
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
-            player->getMovement().setSpriteType(JUMPLEFT);
+            player->setSpriteType(JUMPLEFT);
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
-            player->getMovement().setSpriteType(JUMPRIGHT);
+            player->setSpriteType(JUMPRIGHT);
         }
     }
 

@@ -11,7 +11,7 @@
 class AutoMelee: public MeleeAttack,AutoAttack{
 
 public:
-    AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback);
+    AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short * typeOfSprite);
     void update(sf::Vector2f centerPosition,bool facingRight) override;
 
 private:

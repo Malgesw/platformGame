@@ -6,7 +6,7 @@
 
 
 
-FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size) : Movement(velocity,startPosition,size,'F') {
+FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, unsigned short * typeOfSprite) : Movement(velocity,startPosition,size,'F',typeOfSprite) {
 
 }
 

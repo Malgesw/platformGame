@@ -7,13 +7,13 @@
 
 
 #include "LevelTile.h"
+#include "spriteType.h"
 
-enum spriteType {IDLELEFT,IDLERIGHT, MOVERIGHT, MOVELEFT, JUMPRIGHT, JUMPLEFT};
 
 class Movement{
 
 public:
-    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type);
+    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type, unsigned short* typeOfSprite);
     virtual ~Movement();
     virtual void moveLeft()=0;
     virtual void moveRight()=0;
@@ -28,13 +28,7 @@ public:
     sf::Vector2f& getKnockback();
 
 
-    unsigned short &getSpriteType(){
-        return typeOfSprite;
-    }
 
-    void setSpriteType(unsigned short type){
-        typeOfSprite = type;
-    }
 
     sf::Vector2f getPosition() const;
     void addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls);
@@ -65,7 +59,8 @@ protected:
     std::vector<std::shared_ptr<LevelTile>> barriers;
     bool isOnGround=true;
     bool inertia = true;
-    unsigned short typeOfSprite;
+    unsigned short *typeOfSprite;
+
     void applyKnockback();
 
 };

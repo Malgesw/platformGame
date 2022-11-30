@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer) :
+Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer,unsigned short *typeOfSprite) :
 imageCount(imageCount), switchTime(switchTime), texture(texture) {
 
     totalTime = 0.f;
@@ -28,7 +28,7 @@ void Animation::update(Movement &playerMovement, const float &dt) {
                              playerMovement.getCollisions().getPosition().y-playerMovement.getCollisions().getSize().y/4.f);
 
     int row;
-    switch (playerMovement.getSpriteType()) {
+    switch (*typeOfSprite) {
         case IDLELEFT:
             row = 0;
             faceRight= false;

@@ -4,9 +4,9 @@
 
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback) : Attack(size, speed,
+MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short * typeOfSprite) : Attack(size, speed,
                                                                                                   hitDamage,
-                                                                                                  knockback) {
+                                                                                                  knockback,typeOfSprite) {
 }
 
 void MeleeAttack::hit() {
