@@ -24,6 +24,11 @@ public:
         return faceRight;
     }
 
+    void setCurrentImage(sf::Vector2i newCurrentImage) {
+        currentImage.x = newCurrentImage.x;
+        currentImage.y = newCurrentImage.y;
+    }
+
 
 private:
 
@@ -39,6 +44,7 @@ private:
     float animationLeftOffset=0.f;
     float animationRightOffset=0.f;
     unsigned short *typeOfSprite;
+    bool isRepeatable;
 };
 
 

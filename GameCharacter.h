@@ -24,6 +24,7 @@ public:
     void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos);
     Movement& getMovement();
     Attack& getAttack();
+    Animation& getAnimation();
     int getHp() const;
     void setHp(int hp);
     int getEnergy() const;

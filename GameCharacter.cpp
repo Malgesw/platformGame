@@ -72,6 +72,10 @@ Attack& GameCharacter::getAttack(){
     return *attack;
 }
 
+Animation& GameCharacter::getAnimation(){
+    return *animation;
+}
+
 
 int GameCharacter::getHp() const {
     return hp;

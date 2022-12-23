@@ -11,7 +11,7 @@ TileMap::TileMap(GameCharacter& player) {
     textures.push_back(new sf::Texture);
     textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
     textures.push_back(new sf::Texture);
-    textures[walking]->loadFromFile("./images/cyberMonkey.png");
+    textures[walking]->loadFromFile("./images/cyberMonkey2.png");
 
 
     tilesTextures.push_back(new sf::Texture);

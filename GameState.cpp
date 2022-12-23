@@ -132,13 +132,31 @@ void GameState::update(const float &dt) {
                 }
                 if(hpBar.getSize().x <= 0.f) {
                     death = true;
-                    //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/5.f,
-                                             //tileMap->getRoom()->getCamera().getCenter().y- tileMap->getRoom()->getCamera().getSize().y/3.f);
-                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
-                                             tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
+                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.5f,
+                                             tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/3.f);
+                    //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
+                      //                       tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
                     deathMessage.setCharacterSize(static_cast<unsigned int>(2.f*tileMap->getRoom()->getCamera().getSize().y/45.f));
                 }
             }
+            for (auto &e : tileMap->getRoom()->getEnemies()){
+                if (std::abs(player->getAttack().getHitBox().getPosition().x - e->getAttack().getHitBox().getPosition().x) <= 80.f &&
+                std::abs(player->getAttack().getHitBox().getPosition().y - e->getAttack().getHitBox().getPosition().y) <= 80.f){
+                    //std::cout << "Near enemy" << std::endl;
+                    if(e->isFacingRight())
+                        e->setSpriteType(ATTACKRIGHT);
+                    else
+                        e->setSpriteType(ATTACKLEFT);
+                    //std::cout << e->getSpriteType() << std::endl;
+                }
+                else{
+                    if(e->isFacingRight())
+                        e->setSpriteType(MOVERIGHT);
+                    else
+                        e->setSpriteType(MOVELEFT);
+                }
+            }
+
         }
     }
 }

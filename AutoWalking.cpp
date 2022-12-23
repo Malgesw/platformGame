@@ -14,18 +14,16 @@ WalkingMovement(movementSpeed,startPosition,size,jHeight,typeOfSprite),turnbackT
 
 void AutoWalking::rest() {
 
-    if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2)) {
-        moveRight();
-
-
+    if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2) && *typeOfSprite != ATTACKRIGHT){
+        //moveRight();
     }
-    else if ( timeCounter.getElapsedTime().asSeconds()<turnbackTime){
-        moveLeft();
+    else if (timeCounter.getElapsedTime().asSeconds()<turnbackTime && *typeOfSprite != ATTACKLEFT){
+        //moveLeft();
     }
     else{
         timeCounter.restart();
     }
-    }
+}
 
 void AutoWalking::aggro(const float &dt, sf::Vector2f playerPosition) {
 
