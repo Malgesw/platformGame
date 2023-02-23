@@ -87,12 +87,15 @@ void GameState::update(const float &dt) {
         if (deathMenu->isButtonPressed("RESTART")) {
             death = false;
             tileMap->setCurrentRoom(0);
-            player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(), tileMap->getRoom()->getDimY());
+            tileMap->clearEnemies();
+            tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
+            player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(),
+                                                              tileMap->getRoom()->getDimY());
             player->getMovement().clearWalls();
             player->getMovement().addWalls(tileMap->getRoom()->getWalls());
             player->getAttack().clearTargets();
             player->getAttack().addTargets(tileMap->getRoom()->getTargets());
-            hpBar.setSize(sf::Vector2f (statusBar.getSize().x/1.5f,statusBar.getSize().y/4.6f));
+            hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
             player->setHp(50);
         }
 

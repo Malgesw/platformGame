@@ -1,7 +1,3 @@
-//
-// Created by alessio on 19/08/22.
-//
-
 #include "Attack.h"
 #include <utility>
 
@@ -15,9 +11,6 @@ hitBox.setFillColor(sf::Color::Blue);
 sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
-
-
-
 
 void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
 
@@ -33,7 +26,6 @@ void Attack::clearTargets() {
 bool Attack::checkDeath(const AttackTarget &target) const{
 
     if(target.getHp()<=damage){
-
         notify('k');
         return true;
     }
@@ -58,11 +50,16 @@ void Attack::notify(char category) const {
 }
 
 void Attack::hit() {
-    if(*typeOfSprite==MOVERIGHT or *typeOfSprite==JUMPRIGHT or *typeOfSprite==IDLERIGHT) {
+    if (*typeOfSprite == MOVERIGHT or *typeOfSprite == JUMPRIGHT or *typeOfSprite == IDLERIGHT) {
         *typeOfSprite = ATTACKRIGHT;
-    }
-    else {
+    } else {
         *typeOfSprite = ATTACKLEFT;
+    }
+}
+
+void Attack::update(sf::Vector2f centerPosition, bool orientation) {
+    for (auto &t: targets) {
+        t.update();
     }
 }
 

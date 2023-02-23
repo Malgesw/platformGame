@@ -1,7 +1,3 @@
-//
-// Created by alessio on 26/09/22.
-//
-
 #ifndef PLATFORMGAME_MELEEATTACK_H
 #define PLATFORMGAME_MELEEATTACK_H
 

@@ -132,13 +132,21 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
 
 }
 
-void Room::addEnemy(std::unique_ptr<GameCharacter>& enemy) {
+void Room::addEnemy(std::unique_ptr<GameCharacter> &enemy) {
     enemies.push_back(std::move(enemy));
+}
+
+void Room::clearEnemies() {
+    auto i = enemies.begin();
+
+    while (i != enemies.end()) {
+        enemies.erase(i++);
+    }
 }
 
 std::vector<AttackTarget> Room::getTargets() {
     std::vector<AttackTarget> targets;
-    for(auto &e : enemies){
+    for (auto &e: enemies) {
         targets.push_back(e->generateTarget());
     }
     return targets;

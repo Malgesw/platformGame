@@ -10,7 +10,6 @@
 #include "MeleeAttack.h"
 #include "Achievement.h"
 
-
 class GameState : public State {
 
 public:

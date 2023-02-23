@@ -10,7 +10,6 @@
 #include "AutoFlying.h"
 #include "AutoMelee.h"
 
-
 class Room {
 
 public:
@@ -22,7 +21,9 @@ public:
     const sf::Vector2i &getMapSize() const;
 
 
-    void addEnemy(std::unique_ptr<GameCharacter>& enemy);
+    void addEnemy(std::unique_ptr<GameCharacter> &enemy);
+
+    void clearEnemies();
 
 
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {

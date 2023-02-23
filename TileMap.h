@@ -1,7 +1,3 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #ifndef TILEMAP_H
 #define TILEMAP_H
 #include <SFML/Graphics.hpp>
@@ -12,25 +8,34 @@
 #include "Room.h"
 #include <string>
 
-
-
 class TileMap {
 
 public:
 
-    TileMap(GameCharacter &player);
+    explicit TileMap(GameCharacter &player);
+
     ~TileMap();
+
     void render(sf::RenderTarget &target);
-    void update(const float &dt,GameCharacter &player, sf::RenderWindow *window);
-    const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
+
+    void update(const float &dt, GameCharacter &player, sf::RenderWindow *window);
+
+    void spawnEnemies(GameCharacter &player);
+
+    void clearEnemies();
+
+    const std::vector<std::shared_ptr<LevelTile>> &getWalls() const {
         return rooms[currentRoom]->getWalls();
     }
-    std::vector<AttackTarget> getTargets() const{
+
+    std::vector<AttackTarget> getTargets() const {
         return rooms[currentRoom]->getTargets();
     }
+
     unsigned int getCurrentRoom() const {
         return currentRoom;
     }
+
     void setCurrentRoom(unsigned int newCurrent) {
         currentRoom = newCurrent;
     }

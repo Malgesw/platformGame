@@ -1,7 +1,3 @@
-//
-// Created by alessio on 19/08/22.
-//
-
 #ifndef PLATFORMGAME_ATTACK_H
 #define PLATFORMGAME_ATTACK_H
 
@@ -16,17 +12,25 @@ class Attack :public Subject{
 
 public:
 
-    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short* typeOfSprite);
-    ~Attack() override= default;
-    virtual void hit();
-    sf::RectangleShape& getHitBox();
-    void addTargets(const std::vector<AttackTarget>& newTargets);
+    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short *typeOfSprite);
+
+    ~Attack() override = default;
+
+    sf::RectangleShape &getHitBox();
+
+    void addTargets(const std::vector<AttackTarget> &newTargets);
+
     void clearTargets();
-    virtual void update(sf::Vector2f centerPosition, bool orientation)=0;
-    void attach(Observer* o) override;
-    void detach(Observer* o) override;
+
+    void attach(Observer *o) override;
+
+    void detach(Observer *o) override;
+
     void notify(char category) const override;
 
+    virtual void hit() = 0;
+
+    virtual void update(sf::Vector2f centerPosition, bool orientation) = 0;
 
 
 protected:

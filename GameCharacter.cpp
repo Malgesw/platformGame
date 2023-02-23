@@ -1,7 +1,3 @@
-//
-// Created by alessio on 24/07/22.
-//
-
 #include "GameCharacter.h"
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"

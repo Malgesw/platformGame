@@ -1,7 +1,3 @@
-//
-// Created by alessio on 24/07/22.
-//
-
 #ifndef PLATFORMGAME_GAMECHARACTER_H
 #define PLATFORMGAME_GAMECHARACTER_H
 

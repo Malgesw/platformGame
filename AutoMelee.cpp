@@ -1,7 +1,3 @@
-//
-// Created by alessio on 26/09/22.
-//
-
 #include "AutoMelee.h"
 
 AutoMelee::AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short * typeOfSprite) : MeleeAttack(size, speed,

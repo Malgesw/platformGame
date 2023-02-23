@@ -23,26 +23,31 @@ TileMap::TileMap(GameCharacter& player) {
     tilesTextures[2]->loadFromFile("./images/door.png");
 
 
-    addRoom("room1.ini",player,sf::Vector2i(16,16));
-    addRoom("room2.ini",player,sf::Vector2i(16,16));
-    addRoom("room3.ini",player,sf::Vector2i(16,3));
+    addRoom("room1.ini", player, sf::Vector2i(16, 16));
+    addRoom("room2.ini", player, sf::Vector2i(16, 16));
+    addRoom("room3.ini", player, sf::Vector2i(16, 3));
     currentRoom = 0;
 
-    generateEnemy(0,"./Levels/WalkingEnemy.ini",sf::Vector2i(10,6),player);
-    generateEnemy(0,"./Levels/FlyingEnemy.ini",sf::Vector2i(10,13),player);
-    generateEnemy(2,"./Levels/FlyingEnemy.ini",sf::Vector2i(8,1),player);
+    spawnEnemies(player);
 
 }
 
-void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *window) {
+void TileMap::render(sf::RenderTarget &target) {
+    rooms[currentRoom]->render(target);
+
+}
+
+void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *window) {
 
     unsigned int room = currentRoom;
 
-    rooms[currentRoom]->update(dt,currentRoom,window);
+    rooms[currentRoom]->update(dt, currentRoom, window);
     std::vector<std::shared_ptr<LevelTile>> doors = rooms[currentRoom]->getDoors();
 
-    if(currentRoom < room){
-        player.getMovement().getCollisions().setPosition(doors[doors.size()-1]->getPosition().x - rooms[currentRoom]->getDimX(), doors[doors.size()-1]->getPosition().y);
+    if (currentRoom < room) {
+        player.getMovement().getCollisions().setPosition(
+                doors[doors.size() - 1]->getPosition().x - rooms[currentRoom]->getDimX(),
+                doors[doors.size() - 1]->getPosition().y);
         player.getMovement().setBarriers(rooms[currentRoom]->getWalls());
         player.getAttack().clearTargets();
         player.getAttack().addTargets(rooms[currentRoom]->getTargets());
@@ -82,11 +87,17 @@ void TileMap::update(const float &dt,GameCharacter &player, sf::RenderWindow *wi
 
 }
 
-void TileMap::render(sf::RenderTarget &target) {
-    rooms[currentRoom]->render(target);
-
+void TileMap::spawnEnemies(GameCharacter &player) {
+    generateEnemy(0, "./Levels/WalkingEnemy.ini", sf::Vector2i(10, 6), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);
+    generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
 }
 
+void TileMap::clearEnemies() {
+    for (auto &r: rooms) {
+        r->clearEnemies();
+    }
+}
 
 void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vector2i roomSize) {
 
