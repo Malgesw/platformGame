@@ -13,15 +13,23 @@
 class Bullet {
 
 public:
-    Bullet(sf::Vector2f size,sf::Vector2f startPosition, int speed,  int damage, sf::Texture* texture);
+    Bullet(sf::Vector2f size, int speed,  int damage, int knockback);
 
-    void update(const float &dt, const std::vector<AttackTarget> &targets, const std::vector<std::shared_ptr<LevelTile>> &walls);
+    std::list<AttackTarget>::const_iterator update(const float &dt, const std::list<AttackTarget> &targets, const std::vector<std::shared_ptr<LevelTile>> &walls);
+
     void render(sf::RenderTarget &target);
+    void shoot(sf::Vector2f startposition,sf::Vector2f direction);
+    void setDirection(sf::Vector2f newDirection);
+    bool isActive();
+    bool isCollided();
 
 private:
     int speed;
+    sf::Vector2f direction;
     int damage;
-    bool isActive=true;
+    int knockback;
+    bool active=false;
+    bool collided=false;
     sf::RectangleShape body;
 
 };

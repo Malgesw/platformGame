@@ -8,6 +8,7 @@
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"
 #include "MeleeAttack.h"
+#include "RangedAttack.h"
 #include "Achievement.h"
 
 

@@ -4,10 +4,8 @@
 
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback) : Attack(size, speed,
-                                                                                                  hitDamage,
-                                                                                                  knockback) {
-}
+MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback) :
+Attack(size, speed, hitDamage, knockback) {}
 
 void MeleeAttack::hit() {
 
@@ -46,7 +44,9 @@ void MeleeAttack::hit() {
                     enemyCancelled=true;
                 }
 
-                currentTarget.receiveDamage(knockbackDirection * knockbackDistance, damage);
+                std::cout<<"poi diventa"<<knockback<<std::endl;
+
+                currentTarget.receiveDamage(knockbackDirection * knockback, damage);
 
             }
             if(not enemyCancelled){
@@ -57,10 +57,11 @@ void MeleeAttack::hit() {
     }
 }
 
-void MeleeAttack::update(sf::Vector2f centerPosition,bool facingRight) {
+void MeleeAttack::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     hitBox.setPosition(facingRight?centerPosition.x-hitBox.getSize().x/2-attackoffset:centerPosition.x-hitBox.getSize().x/2+attackoffset,
                        centerPosition.y-hitBox.getSize().y/2);
+
 }
 
 

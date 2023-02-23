@@ -12,7 +12,8 @@ class AutoMelee: public MeleeAttack,AutoAttack{
 
 public:
     AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback);
-    void update(sf::Vector2f centerPosition,bool facingRight) override;
+    void update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) override;
+    void render(sf::RenderTarget &target)override{};
 
 private:
     void attackPlayer(sf::Vector2f centerPosition) override;

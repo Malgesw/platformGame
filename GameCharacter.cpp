@@ -33,9 +33,10 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-    target.draw(attack->getHitBox());
-    target.draw(movement->getCollisions());
+   // target.draw(attack->getHitBox());
+  //  target.draw(movement->getCollisions());
     animation->render(target);
+    attack->render(target);
 
 
 }
@@ -51,7 +52,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                                     movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
 
     movement->update(dt,mainCharacterPos);
-    attack->update(hitboxCenter,isFacingRight());
+    attack->update(dt,hitboxCenter,isFacingRight(),objects);
 
 
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
