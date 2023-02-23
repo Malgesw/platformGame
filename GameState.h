@@ -43,6 +43,7 @@ private:
     sf::RectangleShape energyBar;
     sf::Text deathMessage;
     Achievement achievementCounter;
+    bool isApproaching = true;
 
 
     void initKeys() override;

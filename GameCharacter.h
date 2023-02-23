@@ -58,6 +58,7 @@ private:
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
     unsigned short typeOfSprite;
+    unsigned short previousTypeOfSprite;
 
 
 };

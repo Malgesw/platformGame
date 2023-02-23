@@ -42,24 +42,27 @@ void GameCharacter::render(sf::RenderTarget &target) {
 
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos) {
 
-    if(movement == nullptr or attack == nullptr or animation == nullptr){
+    if (movement == nullptr or attack == nullptr or animation == nullptr) {
         throw std::runtime_error("character's components not valid");
     }
 
+    previousTypeOfSprite = typeOfSprite;
 
-    sf::Vector2f hitboxCenter(isFacingRight()?movement->getCollisions().getPosition().x+movement->getCollisions().getSize().x:movement->getPosition().x,
-                                    movement->getCollisions().getPosition().y+movement->getCollisions().getSize().y/2);
 
-    movement->update(dt,mainCharacterPos);
-    attack->update(hitboxCenter,isFacingRight());
+    sf::Vector2f hitboxCenter(
+            isFacingRight() ? movement->getCollisions().getPosition().x + movement->getCollisions().getSize().x
+                            : movement->getPosition().x,
+            movement->getCollisions().getPosition().y + movement->getCollisions().getSize().y / 2);
+
+    movement->update(dt, mainCharacterPos);
+    attack->update(hitboxCenter, isFacingRight());
 
 
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
                               animation->getSprite().width, animation->getSprite().height);
 
 
-
-    animation->update(*movement, dt);
+    animation->update(*movement, dt, previousTypeOfSprite);
     animation->getAnimationBox().setTextureRect(animationRect);
 
 }

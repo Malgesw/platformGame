@@ -13,6 +13,7 @@ void MeleeAttack::hit() {
 
     if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
 
+        Attack::hit();
         cooldown.restart();
 
         auto i= targets.begin();

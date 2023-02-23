@@ -14,13 +14,13 @@ WalkingMovement(movementSpeed,startPosition,size,jHeight,typeOfSprite),turnbackT
 
 void AutoWalking::rest() {
 
-    if (timeCounter.getElapsedTime().asSeconds()<(turnbackTime/2) && *typeOfSprite != ATTACKRIGHT){
-        //moveRight();
-    }
-    else if (timeCounter.getElapsedTime().asSeconds()<turnbackTime && *typeOfSprite != ATTACKLEFT){
-        //moveLeft();
-    }
-    else{
+    if (timeCounter.getElapsedTime().asSeconds() < (turnbackTime / 2) && *typeOfSprite != ATTACKRIGHT &&
+        *typeOfSprite != ATTACKLEFT) {
+        moveRight();
+    } else if (timeCounter.getElapsedTime().asSeconds() < turnbackTime && *typeOfSprite != ATTACKLEFT &&
+               *typeOfSprite != ATTACKRIGHT) {
+        moveLeft();
+    } else {
         timeCounter.restart();
     }
 }

@@ -22,17 +22,20 @@ imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(t
 
 }
 
-void Animation::update(Movement &playerMovement, const float &dt) {
+void Animation::update(Movement &playerMovement, const float &dt, unsigned short prevTypeOfSprite) {
 
-    animationBox.setPosition(faceRight?playerMovement.getCollisions().getPosition().x-playerMovement.getCollisions().getSize().x/4.f+animationLeftOffset:
-                             playerMovement.getCollisions().getPosition().x-playerMovement.getCollisions().getSize().x/4.f+animationRightOffset,
-                             playerMovement.getCollisions().getPosition().y-playerMovement.getCollisions().getSize().y/4.f);
+    animationBox.setPosition(faceRight ? playerMovement.getCollisions().getPosition().x -
+                                         playerMovement.getCollisions().getSize().x / 4.f + animationLeftOffset :
+                             playerMovement.getCollisions().getPosition().x -
+                             playerMovement.getCollisions().getSize().x / 4.f + animationRightOffset,
+                             playerMovement.getCollisions().getPosition().y -
+                             playerMovement.getCollisions().getSize().y / 4.f);
 
     int row;
     switch (*typeOfSprite) {
         case IDLELEFT:
             row = 0;
-            faceRight= false;
+            faceRight = false;
             isRepeatable = true;
             break;
         case IDLERIGHT:
@@ -93,22 +96,26 @@ void Animation::update(Movement &playerMovement, const float &dt) {
 
     if(totalTime >= switchTime){
         totalTime -= switchTime;
-        if(isRepeatable) {
+        if (isRepeatable) {
             currentImage.x++;
             if (currentImage.x == imageCount.x)
                 currentImage.x = 0;
-        }
-        else if(currentImage.x < imageCount.x-1)
-                currentImage.x++;
+        } else if (currentImage.x < imageCount.x - 1)
+            currentImage.x++;
+        else
+            *typeOfSprite = IDLERIGHT;
     }
 
+    if ((*typeOfSprite == ATTACKRIGHT or *typeOfSprite == ATTACKLEFT) and
+        (prevTypeOfSprite != ATTACKRIGHT and prevTypeOfSprite != ATTACKLEFT))
+        currentImage.x = 0;
+
     sprite.top = currentImage.y * sprite.height;
-    if(faceRight) {
+    if (faceRight) {
         sprite.left = currentImage.x * sprite.width;
         sprite.width = std::abs(sprite.width);
-    }
-    else{
-        sprite.left = (currentImage.x+1) * std::abs(sprite.width);
+    } else {
+        sprite.left = (currentImage.x + 1) * std::abs(sprite.width);
         sprite.width = -std::abs(sprite.width);
     }
     switchTime = t;
