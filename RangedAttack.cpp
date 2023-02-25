@@ -35,16 +35,19 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
 
         auto i=b.update(dt,targets,walls);
         if (i!=targets.end()){
+            Attack::notify('k');
             targets.erase(i);
         }
     }
 
-    auto j=bullets.begin();
-    while (j!=bullets.end()){
-        if((*j).isCollided())
-            bullets.erase(j++);
-        else
-            j++;
+
+    auto j = bullets.begin();
+    while (j != bullets.end()) {
+        if (j->isCollided()) {
+            j = bullets.erase(j);
+        } else {
+            ++j;
+        }
     }
 
     nextBulletDirection=sf::Vector2f(facingRight?1.f:-1.f,0.f);

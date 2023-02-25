@@ -10,7 +10,9 @@ Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback)
     body=sf::RectangleShape(size);
 }
 
-    std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, const std::list<AttackTarget> &targets,
+
+
+std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, const std::list<AttackTarget> &targets,
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     auto enemyDestroyed= targets.end();
