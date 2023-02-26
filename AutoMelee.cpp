@@ -13,8 +13,8 @@ void AutoMelee::attackPlayer(sf::Vector2f centerPosition) {
     }
 }
 
-void AutoMelee::update(sf::Vector2f centerPosition,bool facingRight) {
-    MeleeAttack::update(centerPosition,facingRight);
+void AutoMelee::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
+    MeleeAttack::update(dt,centerPosition,facingRight,walls);
     attackPlayer(centerPosition);
 }
 

@@ -42,7 +42,7 @@ void MeleeAttack::hit() {
                     enemyCancelled=true;
                 }
 
-                currentTarget.receiveDamage(knockbackDirection * knockbackDistance, damage, 0.4f);
+                currentTarget.receiveDamage(knockbackDirection * knockback, damage, 0.4f);
 
             }
             if(not enemyCancelled){
@@ -53,9 +53,9 @@ void MeleeAttack::hit() {
     }
 }
 
-void MeleeAttack::update(sf::Vector2f centerPosition,bool facingRight) {
+void MeleeAttack::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
-    Attack::update(centerPosition, facingRight);
+    Attack::update(dt,centerPosition, facingRight,walls);
     hitBox.setPosition(facingRight ? centerPosition.x - hitBox.getSize().x / 2 - attackoffset : centerPosition.x -
                                                                                                 hitBox.getSize().x / 2 +
                                                                                                 attackoffset,

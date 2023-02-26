@@ -29,16 +29,17 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-    //target.draw(attack->getHitBox());
-    //target.draw(movement->getCollisions());
+   // target.draw(attack->getHitBox());
+  //  target.draw(movement->getCollisions());
     animation->render(target);
+    attack->render(target);
 
 
 }
 
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos) {
 
-    if (movement == nullptr or attack == nullptr or animation == nullptr) {
+    if(movement == nullptr or attack == nullptr or animation == nullptr){
         throw std::runtime_error("character's components not valid");
     }
 
@@ -50,8 +51,8 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                             : movement->getPosition().x,
             movement->getCollisions().getPosition().y + movement->getCollisions().getSize().y / 2);
 
-    movement->update(dt, mainCharacterPos);
-    attack->update(hitboxCenter, isFacingRight());
+    movement->update(dt,mainCharacterPos);
+    attack->update(dt,hitboxCenter,isFacingRight(),objects);
 
 
     sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
