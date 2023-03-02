@@ -5,7 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include "headers.h"
 
-enum TILES{GROUND, WALL, DOOR};
+enum TILES {
+    GROUND = 0, WALL = 1, DOOR = 2, WALL2 = 3, WALL3 = 4, BUMPDX = 5, SPIKEDX = 6, WALL4 = 7, BUMPSX = 8, SPIKESX = 9
+};
 
 class LevelTile {
 

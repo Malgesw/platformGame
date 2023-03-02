@@ -15,12 +15,17 @@ TileMap::TileMap(GameCharacter& player) {
 
 
     tilesTextures.push_back(new sf::Texture);
-    tilesTextures.push_back(new sf::Texture);
-    tilesTextures.push_back(new sf::Texture);
+    /* tilesTextures.push_back(new sf::Texture);
+     tilesTextures.push_back(new sf::Texture);
+     tilesTextures.push_back(new sf::Texture);
+     */
 
-    tilesTextures[0]->loadFromFile("./images/Ground.jpg");
-    tilesTextures[1]->loadFromFile("./images/wall.png");
-    tilesTextures[2]->loadFromFile("./images/door.png");
+    tilesTextures[0]->loadFromFile("./images/tilesheet.png");
+    /* tilesTextures[1]->loadFromFile("./images/tilesheet.png", sf::IntRect(1000,0,2000,2000));
+     tilesTextures[2]->loadFromFile("./images/door.png");
+     tilesTextures[3]->loadFromFile("./images/tilesheet.png", sf::IntRect(0,0,1000,975));
+ */
+
 
 
     addRoom("room1.ini", player, sf::Vector2i(16, 16));

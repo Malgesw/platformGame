@@ -64,16 +64,16 @@ private:
     std::vector<std::shared_ptr<LevelTile>> doors;
     std::list<std::unique_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
-    GameCharacter& player;
+    GameCharacter &player;
     sf::Vector2i mapSize;
     float dimX;
     float dimY;
     sf::View camera;
+    sf::RectangleShape bg;
+    sf::Texture *bgtexture;
 
 
-
-
-    void initFloor(const std::string& roomName,std::vector<sf::Texture*> &tilesTextures);
+    void initFloor(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures);
 
 };
 

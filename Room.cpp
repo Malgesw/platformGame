@@ -4,16 +4,20 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
 :player(mainCharacter),mapSize(mapSize){
 
 
-    dimX=240.f;
-    dimY=180.f;
-    initFloor(roomName,tilesTextures);
+    dimX = 240.f;
+    dimY = 180.f;
+    bg.setSize(sf::Vector2f(static_cast<float>(mapSize.x) * dimX, static_cast<float>(mapSize.y) * dimY));
+    bgtexture = new sf::Texture;
+    bgtexture->loadFromFile("./images/map2bg.png");
+    bg.setTexture(bgtexture);
+    initFloor(roomName, tilesTextures);
     camera.setSize(1920.f, 1080.f);
-    if(dimY* static_cast<float>(mapSize.y)<1080.f){
-        camera.setSize(3*dimY* static_cast<float>(mapSize.y)/2,dimY* static_cast<float>(mapSize.y));
+    if (dimY * static_cast<float>(mapSize.y) < 1080.f) {
+        camera.setSize(3 * dimY * static_cast<float>(mapSize.y) / 2, dimY * static_cast<float>(mapSize.y));
     }
 
-    if(dimX* static_cast<float>(mapSize.x)<1920.f){
-        camera.setSize(dimX* static_cast<float>(mapSize.x),2*dimX* static_cast<float>(mapSize.x)/3);
+    if (dimX * static_cast<float>(mapSize.x) < 1920.f) {
+        camera.setSize(dimX * static_cast<float>(mapSize.x), 2 * dimX * static_cast<float>(mapSize.x) / 3);
     }
 
     camera.setCenter(player.getMovement().getPosition().x+player.getMovement().getCollisions().getGlobalBounds().width/2.f,
@@ -46,17 +50,36 @@ void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tile
         std::vector<std::shared_ptr<LevelTile>> row;
         for(int j=0;j<mapSize.x;j++){
 
-            switch(numbers[i][j]){
-
-                case '2':
-
-                    row.push_back(std::make_unique<LevelTile>(tilesTextures[2], j*dimX , i*dimY,  size,2));
-                    break;
+            switch(numbers[i][j]) {
                 case '0':
-                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j*dimX , i*dimY,  size,0));
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, GROUND));
                     break;
                 case '1':
-                    row.push_back(std::make_unique<LevelTile>(tilesTextures[1], j*dimX , i*dimY,  size,1));
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL));
+                    break;
+                case '2':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, DOOR));
+                    break;
+                case '3':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL2));
+                    break;
+                case '4':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL3));
+                    break;
+                case '5':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, BUMPDX));
+                    break;
+                case '6':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, SPIKEDX));
+                    break;
+                case '7':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL4));
+                    break;
+                case '8':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, BUMPSX));
+                    break;
+                case '9':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, SPIKESX));
                     break;
                 default:
                     throw std::runtime_error("invalid tile");
@@ -68,9 +91,10 @@ void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tile
 
     for(int i=0;i<mapSize.y;i++){
         for(int j=0;j<mapSize.x;j++){
-            if(tiles[i][j]->getTileType() == WALL)
+            if (tiles[i][j]->getTileType() == WALL or tiles[i][j]->getTileType() == WALL2 or
+                tiles[i][j]->getTileType() == WALL3 or tiles[i][j]->getTileType() == WALL4)
                 walls.push_back(tiles[i][j]);
-            else if(tiles[i][j]->getTileType() == DOOR)
+            else if (tiles[i][j]->getTileType() == DOOR)
                 doors.push_back(tiles[i][j]);
         }
     }
@@ -79,14 +103,16 @@ void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tile
 
 void Room::render(sf::RenderTarget &target) {
 
+    target.draw(bg);
+
     //________________________________RENDERING MAP
-    for(int i=0;i<mapSize.y;i++){
-        for(int j=0;j<mapSize.x;j++){
+    for (int i = 0; i < mapSize.y; i++) {
+        for (int j = 0; j < mapSize.x; j++) {
             tiles[i][j]->render(target);
         }
     }
     //________________________________RENDERING ENEMIES
-    for(auto &e : enemies){
+    for (auto &e: enemies) {
         e->render(target);
     }
 
