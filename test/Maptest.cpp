@@ -76,7 +76,7 @@ TEST_F(Maptest, Enemytest){
 
    enemy->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
    player->update(0.01f,walls,player->getMovement().getCollisions().getPosition());
-   enemy->getAttack().update(player->getMovement().getCollisions().getPosition()+player->getMovement().getCollisions().getSize()/2.f,true);
+   enemy->getAttack().update(0.01,player->getMovement().getCollisions().getPosition()+player->getMovement().getCollisions().getSize()/2.f,true, walls);
 
 
 

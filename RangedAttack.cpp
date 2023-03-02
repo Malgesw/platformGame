@@ -5,8 +5,8 @@
 #include "RangedAttack.h"
 
 
-RangedAttack::RangedAttack(sf::Vector2f newBulletSize,float newBulletSpeed, float attackSpeed, int hitDamage, float newKnockback) :
-Attack(sf::Vector2f (50.f,50.f), attackSpeed,hitDamage,newKnockback),bulletSize(newBulletSize),bulletSpeed(newBulletSpeed) {
+RangedAttack::RangedAttack(sf::Vector2f newBulletSize,float newBulletSpeed, float attackSpeed, int hitDamage, float newKnockback, unsigned short * typeOfSprite) :
+Attack(sf::Vector2f (50.f,50.f), attackSpeed,hitDamage,newKnockback,typeOfSprite),bulletSize(newBulletSize),bulletSpeed(newBulletSpeed) {
 
     bullets.emplace_back(bulletSize,bulletSpeed,damage,knockback);
     bullets.emplace_back(bulletSize,bulletSpeed,damage,knockback);
@@ -27,6 +27,7 @@ void RangedAttack::hit() {
 
 void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
+    Attack::update(dt,centerPosition, facingRight,walls);
     hitBox.setPosition(facingRight?centerPosition.x-hitBox.getSize().x/2-attackoffset:centerPosition.x-hitBox.getSize().x/2+attackoffset,
                        centerPosition.y-hitBox.getSize().y/2);
 
@@ -35,6 +36,7 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
 
         auto i=b.update(dt,targets,walls);
         if (i!=targets.end()){
+
             Attack::notify('k');
             targets.erase(i);
         }

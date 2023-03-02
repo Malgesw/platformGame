@@ -12,7 +12,7 @@ Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback)
 
 
 
-std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, const std::list<AttackTarget> &targets,
+std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, std::list<AttackTarget> &targets,
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     auto enemyDestroyed= targets.end();
@@ -24,19 +24,23 @@ std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, const st
         auto i= targets.begin();
 
         while (i!=targets.end()) {
-            if (body.getGlobalBounds().intersects(((*i).getCollisionbox().getGlobalBounds()))) {
+            auto &currentTarget = *i;
+            if (body.getGlobalBounds().intersects((currentTarget.getCollisionbox().getGlobalBounds()))) {
 
-                if((*i).getHp()<=damage) {
+                if(currentTarget.getHp()<=damage) {
                     enemyDestroyed = i;
+                    currentTarget.kill(damage);
                 }
                 collided=true;
-                (*i).receiveDamage(static_cast<float>(knockback)*direction,damage);
+                std::cout<<"la vita del namico prima del colpo: "<<currentTarget.getHp()<<std::endl;
+                currentTarget.receiveDamage(static_cast<float>(knockback)*direction,damage,0.f);
+                std::cout<<"la vita del namico dopo il colpo: "<<currentTarget.getHp()<<std::endl;
             }
             i++;
         }
 
 
-        for (auto &w: walls) {
+        for (const auto &w: walls) {
             if (body.getGlobalBounds().intersects(w->getGlobalBounds()))
                 collided = true;
         }

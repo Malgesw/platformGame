@@ -23,7 +23,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     hpBar.setFillColor(sf::Color(40,223,90));
     energyBar.setFillColor(sf::Color(123,234,209));
     player = std::make_unique<GameCharacter>(50,50);
-    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(380,sf::Vector2f (240.f,180.f),sf::Vector2f (120,126),1500,player->spritePointer());
+    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(380,sf::Vector2f (240.f,180.f),sf::Vector2f (120,126),2000,player->spritePointer());
     //std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
     std::unique_ptr<Attack> playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player->spritePointer());
     auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (168,126),true,player->spritePointer());

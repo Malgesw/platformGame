@@ -15,7 +15,7 @@ class Bullet {
 public:
     Bullet(sf::Vector2f size, int speed,  int damage, int knockback);
 
-    std::list<AttackTarget>::const_iterator update(const float &dt, const std::list<AttackTarget> &targets, const std::vector<std::shared_ptr<LevelTile>> &walls);
+    std::list<AttackTarget>::const_iterator update(const float &dt, std::list<AttackTarget> &targets, const std::vector<std::shared_ptr<LevelTile>> &walls);
 
     void render(sf::RenderTarget &target);
     void shoot(sf::Vector2f startposition,sf::Vector2f direction);

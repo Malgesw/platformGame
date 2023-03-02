@@ -2,7 +2,7 @@
 #include <utility>
 
 Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short* typeOfSprite):
-        attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback),typeOfSprite(typeOfSprite) {
+        attackSpeed(speed), damage(hitDamage), knockback(knockback),typeOfSprite(typeOfSprite) {
 
 hitBox=sf::RectangleShape(size);
 hitBox.setFillColor(sf::Color::Blue);
@@ -57,7 +57,7 @@ void Attack::hit() {
     }
 }
 
-void Attack::update(sf::Vector2f centerPosition, bool orientation) {
+void Attack::update(const float &dt,sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls) {
     for (auto &t: targets) {
         t.update();
     }
