@@ -42,9 +42,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
     if(movement == nullptr or attack == nullptr or animation == nullptr){
         throw std::runtime_error("character's components not valid");
     }
-
     previousTypeOfSprite = typeOfSprite;
-
 
     sf::Vector2f hitboxCenter(
             isFacingRight() ? movement->getCollisions().getPosition().x + movement->getCollisions().getSize().x
@@ -54,13 +52,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
     movement->update(dt,mainCharacterPos);
     attack->update(dt,hitboxCenter,isFacingRight(),objects);
 
-
-    sf::IntRect animationRect(animation->getSprite().left, animation->getSprite().top,
-                              animation->getSprite().width, animation->getSprite().height);
-
-
     animation->update(*movement, dt, previousTypeOfSprite);
-    animation->getAnimationBox().setTextureRect(animationRect);
 
 }
 

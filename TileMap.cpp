@@ -28,7 +28,7 @@ TileMap::TileMap(GameCharacter& player) {
 
 
 
-    addRoom("room1.ini", player, sf::Vector2i(16, 16));
+    addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
     addRoom("room3.ini", player, sf::Vector2i(16, 3));
     currentRoom = 0;
@@ -93,7 +93,7 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
 }
 
 void TileMap::spawnEnemies(GameCharacter &player) {
-    generateEnemy(0, "./Levels/WalkingEnemy.ini", sf::Vector2i(10, 6), player);
+    generateEnemy(0, "./Levels/WalkingEnemy.ini", sf::Vector2i(20, 6), player);
     generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);
     generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
 }

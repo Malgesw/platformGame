@@ -4,10 +4,12 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback)
+Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback,sf::Texture* texture)
 :speed(speed),damage(damage),knockback(knockback) {
 
+
     body=sf::RectangleShape(size);
+    animation= std::make_unique<Animation>(texture,sf::Vector2i(4,1),0.15f,size);
 }
 
 
@@ -15,6 +17,7 @@ Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback)
 std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, std::list<AttackTarget> &targets,
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
+    animation->update(body.getGlobalBounds(),dt);
     auto enemyDestroyed= targets.end();
 
     if(active) {
@@ -50,8 +53,7 @@ std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, std::lis
 }
 
 void Bullet::render(sf::RenderTarget &target) {
-    if (active)
-        target.draw(body);
+    animation->render(target);
 }
 
 void Bullet::shoot(sf::Vector2f startPosition, sf::Vector2f newDirection){

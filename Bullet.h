@@ -8,12 +8,13 @@
 #include "headers.h"
 #include "AttackTarget.h"
 #include "LevelTile.h"
+#include "Animation.h"
 
 
 class Bullet {
 
 public:
-    Bullet(sf::Vector2f size, int speed,  int damage, int knockback);
+    Bullet(sf::Vector2f size, int speed,  int damage, int knockback,sf::Texture* texture);
 
     std::list<AttackTarget>::const_iterator update(const float &dt, std::list<AttackTarget> &targets, const std::vector<std::shared_ptr<LevelTile>> &walls);
 
@@ -31,6 +32,8 @@ private:
     bool active=false;
     bool collided=false;
     sf::RectangleShape body;
+    std::unique_ptr<Animation> animation;
+
 
 };
 

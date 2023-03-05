@@ -9,9 +9,13 @@ class Animation {
 public:
 
     Animation( sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer, unsigned short* typeOfSprite);
+    Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size);
+
+
     ~Animation() = default;
 
     void update(Movement &playerMovement, const float &dt, unsigned short prevTypeOfSprite);
+    void update(sf::FloatRect body, const float &dt);
 
     void render(sf::RenderTarget &target);
 

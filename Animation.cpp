@@ -8,8 +8,8 @@ imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(t
     positionCorrection.x=25.f;
     positionCorrection.y=0.f;
 
-        sprite.width = texture->getSize().x / (float) imageCount.x;
-        sprite.height = texture->getSize().y / (float) imageCount.y;
+    sprite.width = texture->getSize().x / (float) imageCount.x;
+    sprite.height = texture->getSize().y / (float) imageCount.y;
 
     animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
     animationBox.setTexture(texture);
@@ -22,8 +22,21 @@ imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(t
 
 }
 
+Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size):
+        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(nullptr),totalTime(0.f),faceRight(true),isRepeatable(true){
+
+    currentImage.x = 0;
+    currentImage.y = 0;
+    sprite.width = texture->getSize().x / (float) imageCount.x;
+    sprite.height = texture->getSize().y / (float) imageCount.y;
+    animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
+    animationBox.setTexture(texture);
+}
+
 void Animation::update(Movement &playerMovement, const float &dt, unsigned short prevTypeOfSprite) {
 
+
+    sf::IntRect animationRect(sprite.left, sprite.top,sprite.width, sprite.height);
     animationBox.setPosition(faceRight ? playerMovement.getCollisions().getPosition().x -
                                          playerMovement.getCollisions().getSize().x / 4.f + animationLeftOffset :
                              playerMovement.getCollisions().getPosition().x -
@@ -120,9 +133,30 @@ void Animation::update(Movement &playerMovement, const float &dt, unsigned short
     }
     switchTime = t;
 
+    animationBox.setTextureRect(animationRect);
+
+
 }
 
 void Animation::render(sf::RenderTarget &target) {
     target.draw(animationBox);
+}
+
+void Animation::update(sf::FloatRect body, const float &dt) {
+
+    sf::IntRect animationRect(sprite.left, sprite.top,sprite.width, sprite.height);
+    animationBox.setPosition(body.left -body.width / 4.f,body.top -body.height / 4.f);
+
+    totalTime+=dt;
+    if(totalTime >= switchTime) {
+        totalTime -= switchTime;
+        currentImage.x++;
+        if (currentImage.x == imageCount.x)
+            currentImage.x = 0;
+    }
+
+    sprite.top = currentImage.y * sprite.height;
+    sprite.left = currentImage.x * sprite.width;
+    animationBox.setTextureRect(animationRect);
 }
 
