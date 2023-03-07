@@ -143,7 +143,6 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
 
     for (auto &e: enemies) {
         e->update(dt, walls, player.getCenter());
-        //std::cout<<e->getHp()<<std::endl;
     }
 
     auto i = enemies.begin();
