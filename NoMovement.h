@@ -5,9 +5,21 @@
 #ifndef PLATFORMGAME_NOMOVEMENT_H
 #define PLATFORMGAME_NOMOVEMENT_H
 
+#include "Movement.h"
 
-class NoMovement {
+class NoMovement : public Movement {
+public:
+    NoMovement(sf::Vector2f startPosition, sf::Vector2f size);
 
+    void moveLeft() final {};
+
+    void moveRight() final {};
+
+    void moveUp() final {};
+
+    void moveDown() final {};
+protected:
+    void applyKnockback() override {};
 };
 
 

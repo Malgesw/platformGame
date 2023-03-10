@@ -14,7 +14,6 @@ class AutoRanged: public  RangedAttack,AutoAttack{
 public:
     AutoRanged(sf::Vector2f bulletSize,float bulletSpeed, float attackSpeed, int hitDamage, float knockback, unsigned short * typeOfSprite, float ScanRange);
     void update(const float &dt, sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls) override;
-    void render(sf::RenderTarget &target)override{};
 
 private:
     float scanRange;

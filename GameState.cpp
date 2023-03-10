@@ -90,8 +90,7 @@ void GameState::update(const float &dt) {
             tileMap->setCurrentRoom(0);
             tileMap->clearEnemies();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
-            player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(),
-                                                              tileMap->getRoom()->getDimY());
+            player->setPosition(240.f, 2880.f);
             player->getMovement().clearWalls();
             player->getMovement().addWalls(tileMap->getRoom()->getWalls());
             player->getAttack().clearTargets();
@@ -152,21 +151,18 @@ void GameState::updatePlayerPos() {
         keyReleased=true;
     }
 
-    player->getMovement().setVelocity(player->getMovement().getVelocity().x * 0.5f, player->getMovement().getVelocity().y);
+    player->setVelocity(player->getVelocity().x * 0.5f, player->getVelocity().y);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
-        player->getMovement().moveLeft();
+        player->moveLeft();
     }
 
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
-        player->getMovement().moveRight();
-    }
-
-    else if(player->getMovement().onGround()) {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
+        player->moveRight();
+    } else if (player->isOnGround()) {
         if (player->isFacingRight()) {
             player->setSpriteType(IDLERIGHT);
-        }
-        else{
+        } else {
             player->setSpriteType(IDLELEFT);
         }
     }
@@ -174,8 +170,8 @@ void GameState::updatePlayerPos() {
 
     //WHEN PLAYER JUMPS
     if(keyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
-        keyReleased=false;
-        player->getMovement().moveUp();
+        keyReleased = false;
+        player->moveUp();
         //JUMP AFTER IDLELEFT
         if (!player->isFacingRight()) {
             player->setSpriteType(JUMPLEFT);
@@ -191,7 +187,7 @@ void GameState::updatePlayerPos() {
 
     //WHEN PLAYER SHOOTS
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){
-        player->getAttack().hit();
+        player->hit();
     }
 }
 

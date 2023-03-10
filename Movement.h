@@ -61,7 +61,7 @@ protected:
     bool inertia = true;
     unsigned short *typeOfSprite;
 
-    void applyKnockback();
+    virtual void applyKnockback();
 
 };
 

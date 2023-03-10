@@ -5,9 +5,17 @@
 #ifndef PLATFORMGAME_NOATTACK_H
 #define PLATFORMGAME_NOATTACK_H
 
+#include "Attack.h"
 
-class NoAttack {
+class NoAttack : public Attack {
+    NoAttack();
 
+    void hit() override {};
+
+    void update(const float &dt, sf::Vector2f centerPosition, bool orientation,
+                const std::vector<std::shared_ptr<LevelTile>> &walls) override {};
+
+    void render(sf::RenderTarget &target) override {};
 };
 
 

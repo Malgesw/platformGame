@@ -7,13 +7,9 @@
 
 #include "headers.h"
 
-float distance(sf::Vector2f a,sf::Vector2f b){
-    return sqrt(pow(a.x-b.x,2)+ pow(a.y-b.y,2));
-}
 
-sf::Vector2f direction(sf::Vector2f start, sf::Vector2f end){
-    float dis = distance(start,end);
-    return (end-start)/dis;
-}
+float findDistance(sf::Vector2f a, sf::Vector2f b);
+
+sf::Vector2f findDirection(sf::Vector2f start, sf::Vector2f end);
 
 #endif //PLATFORMGAME_USEFULFUNCTIONS_H

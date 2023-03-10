@@ -3,6 +3,7 @@
 //
 
 #include "TileMap.h"
+#include "AutoRanged.h"
 
 TileMap::TileMap(GameCharacter& player) {
 
@@ -25,8 +26,6 @@ TileMap::TileMap(GameCharacter& player) {
      tilesTextures[2]->loadFromFile("./images/door.png");
      tilesTextures[3]->loadFromFile("./images/tilesheet.png", sf::IntRect(0,0,1000,975));
  */
-
-
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
@@ -154,14 +153,25 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
     //________________generating attack
     std::unique_ptr<Attack> enemyAttack;
 
-    if(strcmp(enemyIni.GetValue("attack","type"),"M") == 0){
+    if (strcmp(enemyIni.GetValue("attack", "type"), "M") == 0) {
 
-        enemyAttack= std::make_unique<AutoMelee>(sf::Vector2f(std::stof(enemyIni.GetValue("attack","rangeX")),
-                                                              std::stof(enemyIni.GetValue("attack","rangeY"))),
-                                                            std::stof(enemyIni.GetValue("attack","speed")),
-                                                                 std::stof(enemyIni.GetValue("attack","damage")),
-                                                                    std::stof(enemyIni.GetValue("attack","knockback")),enemy->spritePointer());
-    }
+        enemyAttack = std::make_unique<AutoMelee>(sf::Vector2f(std::stof(enemyIni.GetValue("attack", "rangeX")),
+                                                               std::stof(enemyIni.GetValue("attack", "rangeY"))),
+                                                  std::stof(enemyIni.GetValue("attack", "speed")),
+                                                  std::stof(enemyIni.GetValue("attack", "damage")),
+                                                  std::stof(enemyIni.GetValue("attack", "knockback")),
+                                                  enemy->spritePointer());
+    } else if (strcmp(enemyIni.GetValue("attack", "type"), "R") == 0) {
+
+        enemyAttack = std::make_unique<AutoRanged>(sf::Vector2f(std::stof(enemyIni.GetValue("attack", "bulletSize")),
+                                                                std::stof(enemyIni.GetValue("attack", "bulletSize"))),
+                                                   std::stof(enemyIni.GetValue("attack", "bulletSpeed")),
+                                                   std::stof(enemyIni.GetValue("attack", "speed")),
+                                                   std::stof(enemyIni.GetValue("attack", "damage")),
+                                                   std::stof(enemyIni.GetValue("attack", "knockback")),
+                                                   enemy->spritePointer(), 400.f);
+    } else
+        std::cout << "errore nell' inizializzazione" << std::endl;
     std::vector<AttackTarget> targets;
     targets.push_back(player.generateTarget());
     enemyAttack->addTargets(targets);

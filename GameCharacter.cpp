@@ -1,6 +1,5 @@
 #include "GameCharacter.h"
-#include "WalkingMovement.h"
-#include "FlyingMovement.h"
+
 
 GameCharacter::GameCharacter(int healthPoints, int mana)
 :hp(healthPoints),energy(mana)
@@ -86,15 +85,75 @@ void GameCharacter::setEnergy(int mana) {
 }
 
 
-
 AttackTarget GameCharacter::generateTarget() {
 
-    return AttackTarget(&movement->getCollisions(),&attack->getHitBox(),&movement->getKnockback(),&hp);
+    return AttackTarget(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp);
 }
 
 bool GameCharacter::isFacingRight() const {
     return animation->isFacingRight();
 }
 
+void GameCharacter::moveLeft() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->moveLeft();
+}
+
+void GameCharacter::moveRight() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->moveRight();
+}
+
+void GameCharacter::moveUp() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->moveUp();
+}
+
+void GameCharacter::moveDown() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->moveDown();
+}
+
+void GameCharacter::hit() {
+
+    if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else attack->hit();
+}
+
+sf::Vector2f GameCharacter::getVelocity() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->getVelocity();
+}
+
+void GameCharacter::setVelocity(float x, float y) {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->setVelocity(x, y);
+
+}
+
+sf::Vector2f GameCharacter::getPosition() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->getPosition();
+}
+
+void GameCharacter::setPosition(float x, float y) {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->getCollisions().setPosition(x, y);
+}
+
+
+bool GameCharacter::isOnGround() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->onGround();
+}
 
 

@@ -52,6 +52,7 @@ std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, std::lis
 
 void Bullet::render(sf::RenderTarget &target) {
     animation->render(target);
+    std::cout << "bullet rendered" << std::endl;
 }
 
 void Bullet::shoot(sf::Vector2f startPosition, sf::Vector2f newDirection){

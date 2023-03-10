@@ -58,6 +58,7 @@ void MainMenuState::updateButtons() {
 
                renderError=true;
            }
+           std::cout << error.what() << std::endl;
         }
     }
 
