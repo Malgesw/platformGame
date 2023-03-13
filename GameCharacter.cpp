@@ -2,7 +2,7 @@
 
 
 GameCharacter::GameCharacter(int healthPoints, int mana)
-:hp(healthPoints),energy(mana)
+        : hp(healthPoints), energy(mana), typeOfSprite(IDLERIGHT), previousTypeOfSprite(IDLERIGHT)
 {
 
 //___________________________________________DEFAULT PARAMETERS
@@ -55,6 +55,7 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
 }
 
+/* OLD IMPLEMENTATION, FOR TESTING PURPOSES ONLY
 Movement& GameCharacter::getMovement(){
     return *movement;
 }
@@ -66,7 +67,7 @@ Attack& GameCharacter::getAttack(){
 Animation& GameCharacter::getAnimation(){
     return *animation;
 }
-
+*/
 
 int GameCharacter::getHp() const {
     return hp;
@@ -87,7 +88,7 @@ void GameCharacter::setEnergy(int mana) {
 
 AttackTarget GameCharacter::generateTarget() {
 
-    return AttackTarget(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp);
+    return {&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp};
 }
 
 bool GameCharacter::isFacingRight() const {
@@ -124,7 +125,7 @@ void GameCharacter::hit() {
     else attack->hit();
 }
 
-sf::Vector2f GameCharacter::getVelocity() {
+sf::Vector2f GameCharacter::getVelocity() const {
 
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
     else return movement->getVelocity();
@@ -137,7 +138,7 @@ void GameCharacter::setVelocity(float x, float y) {
 
 }
 
-sf::Vector2f GameCharacter::getPosition() {
+sf::Vector2f GameCharacter::getPosition() const {
 
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
     else return movement->getPosition();
@@ -149,11 +150,52 @@ void GameCharacter::setPosition(float x, float y) {
     else movement->getCollisions().setPosition(x, y);
 }
 
+sf::Vector2f GameCharacter::getSize() const {
 
-bool GameCharacter::isOnGround() {
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return {movement->getCollisions().getGlobalBounds().width, movement->getCollisions().getGlobalBounds().height};
+}
+
+sf::FloatRect GameCharacter::getGlobalBounds() const {
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->getCollisions().getGlobalBounds();
+}
+
+
+bool GameCharacter::isOnGround() const {
 
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
     else return movement->onGround();
 }
 
 
+bool GameCharacter::isColliding() const {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->checkCollisions();
+}
+
+
+void GameCharacter::addWalls(const std::vector<std::shared_ptr<LevelTile>> &newWalls) {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->addWalls(newWalls);
+}
+
+void GameCharacter::clearWalls() {
+
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else movement->clearWalls();
+}
+
+void GameCharacter::addTargets(const std::vector<AttackTarget> &newTargets) {
+
+    if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else attack->addTargets(newTargets);
+}
+
+void GameCharacter::clearTargets() {
+
+    if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else attack->clearTargets();
+}

@@ -25,11 +25,11 @@ public:
         player->setMovement(std::move(playerMovement));
         player->setAttack(std::move(playerAttack));
         player->setAnimation(std::move(playerAnimation));
-        player->getMovement().addWalls(walls);
+        player->addWalls(walls);
 
     }
 };
-TEST_F(Gamecharactertest, playeronground){
-    player->getMovement().getCollisions().setPosition(0.f,50.f);
-    EXPECT_TRUE(player->getMovement().onGround());
+TEST_F(Gamecharactertest, playeronground) {
+    player->setPosition(0.f, 50.f);
+    EXPECT_TRUE(player->isOnGround());
 }

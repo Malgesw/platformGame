@@ -27,11 +27,13 @@ public:
 
     void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos);
 
+    /* OLD IMPLEMENTATION, USE ONLY FOR TESTING
     Movement &getMovement();
 
     Attack &getAttack();
 
     Animation &getAnimation();
+    */
 
     int getHp() const;
 
@@ -53,18 +55,32 @@ public:
 
     void hit();
 
-    sf::Vector2f getVelocity();
+    sf::Vector2f getVelocity() const;
 
     void setVelocity(float x, float y);
 
-    sf::Vector2f getPosition();
+    sf::Vector2f getPosition() const;
 
     void setPosition(float x, float y);
 
+    sf::Vector2f getSize() const;
 
-    bool isOnGround();
+    sf::FloatRect getGlobalBounds() const;
+
+    bool isOnGround() const;
 
     bool isFacingRight() const;
+
+    bool isColliding() const;
+
+    void addWalls(const std::vector<std::shared_ptr<LevelTile>> &newWalls);
+
+    void clearWalls();
+
+    void addTargets(const std::vector<AttackTarget> &newTargets);
+
+    void clearTargets();
+
 
     sf::Vector2f getCenter() {
         return {movement->getPosition().x + movement->getCollisions().getGlobalBounds().width / 2.f,

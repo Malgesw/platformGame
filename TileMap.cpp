@@ -49,18 +49,20 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
     std::vector<std::shared_ptr<LevelTile>> doors = rooms[currentRoom]->getDoors();
 
     if (currentRoom < room) {
-        player.getMovement().getCollisions().setPosition(
+        player.setPosition(
                 doors[doors.size() - 1]->getPosition().x - rooms[currentRoom]->getDimX(),
                 doors[doors.size() - 1]->getPosition().y);
-        player.getMovement().setBarriers(rooms[currentRoom]->getWalls());
-        player.getAttack().clearTargets();
-        player.getAttack().addTargets(rooms[currentRoom]->getTargets());
+        player.clearWalls();
+        player.addWalls(rooms[currentRoom]->getWalls());
+        player.clearTargets();
+        player.addTargets(rooms[currentRoom]->getTargets());
     }
-    else if(currentRoom > room && currentRoom < 3){
-        player.getMovement().getCollisions().setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
-        player.getMovement().setBarriers(rooms[currentRoom]->getWalls());
-        player.getAttack().clearTargets();
-        player.getAttack().addTargets(rooms[currentRoom]->getTargets());
+    else if(currentRoom > room && currentRoom < 3) {
+        player.setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
+        player.clearWalls();
+        player.addWalls(rooms[currentRoom]->getWalls());
+        player.clearTargets();
+        player.addTargets(rooms[currentRoom]->getTargets());
     }
 
     //____________________VIEW COLLISIONS

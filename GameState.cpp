@@ -22,25 +22,29 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     statusBar.setTexture(statusBarTexture);
     hpBar.setFillColor(sf::Color(40,223,90));
     energyBar.setFillColor(sf::Color(123,234,209));
-    player = std::make_unique<GameCharacter>(50,50);
-    std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(380,sf::Vector2f (240.f,2880.f),sf::Vector2f (120,126),2000,player->spritePointer());
+    player = std::make_unique<GameCharacter>(50, 50);
+    std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(240.f, 2880.f),
+                                                                                 sf::Vector2f(120, 126), 2000,
+                                                                                 player->spritePointer());
     //std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
-    std::unique_ptr<Attack> playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player->spritePointer(),true);
-    auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (168,126),true,player->spritePointer());
+    std::unique_ptr<Attack> playerAttack = std::make_unique<RangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 0.5f, 1,
+                                                                          150.f, player->spritePointer(), true);
+    auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f(168, 126),
+                                                       true, player->spritePointer());
     playerAttack->attach(&achievementCounter);
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
     player->setMovement(std::move(playerMovement));
     tileMap = std::make_unique<TileMap>(*player);
-    player->getMovement().addWalls(tileMap->getWalls());
-    player->getAttack().addTargets(tileMap->getTargets());
+    player->addWalls(tileMap->getWalls());
+    player->addTargets(tileMap->getTargets());
     pauseMenu = std::make_unique<PauseMenu>(window, font, false);
     deathMenu = std::make_unique<PauseMenu>(window, font, true);
     deathMessage.setFont(font);
     deathMessage.setString("You died, little sussy baka!");
     deathMessage.setCharacterSize(20);
     deathMessage.setFillColor(sf::Color::White);
-    deathMessage.setPosition(tileMap->getRoom()->getCamera().getSize()/3.f);
+    deathMessage.setPosition(tileMap->getRoom()->getCamera().getSize() / 3.f);
 
 }
 
@@ -91,10 +95,10 @@ void GameState::update(const float &dt) {
             tileMap->clearEnemies();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
             player->setPosition(240.f, 2880.f);
-            player->getMovement().clearWalls();
-            player->getMovement().addWalls(tileMap->getRoom()->getWalls());
-            player->getAttack().clearTargets();
-            player->getAttack().addTargets(tileMap->getRoom()->getTargets());
+            player->clearWalls();
+            player->addWalls(tileMap->getRoom()->getWalls());
+            player->clearTargets();
+            player->addTargets(tileMap->getRoom()->getTargets());
             hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
             player->setHp(50);
         }

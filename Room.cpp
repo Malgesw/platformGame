@@ -20,11 +20,11 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
         camera.setSize(dimX * static_cast<float>(mapSize.x), 2 * dimX * static_cast<float>(mapSize.x) / 3);
     }
 
-    camera.setCenter(player.getMovement().getPosition().x+player.getMovement().getCollisions().getGlobalBounds().width/2.f,
-                     player.getMovement().getPosition().y+player.getMovement().getCollisions().getGlobalBounds().height/2.f);
+    camera.setCenter(player.getPosition().x + player.getSize().x / 2.f,
+                     player.getPosition().y + player.getSize().y / 2.f);
 
 
-    }
+}
 
 
 void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tilesTextures) {
@@ -128,8 +128,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     for (int i = 0; i < mapSize.y; i++) {
         for (int j = 0; j < mapSize.x; j++) {
             if (tiles[i][j]->isExit() &&
-                tiles[i][j]->getGlobalBounds().intersects(player.getMovement().getCollisions().getGlobalBounds())) {
-                if (player.getMovement().getVelocity().x >= 0.f)
+                tiles[i][j]->getGlobalBounds().intersects(player.getGlobalBounds())) {
+                if (player.getVelocity().x >= 0.f)
 
                     currentRoom++;
 
