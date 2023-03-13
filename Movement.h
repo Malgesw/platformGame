@@ -26,26 +26,10 @@ public:
     sf::Vector2f getVelocity() const;
     sf::RectangleShape& getCollisions();
     sf::Vector2f& getKnockback();
-
-
-
-
     sf::Vector2f getPosition() const;
     void addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls);
     void clearWalls();
 
-
-    const std::vector<std::shared_ptr<LevelTile>> &getBarriers() const;
-
-    void setBarriers(const std::vector<std::shared_ptr<LevelTile>>& newWalls){
-
-
-        barriers.clear();
-
-        for(auto &nw : newWalls){
-            barriers.push_back(nw);
-        }
-    }
 
 
 protected:

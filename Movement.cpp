@@ -153,10 +153,6 @@ sf::Vector2f Movement::getPosition() const {
 
 Movement::~Movement() = default;
 
-const std::vector<std::shared_ptr<LevelTile>> &Movement::getBarriers() const {
-    return barriers;
-}
-
 void Movement::addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls) {
 
     for(auto &w : newWalls){
