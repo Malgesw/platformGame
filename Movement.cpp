@@ -6,24 +6,32 @@
 #include <utility>
 
 void Movement::moveLeft() {
+    /*
     if(isOnGround)
         *typeOfSprite = MOVELEFT;
     else
         *typeOfSprite = JUMPLEFT;
-    velocity.x=velocity.x-speed;
-    if (velocity.x<=-10*speed)
-        velocity.x=-10*speed;
-    collisionBox.move(velocity.x*dt,0.f);
+         */
+    isMoving = true;
+    isFacingRight = false;
+    velocity.x = velocity.x - speed;
+    if (velocity.x <= -10 * speed)
+        velocity.x = -10 * speed;
+    collisionBox.move(velocity.x * dt, 0.f);
 }
 void Movement::moveRight() {
+    /*
     if(isOnGround)
         *typeOfSprite = MOVERIGHT;
     else
         *typeOfSprite = JUMPRIGHT;
-    velocity.x=velocity.x+speed;
-    if (velocity.x>=10*speed)
-        velocity.x=10*speed;
-    collisionBox.move(velocity.x*dt,0.f);
+    */
+    isMoving = true;
+    isFacingRight = true;
+    velocity.x = velocity.x + speed;
+    if (velocity.x >= 10 * speed)
+        velocity.x = 10 * speed;
+    collisionBox.move(velocity.x * dt, 0.f);
 }
 
 
@@ -132,15 +140,27 @@ sf::RectangleShape& Movement::getCollisions() {
 void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
 
 
-    dt=deltaTime;
+    dt = deltaTime;
     applyKnockback();
-    if(typeOfMovement=='W')
+    if (typeOfMovement == 'W')
 
-        velocity.y+=3200.f*dt;
+        velocity.y += 3200.f * dt;
 
     checkCollisions();
-    collisionBox.move(0,velocity.y*dt);
+    collisionBox.move(0, velocity.y * dt);
 
+    //setting animation type
+    if (*typeOfSprite != ATTACKRIGHT and *typeOfSprite != ATTACKLEFT) {
+        if ((not isOnGround) and (not isFacingRight)) *typeOfSprite = JUMPLEFT;
+        else if ((not isOnGround) and isFacingRight) *typeOfSprite = JUMPRIGHT;
+        else if (isOnGround and isMoving and (not isFacingRight)) *typeOfSprite = MOVELEFT;
+        else if (isOnGround and isMoving and isFacingRight) *typeOfSprite = MOVERIGHT;
+        else if (isOnGround and (not isMoving) and (not isFacingRight)) *typeOfSprite = IDLELEFT;
+        else *typeOfSprite = IDLERIGHT;
+    }
+
+
+    isMoving = false;
 }
 
 bool Movement::onGround() const {

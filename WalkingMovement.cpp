@@ -13,9 +13,9 @@ WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf:
 void WalkingMovement::moveUp() {
     if(isOnGround) {
         isOnGround = false;
+        isMoving = true;
         velocity.y = -sqrtf(2.f * 981.f * jumpHeight);
         collisionBox.move(0.f, velocity.y * dt);
-        *typeOfSprite = JUMPRIGHT;
     }
 }
 

@@ -31,7 +31,6 @@ public:
     void clearWalls();
 
 
-
 protected:
     char typeOfMovement;
     //can be F for flying or W for walking
@@ -41,7 +40,9 @@ protected:
     sf::Vector2f knockback;
     sf::RectangleShape collisionBox;
     std::vector<std::shared_ptr<LevelTile>> barriers;
-    bool isOnGround=true;
+    bool isMoving = false;
+    bool isFacingRight = true;
+    bool isOnGround = true;
     bool inertia = true;
     unsigned short *typeOfSprite;
 

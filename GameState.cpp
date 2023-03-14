@@ -157,29 +157,29 @@ void GameState::updatePlayerPos() {
 
     player->setVelocity(player->getVelocity().x * 0.5f, player->getVelocity().y);
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
         player->moveLeft();
-    }
-
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
         player->moveRight();
-    } else if (player->isOnGround()) {
+    }
+    /*
+    else if (player->isOnGround()) {
         if (player->isFacingRight()) {
             player->setSpriteType(IDLERIGHT);
         } else {
             player->setSpriteType(IDLELEFT);
         }
     }
+     */
 
 
     //WHEN PLAYER JUMPS
-    if(keyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))){
+
+    if (keyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))) {
         keyReleased = false;
         player->moveUp();
-        //JUMP AFTER IDLELEFT
-        if (!player->isFacingRight()) {
-            player->setSpriteType(JUMPLEFT);
-        }
+    }
+    /*
         //MOVEMENT LEFT/RIGHT WHILE IN AIR
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
             player->setSpriteType(JUMPLEFT);
@@ -188,6 +188,7 @@ void GameState::updatePlayerPos() {
             player->setSpriteType(JUMPRIGHT);
         }
     }
+     */
 
     //WHEN PLAYER SHOOTS
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){
