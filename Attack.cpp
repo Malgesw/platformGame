@@ -26,7 +26,7 @@ void Attack::clearTargets() {
 bool Attack::checkDeath(const AttackTarget &target) const{
 
     if(target.getHp()<=damage){
-        notify('k');
+        notify(ENEMYKILLED);
         return true;
     }
     else{
@@ -43,8 +43,8 @@ void Attack::detach(Observer *o) {
     observers.remove(o);
 }
 
-void Attack::notify(char category) const {
-    for(auto &o : observers){
+void Attack::notify(unsigned short category) const {
+    for (auto &o: observers) {
         o->getNews(category);
     }
 }

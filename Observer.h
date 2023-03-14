@@ -4,11 +4,18 @@
 
 #ifndef PLATFORMGAME_OBSERVER_H
 #define PLATFORMGAME_OBSERVER_H
-class Observer{
+
+enum achievementTypes {
+    ENEMYKILLED
+};
+
+class Observer {
 
 public:
 
-    virtual ~Observer()=default;
-    virtual void getNews(char category)=0;
+    virtual ~Observer() = default;
+
+    virtual void getNews(unsigned short category) = 0;
 };
+
 #endif //PLATFORMGAME_OBSERVER_H

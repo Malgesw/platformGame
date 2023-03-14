@@ -20,7 +20,9 @@ public:
     void addTargets(const std::vector<AttackTarget> &newTargets);
     void clearTargets();
     void attach(Observer *o) override;    void detach(Observer *o) override;
-    void notify(char category) const override;
+
+    void notify(unsigned short category) const override;
+
     virtual void hit() = 0;
     virtual void update(const float &dt, sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls)=0;
     virtual void render(sf::RenderTarget &target)=0;

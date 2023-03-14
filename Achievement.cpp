@@ -15,12 +15,13 @@ Achievement::Achievement() {
 
 
 
-void Achievement::getNews(char category) {
+void Achievement::getNews(unsigned short category) {
 
-    if(category=='k'){
+
+    if (category == ENEMYKILLED) {
         enemiesKilled++;
-        newAchievement=true;
-    }
+        newAchievement = true;
+    } else throw std::runtime_error("Invalid achievement category");
 }
 
 
