@@ -18,12 +18,12 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     isPaused = false;
     pauseTime = 0.5f;
     pauseClock.restart();
-    statusBar.setSize(sf::Vector2f(150,60.f));
+    statusBar.setSize(sf::Vector2f(150, 60.f));
     statusBar.setTexture(statusBarTexture);
-    hpBar.setFillColor(sf::Color(40,223,90));
-    energyBar.setFillColor(sf::Color(123,234,209));
-    player = std::make_unique<GameCharacter>(50, 50);
-    std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(240.f, 2880.f),
+    hpBar.setFillColor(sf::Color(40, 223, 90));
+    energyBar.setFillColor(sf::Color(123, 234, 209));
+    player = std::make_unique<GameCharacter>(startPlayerLife, startPlayerEnergy);
+    std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, startPlayerPosition,
                                                                                  sf::Vector2f(120, 126), 2000,
                                                                                  player->spritePointer());
     //std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
@@ -94,13 +94,13 @@ void GameState::update(const float &dt) {
             tileMap->setCurrentRoom(0);
             tileMap->clearEnemies();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
-            player->setPosition(240.f, 2880.f);
+            player->setPosition(startPlayerPosition.x, startPlayerPosition.y);
             player->clearWalls();
             player->addWalls(tileMap->getRoom()->getWalls());
             player->clearTargets();
             player->addTargets(tileMap->getRoom()->getTargets());
             hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
-            player->setHp(50);
+            player->setHp(startPlayerLife);
         }
 
         if (deathMenu->isButtonPressed("EXIT_MENU")) {
@@ -125,27 +125,44 @@ void GameState::update(const float &dt) {
 
             //___________________UPDATING STATUS BAR
 
-            statusBar.setPosition(tileMap->getRoom()->getCamera().getCenter()-tileMap->getRoom()->getCamera().getSize()/2.f);
-            statusBar.setSize(sf::Vector2f(tileMap->getRoom()->getCamera().getSize().x/2.7f,tileMap->getRoom()->getCamera().getSize().y/5.f));
-            hpBar.setPosition(statusBar.getPosition().x+statusBar.getSize().x/6.5f,statusBar.getPosition().y+statusBar.getSize().y/2.05f);
-            hpBar.setSize(sf::Vector2f (statusBar.getSize().x/1.5f,statusBar.getSize().y/4.6f));
-            energyBar.setPosition(statusBar.getPosition().x+statusBar.getSize().x/6.5f,statusBar.getPosition().y+statusBar.getSize().y/2.5f);
-            energyBar.setSize(sf::Vector2f (statusBar.getSize().x/2.5f,statusBar.getSize().y/10.f));
-            if(player->getHp() < 50) {
-                if(hpBar.getSize().x > 0.f) {
-                    death = false;
-                    hpBar.setSize(sf::Vector2f(hpBar.getSize().x - static_cast<float>(50 - player->getHp()) * hpBar.getSize().x / 8.f,
-                                               hpBar.getSize().y));
-                }
-                if(hpBar.getSize().x <= 0.f) {
-                    death = true;
-                    deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.5f,
-                                             tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/3.f);
-                    //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
-                      //                       tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
-                    deathMessage.setCharacterSize(static_cast<unsigned int>(2.f*tileMap->getRoom()->getCamera().getSize().y/45.f));
-                }
+            statusBar.setPosition(
+                    tileMap->getRoom()->getCamera().getCenter() - tileMap->getRoom()->getCamera().getSize() / 2.f);
+            statusBar.setSize(sf::Vector2f(tileMap->getRoom()->getCamera().getSize().x / 2.7f,
+                                           tileMap->getRoom()->getCamera().getSize().y / 5.f));
+            hpBar.setPosition(statusBar.getPosition().x + statusBar.getSize().x / 6.5f,
+                              statusBar.getPosition().y + statusBar.getSize().y / 2.05f);
+            hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
+            energyBar.setPosition(statusBar.getPosition().x + statusBar.getSize().x / 6.5f,
+                                  statusBar.getPosition().y + statusBar.getSize().y / 2.5f);
+            energyBar.setSize(sf::Vector2f(statusBar.getSize().x / 2.5f, statusBar.getSize().y / 10.f));
+
+            if (player->getHp() > 0) {
+                death = false;
+                //hpBar.setSize(sf::Vector2f(hpBar.getSize().x - static_cast<float>(startPlayerLife - player->getHp()) * hpBar.getSize().x / 8.f,
+                //                               hpBar.getSize().y));
+                hpBar.setSize(sf::Vector2f(
+                        (static_cast<float>(player->getHp()) / static_cast<float>(startPlayerLife)) * hpBar.getSize().x,
+                        hpBar.getSize().y));
             }
+            if (player->getEnergy() > -1) {
+                //energyBar.setSize(sf::Vector2f(energyBar.getSize().x - static_cast<float>(maxPlayerEnergy - player->getEnergy()) * energyBar.getSize().x / 8.f,
+                //                               energyBar.getSize().y));
+                energyBar.setSize(
+                        sf::Vector2f(static_cast<float>(player->getEnergy() / maxPlayerEnergy) * energyBar.getSize().x,
+                                     energyBar.getSize().y));
+            }
+            if (player->getHp() <= 0) {
+                death = true;
+                deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x -
+                                         tileMap->getRoom()->getCamera().getSize().x / 8.5f,
+                                         tileMap->getRoom()->getCamera().getCenter().y -
+                                         tileMap->getRoom()->getCamera().getSize().y / 3.f);
+                //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
+                //                       tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
+                deathMessage.setCharacterSize(
+                        static_cast<unsigned int>(2.f * tileMap->getRoom()->getCamera().getSize().y / 45.f));
+            }
+
         }
     }
 }
