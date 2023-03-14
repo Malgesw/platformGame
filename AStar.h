@@ -1,7 +1,3 @@
-//
-// Created by alessio on 01/09/22.
-//
-
 #ifndef PLATFORMGAME_ASTAR_H
 #define PLATFORMGAME_ASTAR_H
 

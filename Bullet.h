@@ -1,7 +1,3 @@
-//
-// Created by alessio on 29/11/22.
-//
-
 #ifndef PLATFORMGAME_BULLET_H
 #define PLATFORMGAME_BULLET_H
 

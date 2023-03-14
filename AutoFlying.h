@@ -1,7 +1,3 @@
-//
-// Created by alessio on 02/09/22.
-//
-
 #ifndef PLATFORMGAME_AUTOFLYING_H
 #define PLATFORMGAME_AUTOFLYING_H
 

@@ -1,6 +1,3 @@
-//
-// Created by alessio on 25/07/22.
-//
 #include "Movement.h"
 #include <cmath>
 #include <utility>

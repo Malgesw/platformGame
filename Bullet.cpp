@@ -1,7 +1,3 @@
-//
-// Created by alessio on 29/11/22.
-//
-
 #include "Bullet.h"
 
 Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback,sf::Texture* texture)
@@ -35,9 +31,7 @@ std::list<AttackTarget>::const_iterator Bullet::update(const float &dt, std::lis
                     currentTarget.kill(damage);
                 }
                 collided=true;
-                std::cout<<"la vita del namico prima del colpo: "<<currentTarget.getHp()<<std::endl;
                 currentTarget.receiveDamage(static_cast<float>(knockback)*direction,damage,0.f);
-                std::cout<<"la vita del namico dopo il colpo: "<<currentTarget.getHp()<<std::endl;
             }
             i++;
         }

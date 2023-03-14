@@ -35,10 +35,6 @@ private:
     void initStates();
     void initKeys();
 
-
-
-
-
 };
 
 

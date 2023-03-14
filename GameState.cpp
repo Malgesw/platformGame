@@ -89,9 +89,11 @@ void GameState::update(const float &dt) {
             death = false;
             tileMap->setCurrentRoom(0);
             tileMap->clearEnemies();
+            tileMap->clearItems();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
+            tileMap->placeItems(); //after every restart, the map is cleared and items are regenerated
             player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(),
-                                                              tileMap->getRoom()->getDimY());
+                                                              16 * tileMap->getRoom()->getDimY());
             player->getMovement().clearWalls();
             player->getMovement().addWalls(tileMap->getRoom()->getWalls());
             player->getAttack().clearTargets();
@@ -107,7 +109,6 @@ void GameState::update(const float &dt) {
 
     }
     else {
-        //std::cout<<"fps is "<<1/dt<<std::endl;
         if (dt > 0.1f) {
             updatePlayerPos();
             player->update(0.1f, tileMap->getWalls(), mainCharacterPos);
@@ -138,8 +139,6 @@ void GameState::update(const float &dt) {
                     death = true;
                     deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.5f,
                                              tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/3.f);
-                    //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
-                      //                       tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
                     deathMessage.setCharacterSize(static_cast<unsigned int>(2.f*tileMap->getRoom()->getCamera().getSize().y/45.f));
                 }
             }
@@ -154,20 +153,31 @@ void GameState::updatePlayerPos() {
 
     player->getMovement().setVelocity(player->getMovement().getVelocity().x * 0.5f, player->getMovement().getVelocity().y);
 
+    //WHEN PLAYER MOVES TO THE LEFT
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
         player->getMovement().moveLeft();
     }
 
+        //WHEN PLAYER MOVES TO THE RIGHT
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
         player->getMovement().moveRight();
     }
 
-    else if(player->getMovement().onGround()) {
+        //WHEN PLAYER DOES NOT MOVE ON GROUND
+    else if (player->getMovement().onGround()) {
         if (player->isFacingRight()) {
             player->setSpriteType(IDLERIGHT);
-        }
-        else{
+        } else {
             player->setSpriteType(IDLELEFT);
+        }
+    }
+
+        //WHEN PLAYER DOES NOT MOVE IN AIR
+    else {
+        if (player->isFacingRight()) {
+            player->setSpriteType(JUMPRIGHT);
+        } else {
+            player->setSpriteType(JUMPLEFT);
         }
     }
 

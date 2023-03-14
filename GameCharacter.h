@@ -12,7 +12,8 @@
 class GameCharacter {
 
 public:
-    GameCharacter(int healthPoints, int mana);
+    GameCharacter(int healthPoints, int mana, bool isPlayer = true);
+
     void setMovement(std::unique_ptr<Movement> newMovement);
     void setAnimation(std::unique_ptr<Animation> animation);
     void setAttack(std::unique_ptr<Attack> attack);
@@ -37,12 +38,16 @@ public:
         return typeOfSprite;
     }
 
-    unsigned short *spritePointer(){
+    unsigned short *spritePointer() {
         return &typeOfSprite;
     }
 
-    void setSpriteType(unsigned short type){
+    void setSpriteType(unsigned short type) {
         typeOfSprite = type;
+    }
+
+    bool isMainCharacter() const {
+        return isPlayer;
     }
 
 
@@ -55,6 +60,7 @@ private:
     std::unique_ptr<Animation> animation;
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;
+    bool isPlayer;
 
 
 };

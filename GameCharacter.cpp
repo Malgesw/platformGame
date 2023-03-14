@@ -2,8 +2,8 @@
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"
 
-GameCharacter::GameCharacter(int healthPoints, int mana)
-:hp(healthPoints),energy(mana)
+GameCharacter::GameCharacter(int healthPoints, int mana, bool isPlayer)
+        : hp(healthPoints), energy(mana), isPlayer(isPlayer)
 {
 
 //___________________________________________DEFAULT PARAMETERS
@@ -28,9 +28,8 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 
 void GameCharacter::render(sf::RenderTarget &target) {
 
-
-   // target.draw(attack->getHitBox());
-  //  target.draw(movement->getCollisions());
+    //target.draw(attack->getHitBox());
+    // target.draw(movement->getCollisions());
     animation->render(target);
     attack->render(target);
 

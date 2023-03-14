@@ -1,7 +1,3 @@
-//
-// Created by alessio on 01/12/22.
-//
-
 #ifndef PLATFORMGAME_RANGEDATTACK_H
 #define PLATFORMGAME_RANGEDATTACK_H
 

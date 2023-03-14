@@ -1,7 +1,3 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #include "TileMap.h"
 
 TileMap::TileMap(GameCharacter& player) {
@@ -12,21 +8,8 @@ TileMap::TileMap(GameCharacter& player) {
     textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
     textures.push_back(new sf::Texture);
     textures[walking]->loadFromFile("./images/cyberMonkey2.png");
-
-
     tilesTextures.push_back(new sf::Texture);
-    /* tilesTextures.push_back(new sf::Texture);
-     tilesTextures.push_back(new sf::Texture);
-     tilesTextures.push_back(new sf::Texture);
-     */
-
     tilesTextures[0]->loadFromFile("./images/tilesheet.png");
-    /* tilesTextures[1]->loadFromFile("./images/tilesheet.png", sf::IntRect(1000,0,2000,2000));
-     tilesTextures[2]->loadFromFile("./images/door.png");
-     tilesTextures[3]->loadFromFile("./images/tilesheet.png", sf::IntRect(0,0,1000,975));
- */
-
-
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
@@ -34,6 +17,7 @@ TileMap::TileMap(GameCharacter& player) {
     currentRoom = 0;
 
     spawnEnemies(player);
+    placeItems();
 
 }
 
@@ -88,7 +72,7 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
     //_____TOP
     if(rooms[currentRoom]->getCamera().getSize().y/2.f >= player.getCenter().y)
         rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getCenter().x,
-                                            rooms[currentRoom]->getCamera().getSize().y/2.f);
+                                            rooms[currentRoom]->getCamera().getSize().y / 2.f);
 
 }
 
@@ -98,21 +82,33 @@ void TileMap::spawnEnemies(GameCharacter &player) {
     generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
 }
 
+void TileMap::placeItems() {
+    generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(50.f, 50.f));
+    generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(50.f, 50.f));
+    generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f));
+    generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(50.f, 50.f));
+}
+
 void TileMap::clearEnemies() {
     for (auto &r: rooms) {
         r->clearEnemies();
     }
 }
 
-void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vector2i roomSize) {
-
-    rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize,tilesTextures));
+void TileMap::clearItems() {
+    for (auto &r: rooms)
+        r->clearItems();
 }
 
-void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i startPosition, GameCharacter& player) {
+void TileMap::addRoom(const std::string &roomName, GameCharacter &player, sf::Vector2i roomSize) {
+
+    rooms.push_back(std::make_unique<Room>(roomName, player, textures, roomSize, tilesTextures));
+}
+
+void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i startPosition, GameCharacter &player) {
 
     CSimpleIniA enemyIni;
-    SI_Error err=enemyIni.LoadFile(configFile.c_str());
+    SI_Error err = enemyIni.LoadFile(configFile.c_str());
     if(err<0)throw std::runtime_error("path to enemy configuration file not valid");
 
 
@@ -189,10 +185,19 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
 }
 
+void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size) {
+    auto item = std::make_unique<Item>(nullptr, size,
+                                       sf::Vector2f(static_cast<float>(position.x) * rooms[roomNumber]->getDimX() +
+                                                    rooms[roomNumber]->getDimX() / 2.f,
+                                                    static_cast<float>(position.y) * rooms[roomNumber]->getDimY() +
+                                                    rooms[roomNumber]->getDimY() / 2.f));
+    rooms[roomNumber]->addItem(item);
+}
+
 
 TileMap::~TileMap() {
-for (auto& t: textures){
-    delete t;
-}
+    for (auto &t: textures) {
+        delete t;
+    }
 }
 
