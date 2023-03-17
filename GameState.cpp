@@ -50,6 +50,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
 void GameState::update(const float &dt) {
     updateMousePosition();
+    int currentPlayerLife;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()) {
         pauseClock.restart();
@@ -111,16 +112,35 @@ void GameState::update(const float &dt) {
     }
     else {
         //std::cout<<"fps is "<<1/dt<<std::endl;
+        currentPlayerLife = player->getHp();
+        if (invincibilityTimer.getElapsedTime().asSeconds() > invincibilityTime) {
+            isInvincible = false;
+        }
+
         if (dt > 0.1f) {
             updatePlayerPos();
             player->update(0.1f, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(0.1f, *player, window);
+            if (isInvincible)
+                player->setHp(currentPlayerLife);
+            else if (currentPlayerLife < player->getHp()) {
+                isInvincible = true;
+                invincibilityTimer.restart();
+            }
+
             achievementCounter.update(tileMap->getRoom()->getCamera(), 0.1f);
 
         } else {
             updatePlayerPos();
             player->update(dt, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(dt, *player, window);
+            if (isInvincible) {
+                player->setHp(currentPlayerLife);
+
+            } else if (currentPlayerLife > player->getHp()) {
+                isInvincible = true;
+                invincibilityTimer.restart();
+            }
             achievementCounter.update(tileMap->getRoom()->getCamera(), dt);
 
             //___________________UPDATING STATUS BAR

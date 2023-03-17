@@ -45,13 +45,15 @@ private:
     sf::Clock pauseClock;
     std::unique_ptr<TileMap> tileMap;
     sf::Texture *playerTexture;
-    sf::Texture* statusBarTexture;
+    sf::Texture *statusBarTexture;
     sf::RectangleShape statusBar;
     sf::RectangleShape hpBar;
     sf::RectangleShape energyBar;
     sf::Text deathMessage;
     Achievement achievementCounter;
-    bool isApproaching = true;
+    sf::Clock invincibilityTimer;
+    const float invincibilityTime = 2.5f;
+    bool isInvincible = false;
 
 
     void initKeys() override;

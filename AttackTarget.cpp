@@ -37,7 +37,6 @@ void AttackTarget::update() {
             *knockback += nextKnockback;
             *hp -= nextHp;
             incomingDamage = false;
-
         }
     }
 }
