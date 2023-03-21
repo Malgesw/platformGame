@@ -57,7 +57,50 @@ void Attack::hit() {
     }
 }
 
-void Attack::update(const float &dt,sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls) {
+void Attack::applyCollisionDamage() {
+
+    auto i = targets.begin();
+
+    while (i != targets.end()) {
+
+        auto &currentTarget = *i;
+        bool enemyCancelled = false;
+
+        if (hitBox.getGlobalBounds().intersects(currentTarget.getCollisionbox().getGlobalBounds())) {
+
+
+            sf::Vector2f knockbackDirection;
+
+            if (std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
+
+                knockbackDirection.x = (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                       std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
+            } else knockbackDirection.x = 0;
+
+            if (std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
+                knockbackDirection.y = (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                       std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
+            } else knockbackDirection.y = 0;
+
+            if (checkDeath(currentTarget)) {
+                currentTarget.kill(damage);
+                targets.erase(i++);
+                enemyCancelled = true;
+            }
+
+            currentTarget.receiveDamage(knockbackDirection * knockback, damage, 0.0f);
+
+        }
+        if (not enemyCancelled) {
+            i++;
+        }
+
+    }
+}
+
+
+void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,
+                    const std::vector<std::shared_ptr<LevelTile>> &walls) {
     for (auto &t: targets) {
         t.update();
     }

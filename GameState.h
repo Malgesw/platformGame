@@ -52,7 +52,7 @@ private:
     sf::Text deathMessage;
     Achievement achievementCounter;
     sf::Clock invincibilityTimer;
-    const float invincibilityTime = 2.5f;
+    const float invincibilityTime = 0.5f;
     bool isInvincible = false;
 
 

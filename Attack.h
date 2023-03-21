@@ -21,6 +21,8 @@ public:
     void clearTargets();
     void attach(Observer *o) override;    void detach(Observer *o) override;
 
+    void applyCollisionDamage();
+
     void notify(unsigned short category) const override;
 
     virtual void hit() = 0;
