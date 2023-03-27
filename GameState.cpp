@@ -158,15 +158,12 @@ void GameState::update(const float &dt) {
 
             if (player->getHp() > 0) {
                 death = false;
-                //hpBar.setSize(sf::Vector2f(hpBar.getSize().x - static_cast<float>(startPlayerLife - player->getHp()) * hpBar.getSize().x / 8.f,
-                //                               hpBar.getSize().y));
                 hpBar.setSize(sf::Vector2f(
                         (static_cast<float>(player->getHp()) / static_cast<float>(startPlayerLife)) * hpBar.getSize().x,
                         hpBar.getSize().y));
             }
             if (player->getEnergy() > -1) {
-                //energyBar.setSize(sf::Vector2f(energyBar.getSize().x - static_cast<float>(maxPlayerEnergy - player->getEnergy()) * energyBar.getSize().x / 8.f,
-                //                               energyBar.getSize().y));
+
                 energyBar.setSize(
                         sf::Vector2f(static_cast<float>(player->getEnergy() / maxPlayerEnergy) * energyBar.getSize().x,
                                      energyBar.getSize().y));
@@ -177,8 +174,6 @@ void GameState::update(const float &dt) {
                                          tileMap->getRoom()->getCamera().getSize().x / 8.5f,
                                          tileMap->getRoom()->getCamera().getCenter().y -
                                          tileMap->getRoom()->getCamera().getSize().y / 3.f);
-                //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x/1.06f - deathMessage.getGlobalBounds().width/2.f,
-                //                       tileMap->getRoom()->getCamera().getCenter().y/1.18f - deathMessage.getGlobalBounds().height/2.f);
                 deathMessage.setCharacterSize(
                         static_cast<unsigned int>(2.f * tileMap->getRoom()->getCamera().getSize().y / 45.f));
             }
@@ -199,16 +194,6 @@ void GameState::updatePlayerPos() {
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
         player->moveRight();
     }
-    /*
-    else if (player->isOnGround()) {
-        if (player->isFacingRight()) {
-            player->setSpriteType(IDLERIGHT);
-        } else {
-            player->setSpriteType(IDLELEFT);
-        }
-    }
-     */
-
 
     //WHEN PLAYER JUMPS
 
@@ -216,16 +201,6 @@ void GameState::updatePlayerPos() {
         keyReleased = false;
         player->moveUp();
     }
-    /*
-        //MOVEMENT LEFT/RIGHT WHILE IN AIR
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Left")))) {
-            player->setSpriteType(JUMPLEFT);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Right")))) {
-            player->setSpriteType(JUMPRIGHT);
-        }
-    }
-     */
 
     //WHEN PLAYER SHOOTS
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){

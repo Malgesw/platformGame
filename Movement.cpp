@@ -1,17 +1,10 @@
-//
-// Created by alessio on 25/07/22.
-//
+
 #include "Movement.h"
 #include <cmath>
 #include <utility>
 
 void Movement::moveLeft() {
-    /*
-    if(isOnGround)
-        *typeOfSprite = MOVELEFT;
-    else
-        *typeOfSprite = JUMPLEFT;
-         */
+
     isMoving = true;
     isFacingRight = false;
     velocity.x = velocity.x - speed;
@@ -20,12 +13,7 @@ void Movement::moveLeft() {
     collisionBox.move(velocity.x * dt, 0.f);
 }
 void Movement::moveRight() {
-    /*
-    if(isOnGround)
-        *typeOfSprite = MOVERIGHT;
-    else
-        *typeOfSprite = JUMPRIGHT;
-    */
+
     isMoving = true;
     isFacingRight = true;
     velocity.x = velocity.x + speed;
