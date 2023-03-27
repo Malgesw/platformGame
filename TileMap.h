@@ -4,7 +4,7 @@
 #include "LevelTile.h"
 #include "GameCharacter.h"
 #include "headers.h"
-#include "Item.h"
+#include "Droid.h"
 #include "Room.h"
 #include <string>
 
@@ -18,7 +18,7 @@ public:
     void update(const float &dt, GameCharacter &player, sf::RenderWindow *window);
     void spawnEnemies(GameCharacter &player);
 
-    void placeItems();
+    void placeItems(GameCharacter &player);
 
     void clearEnemies();
 
@@ -49,7 +49,7 @@ private:
 
     void generateEnemy(int roomNumber, std::string configFile, sf::Vector2i startPosition, GameCharacter &player);
 
-    void generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size);
+    void generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, char type, GameCharacter &player);
 
 };
 

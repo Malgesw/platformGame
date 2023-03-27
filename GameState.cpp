@@ -91,7 +91,7 @@ void GameState::update(const float &dt) {
             tileMap->clearEnemies();
             tileMap->clearItems();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
-            tileMap->placeItems(); //after every restart, the map is cleared and items are regenerated
+            tileMap->placeItems(*player); //after every restart, the map is cleared and items are regenerated
             player->getMovement().getCollisions().setPosition(tileMap->getRoom()->getDimX(),
                                                               16 * tileMap->getRoom()->getDimY());
             player->getMovement().clearWalls();

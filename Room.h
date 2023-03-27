@@ -9,6 +9,7 @@
 #include "AutoWalking.h"
 #include "AutoFlying.h"
 #include "AutoMelee.h"
+#include "RangedAttack.h"
 
 class Room {
 

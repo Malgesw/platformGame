@@ -1,6 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
-#include <SFML/Graphics.hpp>
+
+#include "GameCharacter.h"
 
 class Item {
 
@@ -8,6 +9,8 @@ public:
     Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position);
 
     void render(sf::RenderTarget &target);
+
+    virtual void use(GameCharacter &player);
 
     bool isOnMap() const {
         return onMap;
@@ -26,7 +29,6 @@ public:
     }
 
 protected:
-    sf::Texture *texture;
     sf::RectangleShape body;
     sf::Vector2f position;
     bool onMap;

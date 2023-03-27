@@ -167,8 +167,7 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
             if (player.getMovement().getCollisions().getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
                 it->setState(false); //if taken, the item is removed from the map
                 //HP-GAIN LIKE ITEM
-                if (player.getHp() < 50)
-                    player.setHp(player.getHp() + 1);
+                it->use(player);
 
             }
         }

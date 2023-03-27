@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.20)
 project(platformGame)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -11,12 +11,12 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         Pathfinder.h AutoFlying.cpp AutoFlying.h AutoMovement.h AttackTarget.cpp AttackTarget.h Room.cpp Room.h
         AutoAttack.h Animation.cpp Animation.h DropDownList.cpp DropDownList.h MeleeAttack.cpp
         MeleeAttack.h AutoMelee.cpp AutoMelee.h simpleini/SimpleIni.h Observer.h Subject.h Achievement.cpp Achievement.h spriteType.h
-        RangedAttack.cpp RangedAttack.h Bullet.cpp Bullet.h Item.cpp Item.h)
+        RangedAttack.cpp RangedAttack.h Bullet.cpp Bullet.h Item.cpp Item.h Droid.cpp Droid.h)
 
 
 add_executable(platformGame main.cpp)
 set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR C:/SFML-2.5.1/lib/cmake/SFML)
+set(SFML_DIR C:/SFML/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics audio network REQUIRED)
 
 include_directories(C:/SFML/include)
