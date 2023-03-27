@@ -4,7 +4,7 @@ PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu)
 
     initButtons();
 
-    background.setSize(static_cast<sf::Vector2f>(3.f*window->getView().getSize()));
+    background.setSize(static_cast<sf::Vector2f>(5.f * window->getView().getSize()));
     background.setFillColor(sf::Color(sf::Color(20, 20, 20, 100)));
 
 }

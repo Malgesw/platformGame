@@ -1,7 +1,3 @@
-//
-// Created by alessio on 25/07/22.
-//
-
 #ifndef PLATFORMGAME_MOVEMENT_H
 #define PLATFORMGAME_MOVEMENT_H
 

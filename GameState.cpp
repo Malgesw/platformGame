@@ -94,7 +94,9 @@ void GameState::update(const float &dt) {
             death = false;
             tileMap->setCurrentRoom(0);
             tileMap->clearEnemies();
+            tileMap->clearItems();
             tileMap->spawnEnemies(*player); //after every restart, the map is cleared and enemies are respawned
+            tileMap->placeItems(*player); //after every restart, the map is cleared and items are regenerated
             player->setPosition(startPlayerPosition.x, startPlayerPosition.y);
             player->clearWalls();
             player->addWalls(tileMap->getRoom()->getWalls());
@@ -177,6 +179,7 @@ void GameState::update(const float &dt) {
                 deathMessage.setCharacterSize(
                         static_cast<unsigned int>(2.f * tileMap->getRoom()->getCamera().getSize().y / 45.f));
             }
+
 
         }
     }

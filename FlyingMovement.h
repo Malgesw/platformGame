@@ -1,7 +1,3 @@
-//
-// Created by alessio on 26/07/22.
-//
-
 #ifndef PLATFORMGAME_FLYINGMOVEMENT_H
 #define PLATFORMGAME_FLYINGMOVEMENT_H
 

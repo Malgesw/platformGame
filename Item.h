@@ -1,22 +1,37 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #ifndef ITEM_H
 #define ITEM_H
-#include <SFML/Graphics.hpp>
-//add animation
 
+#include "GameCharacter.h"
 
 class Item {
-private:
-    sf::Texture texture;
-    sf::Sprite sprite;
-    sf::Vector2f pos;
-    bool active;
+
 public:
-    void activate();
-    bool isActive();
+    Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position);
+
+    void render(sf::RenderTarget &target);
+
+    virtual void use(GameCharacter &player);
+
+    bool isOnMap() const {
+        return onMap;
+    }
+
+    sf::Vector2f getPosition() {
+        return position;
+    }
+
+    sf::RectangleShape getBody() const {
+        return body;
+    }
+
+    void setState(bool state) {
+        onMap = state;
+    }
+
+protected:
+    sf::RectangleShape body;
+    sf::Vector2f position;
+    bool onMap;
 };
 
 

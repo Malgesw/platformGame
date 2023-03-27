@@ -1,16 +1,20 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #include "Item.h"
 
-//PLACEHOLDER
-
-bool Item::isActive() {
-
-    return false;
+Item::Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position) {
+    onMap = true;
+    body.setSize(size);
+    body.setPosition(position);
+    //body.setFillColor(sf::Color::Cyan);
+    body.setTexture(texture);
 }
 
-void Item::activate() {
-
+void Item::render(sf::RenderTarget &target) {
+    target.draw(body);
 }
+
+void Item::use(GameCharacter &player) {
+    if (player.getHp() < 50)
+        player.setHp(player.getHp() + 1);
+}
+
+

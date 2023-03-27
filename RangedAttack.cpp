@@ -1,9 +1,4 @@
-//
-// Created by alessio on 01/12/22.
-//
-
 #include "RangedAttack.h"
-
 
 RangedAttack::RangedAttack(sf::Vector2f newBulletSize,float newBulletSpeed, float attackSpeed, int hitDamage, float newKnockback, unsigned short * typeOfSprite, bool isPlayer) :
 Attack(sf::Vector2f (50.f,50.f), attackSpeed,hitDamage,newKnockback,typeOfSprite),bulletSize(newBulletSize),bulletSpeed(newBulletSpeed) {

@@ -9,56 +9,55 @@
 #include "AutoWalking.h"
 #include "AutoFlying.h"
 #include "AutoMelee.h"
+#include "RangedAttack.h"
 
 class Room {
 
 public:
 
+    Room(const std::string &roomName, GameCharacter &mainCharacter, const std::vector<sf::Texture *> &textures,
+         sf::Vector2i mapSize, std::vector<sf::Texture *> &tilesTextures);
 
-    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures,sf::Vector2i mapSize, std::vector<sf::Texture*> &tilesTextures);
     void render(sf::RenderTarget &target);
     void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
     const sf::Vector2i &getMapSize() const;
 
-
     void addEnemy(std::unique_ptr<GameCharacter> &enemy);
+
+    void addItem(std::unique_ptr<Item> &item);
 
     void clearEnemies();
 
-
+    void clearItems();
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return walls;
     }
-
     float getDimX() const{
         return dimX;
     }
-
     float getDimY() const{
         return dimY;
     }
-
     const std::vector<std::shared_ptr<LevelTile>> &getDoors() const {
         return doors;
     }
-
     std::list<std::unique_ptr<GameCharacter>> &getEnemies() {
         return enemies;
     }
-
     std::vector<AttackTarget> getTargets();
     sf::View &getCamera(){
         return camera;
     }
-
     void setCameraCenter(float x, float y){
         camera.setCenter(x, y);
     }
 
 private:
 
-    enum enemyType{flying=0, walking=1};
-    std::map< std:: string, std::unique_ptr<Item>> items;
+    enum enemyType {
+        flying = 0, walking = 1
+    };
+    std::list<std::unique_ptr<Item>> items;
     std::vector<std::vector<std::shared_ptr<LevelTile>>> tiles;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::vector<std::shared_ptr<LevelTile>> doors;
@@ -72,8 +71,7 @@ private:
     sf::RectangleShape bg;
     sf::Texture *bgtexture;
 
-
-    void initFloor(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures);
+    void initRoom(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures);
 
 };
 

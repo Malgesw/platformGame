@@ -10,7 +10,7 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
     bgtexture = new sf::Texture;
     bgtexture->loadFromFile("./images/map2bg.png");
     bg.setTexture(bgtexture);
-    initFloor(roomName, tilesTextures);
+    initRoom(roomName, tilesTextures);
     camera.setSize(1920.f, 1080.f);
     if (dimY * static_cast<float>(mapSize.y) < 1080.f) {
         camera.setSize(3 * dimY * static_cast<float>(mapSize.y) / 2, dimY * static_cast<float>(mapSize.y));
@@ -27,19 +27,17 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
 }
 
 
-void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tilesTextures) {
+void Room::initRoom(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures) {
 
     sf::Vector2f size(dimX, dimY);
     tiles.clear();
     doors.clear();
     std::ifstream ifs;
     std::string n;
-    ifs.open("./Levels/"+roomName);
+    ifs.open("./Levels/" + roomName);
 
-
-
-    for(int i = 0; i < mapSize.x; i++) {
-        while(ifs >> n){
+    for (int i = 0; i < mapSize.x; i++) {
+        while (ifs >> n) {
             numbers.push_back(n);
         }
     }
@@ -115,13 +113,20 @@ void Room::render(sf::RenderTarget &target) {
     for (auto &e: enemies) {
         e->render(target);
     }
+    //________________________________RENDERING ITEMS
+    for (auto &i: items) {
+        i->render(target);
+    }
+
+    //if (items.empty())
+    //  std::cout << "no items" << std::endl;
 
     target.setView(camera);
 }
 
 void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window) {
 
-    //________________________________UPDATING WIEW
+    //________________________________UPDATING VIEW
 
 
     //________________________________UPDATING MAP
@@ -156,10 +161,34 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
         }
     }
 
+    //_______________________________UPDATING ITEMS
+    if (player.isMainCharacter()) {
+        for (auto &it: items) {
+            if (player.getMovement().getCollisions().getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
+                it->setState(false); //if taken, the item is removed from the map
+                //HP-GAIN LIKE ITEM
+                it->use(player);
+
+            }
+        }
+
+        auto j = items.begin();
+        while (j != items.end()) {
+            if (!(*j)->isOnMap())
+                items.erase(j++);
+            else
+                j++;
+        }
+    }
+
 }
 
 void Room::addEnemy(std::unique_ptr<GameCharacter> &enemy) {
     enemies.push_back(std::move(enemy));
+}
+
+void Room::addItem(std::unique_ptr<Item> &item) {
+    items.push_back(std::move(item));
 }
 
 void Room::clearEnemies() {
@@ -168,6 +197,12 @@ void Room::clearEnemies() {
     while (i != enemies.end()) {
         enemies.erase(i++);
     }
+}
+
+void Room::clearItems() {
+    auto i = items.begin();
+    while (i != items.end())
+        items.erase(i++);
 }
 
 std::vector<AttackTarget> Room::getTargets() {

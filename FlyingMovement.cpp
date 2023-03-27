@@ -1,10 +1,4 @@
-//
-// Created by alessio on 26/07/22.
-//
-
 #include "FlyingMovement.h"
-
-
 
 FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, unsigned short * typeOfSprite) : Movement(velocity,startPosition,size,'F',typeOfSprite) {
 

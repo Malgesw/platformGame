@@ -1,7 +1,3 @@
-//
-// Created by alessio on 16/08/22.
-//
-
 #ifndef PLATFORMGAME_AUTOWALKING_H
 #define PLATFORMGAME_AUTOWALKING_H
 #include "WalkingMovement.h"

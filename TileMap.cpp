@@ -1,31 +1,18 @@
-//
-// Created by seren on 19/07/2022.
-//
-
 #include "TileMap.h"
 #include "AutoRanged.h"
 
-TileMap::TileMap(GameCharacter& player) {
+TileMap::TileMap(GameCharacter &player) {
 
-    enum enemy{flying=0,walking=1};
+    enum enemy {
+        flying = 0, walking = 1
+    };
 
     textures.push_back(new sf::Texture);
     textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
     textures.push_back(new sf::Texture);
     textures[walking]->loadFromFile("./images/cyberMonkey2.png");
-
-
     tilesTextures.push_back(new sf::Texture);
-    /* tilesTextures.push_back(new sf::Texture);
-     tilesTextures.push_back(new sf::Texture);
-     tilesTextures.push_back(new sf::Texture);
-     */
-
     tilesTextures[0]->loadFromFile("./images/tilesheet.png");
-    /* tilesTextures[1]->loadFromFile("./images/tilesheet.png", sf::IntRect(1000,0,2000,2000));
-     tilesTextures[2]->loadFromFile("./images/door.png");
-     tilesTextures[3]->loadFromFile("./images/tilesheet.png", sf::IntRect(0,0,1000,975));
- */
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
@@ -33,6 +20,7 @@ TileMap::TileMap(GameCharacter& player) {
     currentRoom = 0;
 
     spawnEnemies(player);
+    placeItems(player);
 
 }
 
@@ -89,7 +77,7 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
     //_____TOP
     if(rooms[currentRoom]->getCamera().getSize().y/2.f >= player.getCenter().y)
         rooms[currentRoom]->setCameraCenter(rooms[currentRoom]->getCamera().getCenter().x,
-                                            rooms[currentRoom]->getCamera().getSize().y/2.f);
+                                            rooms[currentRoom]->getCamera().getSize().y / 2.f);
 
 }
 
@@ -99,21 +87,33 @@ void TileMap::spawnEnemies(GameCharacter &player) {
     generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
 }
 
+void TileMap::placeItems(GameCharacter &player) {
+    generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(80.f, 80.f), 'i', player);
+    generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), 'i', player);
+    generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), 'd', player);
+    generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), 'i', player);
+}
+
 void TileMap::clearEnemies() {
     for (auto &r: rooms) {
         r->clearEnemies();
     }
 }
 
-void TileMap::addRoom(const std::string& roomName, GameCharacter &player,sf::Vector2i roomSize) {
-
-    rooms.push_back(std::make_unique<Room>(roomName,player,textures,roomSize,tilesTextures));
+void TileMap::clearItems() {
+    for (auto &r: rooms)
+        r->clearItems();
 }
 
-void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i startPosition, GameCharacter& player) {
+void TileMap::addRoom(const std::string &roomName, GameCharacter &player, sf::Vector2i roomSize) {
+
+    rooms.push_back(std::make_unique<Room>(roomName, player, textures, roomSize, tilesTextures));
+}
+
+void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i startPosition, GameCharacter &player) {
 
     CSimpleIniA enemyIni;
-    SI_Error err=enemyIni.LoadFile(configFile.c_str());
+    SI_Error err = enemyIni.LoadFile(configFile.c_str());
     if(err<0)throw std::runtime_error("path to enemy configuration file not valid");
 
 
@@ -201,10 +201,56 @@ void TileMap::generateEnemy(int roomNumber,std::string configFile, sf::Vector2i 
 
 }
 
+void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, char type, GameCharacter &player) {
+
+    if (type == 'i') {
+        auto tex = new sf::Texture;
+        tex->loadFromFile("./images/taco.png");
+        std::unique_ptr<Item> item_i = std::make_unique<Item>(tex, size,
+                                                              sf::Vector2f(
+                                                                      static_cast<float>(position.x) *
+                                                                      rooms[roomNumber]->getDimX() +
+                                                                      rooms[roomNumber]->getDimX() / 2.f,
+                                                                      static_cast<float>(position.y) *
+                                                                      rooms[roomNumber]->getDimY() +
+                                                                      rooms[roomNumber]->getDimY() / 2.f));
+        rooms[roomNumber]->addItem(item_i);
+    } else {
+        auto text = new sf::Texture;
+        text->loadFromFile("./images/playerSheet.png");
+        std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(
+                position.x * rooms[currentRoom]->getDimX(),
+                position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer());
+        playerMovement->setBarriers(rooms[currentRoom]->getWalls());
+        //auto playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player->spritePointer(),true);
+        std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 3), 0.3f,
+                                                                                 sf::Vector2f(168, 126), true,
+                                                                                 player.spritePointer());
+        std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
+                                                               text, size,
+                                                               sf::Vector2f(static_cast<float>(position.x) *
+                                                                            rooms[roomNumber]->getDimX() +
+                                                                            rooms[roomNumber]->getDimX() / 2.f,
+                                                                            static_cast<float>(position.y) *
+                                                                            rooms[roomNumber]->getDimY() +
+                                                                            rooms[roomNumber]->getDimY() / 2.f));
+        rooms[roomNumber]->addItem(item_d);
+        std::vector<AttackTarget> newTargets;
+        newTargets.push_back(player.generateTarget());
+
+        for (auto &r: rooms) {
+            for (auto &e: r->getEnemies()) {
+                e->addTargets(newTargets);
+            }
+        }
+    }
+
+}
+
 
 TileMap::~TileMap() {
-for (auto& t: textures){
-    delete t;
-}
+    for (auto &t: textures) {
+        delete t;
+    }
 }
 

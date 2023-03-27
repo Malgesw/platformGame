@@ -1,7 +1,3 @@
-//
-// Created by alessio on 29/11/22.
-//
-
 #include "Bullet.h"
 
 Bullet::Bullet(sf::Vector2f size, int speed, int damage,int knockback,sf::Texture* texture)
