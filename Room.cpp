@@ -162,9 +162,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
     }
 
     //_______________________________UPDATING ITEMS
-    if (player.isMainCharacter()) {
         for (auto &it: items) {
-            if (player.getMovement().getCollisions().getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
+            if (player.getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
                 it->setState(false); //if taken, the item is removed from the map
                 //HP-GAIN LIKE ITEM
                 it->use(player);
@@ -181,7 +180,6 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
         }
     }
 
-}
 
 void Room::addEnemy(std::unique_ptr<GameCharacter> &enemy) {
     enemies.push_back(std::move(enemy));

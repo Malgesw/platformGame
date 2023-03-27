@@ -13,7 +13,7 @@ void Item::render(sf::RenderTarget &target) {
 }
 
 void Item::use(GameCharacter &player) {
-    if (player.getHp() < 50)
+    if (player.getHp() < player.getStartHp())
         player.setHp(player.getHp() + 1);
 }
 

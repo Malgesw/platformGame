@@ -12,7 +12,7 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         AutoAttack.h Animation.cpp Animation.h DropDownList.cpp DropDownList.h MeleeAttack.cpp
         MeleeAttack.h AutoMelee.cpp AutoMelee.h simpleini/SimpleIni.h Observer.h Subject.h Achievement.cpp Achievement.h spriteType.h
         RangedAttack.cpp RangedAttack.h Bullet.cpp Bullet.h NoAttack.cpp NoAttack.h NoMovement.cpp NoMovement.h StarRangedAttack.cpp StarRangedAttack.h
-        usefulFunctions.cpp usefulFunctions.h InvalidComponent.cpp InvalidComponent.h exceptions.h AutoRanged.cpp AutoRanged.h)
+        usefulFunctions.cpp usefulFunctions.h InvalidComponent.cpp InvalidComponent.h exceptions.h AutoRanged.cpp AutoRanged.h Item.cpp Item.h Droid.cpp Droid.h)
 
 
 add_executable(platformGame main.cpp)

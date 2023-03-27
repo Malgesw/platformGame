@@ -91,12 +91,20 @@ public:
         return typeOfSprite;
     }
 
-    unsigned short *spritePointer(){
+    unsigned short *spritePointer() {
         return &typeOfSprite;
     }
 
-    void setSpriteType(unsigned short type){
+    void setSpriteType(unsigned short type) {
         typeOfSprite = type;
+    }
+
+    int getStartHp() const {
+        return startHp;
+    }
+
+    int getStartEnergy() const {
+        return startEnergy;
     }
 
 
@@ -104,12 +112,15 @@ private:
 
     int hp;
     int energy;
+    int startHp;
+    int startEnergy;
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
     std::unique_ptr<Movement> backupMovement;
     std::unique_ptr<Attack> backupAttack;
     std::unique_ptr<Animation> backupAnimation;
+    AttackTarget selfTarget;
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;
 

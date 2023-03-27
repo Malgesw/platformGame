@@ -221,7 +221,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(
                 position.x * rooms[currentRoom]->getDimX(),
                 position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer());
-        playerMovement->setBarriers(rooms[currentRoom]->getWalls());
+        playerMovement->addWalls(rooms[currentRoom]->getWalls());
         //auto playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player->spritePointer(),true);
         std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 3), 0.3f,
                                                                                  sf::Vector2f(168, 126), true,
