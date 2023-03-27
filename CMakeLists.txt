@@ -11,7 +11,7 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         Pathfinder.h AutoFlying.cpp AutoFlying.h AutoMovement.h AttackTarget.cpp AttackTarget.h Room.cpp Room.h AutoAttack.h
         Animation.cpp Animation.h DropDownList.cpp DropDownList.h MeleeAttack.cpp MeleeAttack.h AutoMelee.cpp AutoMelee.h
         simpleini/SimpleIni.h Observer.h Subject.h Achievement.cpp Achievement.h
-        Bullet.cpp Bullet.h RangedAttack.cpp RangedAttack.h spriteType.h AutoRanged.cpp AutoRanged.h NoAttack.cpp NoAttack.h NoMovement.cpp NoMovement.h usefulFunctions.cpp usefulFunctions.h InvalidComponent.cpp InvalidComponent.h exceptions.h)
+        Bullet.cpp Bullet.h RangedAttack.cpp RangedAttack.h spriteType.h AutoRanged.cpp AutoRanged.h NoAttack.cpp NoAttack.h NoMovement.cpp NoMovement.h usefulFunctions.cpp usefulFunctions.h InvalidComponent.cpp InvalidComponent.h exceptions.h StarRangedAttack.cpp StarRangedAttack.h)
 
 
 add_executable(platformGame main.cpp)

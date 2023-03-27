@@ -9,6 +9,7 @@
 #include "spriteType.h"
 #include "LevelTile.h"
 
+class GameCharacter;
 
 class Attack :public Subject{
 
