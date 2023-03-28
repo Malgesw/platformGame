@@ -15,7 +15,8 @@ class Attack :public Subject{
 
 public:
 
-    Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short *typeOfSprite);
+    Attack(sf::Vector2f size, float speed, float delay, int hitDamage, float knockback, unsigned short *typeOfSprite);
+
     ~Attack() override = default;
     sf::RectangleShape &getHitBox();
 
@@ -28,14 +29,23 @@ public:
 
     void notify(unsigned short category) const override;
 
-    virtual void hit() = 0;
-    virtual void update(const float &dt, sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls)=0;
-    virtual void render(sf::RenderTarget &target)=0;
+    void hit();
+
+    virtual void update(const float &dt, sf::Vector2f centerPosition, bool orientation,
+                        const std::vector<std::shared_ptr<LevelTile>> &walls) = 0;
+
+    virtual void render(sf::RenderTarget &target) = 0;
 
 
 protected:
+
+    virtual void doDamage() = 0;
+
+    bool incomingAttack = false;
     sf::Clock cooldown;
+    sf::Clock delay;
     float attackSpeed;
+    float attackDelay;
     int damage;
     float knockback;
     sf::RectangleShape hitBox;

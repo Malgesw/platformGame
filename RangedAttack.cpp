@@ -1,40 +1,45 @@
 #include "RangedAttack.h"
 
-RangedAttack::RangedAttack(sf::Vector2f newBulletSize,float newBulletSpeed, float attackSpeed, int hitDamage, float newKnockback, unsigned short * typeOfSprite, bool isPlayer) :
-Attack(sf::Vector2f (50.f,50.f), attackSpeed,hitDamage,newKnockback,typeOfSprite),bulletSize(newBulletSize),bulletSpeed(newBulletSpeed) {
+RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, float attackSpeed, int hitDamage,
+                           float newKnockback, unsigned short *typeOfSprite, bool isPlayer) :
+        Attack(sf::Vector2f(50.f, 50.f), attackSpeed, 0.f, hitDamage, newKnockback, typeOfSprite),
+        bulletSize(newBulletSize), bulletSpeed(newBulletSpeed) {
 
-    texture=new sf::Texture;
-    if(isPlayer)
+    texture = new sf::Texture;
+    if (isPlayer)
         texture->loadFromFile("./images/bulletplayer.png");
     else
         texture->loadFromFile("./images/bulletenemy.png");
 
 
-    bullets.emplace_back(bulletSize,bulletSpeed,damage,knockback,texture);
-    bullets.emplace_back(bulletSize,bulletSpeed,damage,knockback,texture);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture);
     bullets.emplace_back(bulletSize,bulletSpeed,damage,knockback,texture);
 }
 
-void RangedAttack::hit() {
+void RangedAttack::doDamage() {
 
-    if (cooldown.getElapsedTime().asSeconds() > attackSpeed) {
-        cooldown.restart();
-        auto i = bullets.begin();
-        while (i != bullets.end() and (*i).isActive()) i++;
-        if (i != bullets.end()) (*i).shoot(nextBulletStartPosition, nextBulletDirection);
-        bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture);
-    }
+    auto i = bullets.begin();
+    while (i != bullets.end() and (*i).isActive()) i++;
+    if (i != bullets.end()) (*i).shoot(nextBulletStartPosition, nextBulletDirection);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture);
+
 }
 
 void RangedAttack::hit(sf::Vector2f direction) {
 
+
+    Attack::hit();
+    nextBulletDirection = direction;
+
+    /*
     if (cooldown.getElapsedTime().asSeconds() > attackSpeed) {
         cooldown.restart();
         auto i = bullets.begin();
         while (i != bullets.end() and (*i).isActive()) i++;
         if (i != bullets.end()) (*i).shoot(nextBulletStartPosition, direction);
         bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture);
-    }
+    */
 }
 
 

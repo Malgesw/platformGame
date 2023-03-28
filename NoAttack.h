@@ -8,14 +8,16 @@
 #include "Attack.h"
 
 class NoAttack : public Attack {
+public:
     NoAttack();
 
-    void hit() override {};
 
     void update(const float &dt, sf::Vector2f centerPosition, bool orientation,
                 const std::vector<std::shared_ptr<LevelTile>> &walls) override {};
 
     void render(sf::RenderTarget &target) override {};
+private:
+    void doDamage() override {};
 };
 
 

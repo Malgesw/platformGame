@@ -10,7 +10,7 @@ StarRangedAttack::StarRangedAttack(sf::Vector2f bulletSize, float bulletSpeed, f
 
 }
 
-void StarRangedAttack::hit() {
+void StarRangedAttack::doDamage() {
 
     RangedAttack::hit(sf::Vector2f(1, 0));
     RangedAttack::hit(sf::Vector2f(sqrtf(2) / 2, sqrtf(2) / 2));

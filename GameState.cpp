@@ -119,10 +119,10 @@ void GameState::update(const float &dt) {
             isInvincible = false;
         }
 
-        if (dt > 0.1f) {
+        if (dt > 0.05f) {
             updatePlayerPos();
-            player->update(0.1f, tileMap->getWalls(), mainCharacterPos);
-            tileMap->update(0.1f, *player, window);
+            player->update(0.05f, tileMap->getWalls(), mainCharacterPos);
+            tileMap->update(0.05f, *player, window);
             if (isInvincible)
                 player->setHp(currentPlayerLife);
             else if (currentPlayerLife < player->getHp()) {

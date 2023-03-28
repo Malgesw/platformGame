@@ -1,11 +1,12 @@
 #include "Attack.h"
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short* typeOfSprite):
-        attackSpeed(speed), damage(hitDamage), knockback(knockback),typeOfSprite(typeOfSprite) {
+Attack::Attack(sf::Vector2f size, float speed, float delay, int hitDamage, float knockback,
+               unsigned short *typeOfSprite) :
+        attackSpeed(speed), damage(hitDamage), knockback(knockback), typeOfSprite(typeOfSprite), attackDelay(delay) {
 
-hitBox=sf::RectangleShape(size);
-hitBox.setFillColor(sf::Color::Blue);
+    hitBox = sf::RectangleShape(size);
+    hitBox.setFillColor(sf::Color::Blue);
 }
 
 sf::RectangleShape& Attack::getHitBox(){
@@ -49,10 +50,18 @@ void Attack::notify(unsigned short category) const {
 }
 
 void Attack::hit() {
-    if (*typeOfSprite == MOVERIGHT or *typeOfSprite == JUMPRIGHT or *typeOfSprite == IDLERIGHT) {
-        *typeOfSprite = ATTACKRIGHT;
-    } else {
-        *typeOfSprite = ATTACKLEFT;
+
+    if (cooldown.getElapsedTime().asSeconds() > attackSpeed) {
+        cooldown.restart();
+        if (*typeOfSprite == MOVERIGHT or *typeOfSprite == JUMPRIGHT or *typeOfSprite == IDLERIGHT or
+            *typeOfSprite == ATTACKRIGHT) {
+            *typeOfSprite = ATTACKRIGHT;
+        } else {
+            *typeOfSprite = ATTACKLEFT;
+        }
+
+        incomingAttack = true;
+        delay.restart();
     }
 }
 
@@ -101,10 +110,19 @@ void Attack::applyCollisionDamage() {
 
 void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
-    /*
-    for (auto &t: targets) {
-        t.update();
+
+    if (incomingAttack) {
+        std::cout << "from attack.cpp   delay timer is " << delay.getElapsedTime().asSeconds() << std::endl;
+        std::cout << "from attack.cpp   delay is " << attackDelay << std::endl;
+        if (delay.getElapsedTime().asSeconds() > attackDelay) {
+
+
+            doDamage();
+            delay.restart();
+            incomingAttack = false;
+        }
     }
-     */
+
 }
+
 
