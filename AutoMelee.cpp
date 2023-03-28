@@ -8,8 +8,10 @@ AutoMelee::AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockb
 }
 
 void AutoMelee::attackPlayer(sf::Vector2f centerPosition) {
-    if (hitBox.getGlobalBounds().intersects(targets.front().getCollisionbox().getGlobalBounds())) {
-        hit();
+    if (not targets.empty()) {
+        if (hitBox.getGlobalBounds().intersects(targets.front()->getCollisionbox().getGlobalBounds())) {
+            hit();
+        }
     }
 }
 

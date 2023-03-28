@@ -12,9 +12,9 @@ sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
 
-void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
+void Attack::addTargets(const std::vector<AttackTarget *> &newTargets) {
 
-    for(auto &t : newTargets){
+    for (auto &t: newTargets) {
         targets.push_back(t);
     }
 }
@@ -23,13 +23,12 @@ void Attack::clearTargets() {
     targets.clear();
 }
 
-bool Attack::checkDeath(const AttackTarget &target) const{
+bool Attack::checkDeath(AttackTarget *target) const {
 
-    if(target.getHp()<=damage){
+    if (target->getHp() <= damage) {
         notify(ENEMYKILLED);
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
@@ -63,32 +62,33 @@ void Attack::applyCollisionDamage() {
 
     while (i != targets.end()) {
 
-        auto &currentTarget = *i;
+        auto currentTarget = *i;
         bool enemyCancelled = false;
 
-        if (hitBox.getGlobalBounds().intersects(currentTarget.getCollisionbox().getGlobalBounds())) {
+        if (hitBox.getGlobalBounds().intersects(currentTarget->getCollisionbox().getGlobalBounds())) {
 
 
             sf::Vector2f knockbackDirection;
 
-            if (std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
+            if (std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
 
-                knockbackDirection.x = (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
-                                       std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
+                knockbackDirection.x = (currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                       std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x);
             } else knockbackDirection.x = 0;
 
-            if (std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
-                knockbackDirection.y = (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
-                                       std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
+            if (std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
+                knockbackDirection.y = (currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                       std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y);
             } else knockbackDirection.y = 0;
 
             if (checkDeath(currentTarget)) {
-                currentTarget.kill(damage);
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
                 targets.erase(i++);
                 enemyCancelled = true;
-            }
+            } else {
 
-            currentTarget.receiveDamage(knockbackDirection * knockback, damage, 0.0f);
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
+            }
 
         }
         if (not enemyCancelled) {
@@ -101,8 +101,10 @@ void Attack::applyCollisionDamage() {
 
 void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
+    /*
     for (auto &t: targets) {
         t.update();
     }
+     */
 }
 

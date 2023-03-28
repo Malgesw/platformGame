@@ -3,8 +3,7 @@
 
 GameCharacter::GameCharacter(int healthPoints, int mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
-          previousTypeOfSprite(IDLERIGHT),
-          selfTarget(nullptr, nullptr, nullptr, nullptr) {}
+          previousTypeOfSprite(IDLERIGHT) {}
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
     if (newMovement== nullptr) throw std::runtime_error("Movement passed is not valid");
@@ -36,9 +35,11 @@ void GameCharacter::render(sf::RenderTarget &target) {
 
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos) {
 
-    if(movement == nullptr or attack == nullptr or animation == nullptr){
+    if (movement == nullptr or attack == nullptr or animation == nullptr) {
         throw std::runtime_error("character's components not valid");
     }
+
+    selfTarget.update(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp);
 
     previousTypeOfSprite = typeOfSprite;
 
@@ -47,8 +48,8 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
                             : movement->getPosition().x,
             movement->getCollisions().getPosition().y + movement->getCollisions().getSize().y / 2);
 
-    movement->update(dt,mainCharacterPos);
-    attack->update(dt,hitboxCenter,isFacingRight(),objects);
+    movement->update(dt, mainCharacterPos);
+    attack->update(dt, hitboxCenter, isFacingRight(), objects);
 
     animation->update(*movement, dt, previousTypeOfSprite);
 
@@ -85,9 +86,9 @@ void GameCharacter::setEnergy(int mana) {
 }
 
 
-AttackTarget GameCharacter::generateTarget() {
+AttackTarget *GameCharacter::generateTarget() {
 
-    return {&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp};
+    return &selfTarget;
 }
 
 bool GameCharacter::isFacingRight() const {
@@ -187,7 +188,7 @@ void GameCharacter::clearWalls() {
     else movement->clearWalls();
 }
 
-void GameCharacter::addTargets(const std::vector<AttackTarget> &newTargets) {
+void GameCharacter::addTargets(const std::vector<AttackTarget *> &newTargets) {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
     else attack->addTargets(newTargets);

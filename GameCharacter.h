@@ -43,7 +43,7 @@ public:
 
     void setEnergy(int energy);
 
-    AttackTarget generateTarget();
+    AttackTarget *generateTarget();
 
     void moveLeft();
 
@@ -77,7 +77,7 @@ public:
 
     void clearWalls();
 
-    void addTargets(const std::vector<AttackTarget> &newTargets);
+    void addTargets(const std::vector<AttackTarget *> &newTargets);
 
     void clearTargets();
 

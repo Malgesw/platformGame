@@ -203,8 +203,8 @@ void Room::clearItems() {
         items.erase(i++);
 }
 
-std::vector<AttackTarget> Room::getTargets() {
-    std::vector<AttackTarget> targets;
+std::vector<AttackTarget *> Room::getTargets() {
+    std::vector<AttackTarget *> targets;
     for (auto &e: enemies) {
         targets.push_back(e->generateTarget());
     }

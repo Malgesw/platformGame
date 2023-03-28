@@ -26,9 +26,11 @@ public:
     const std::vector<std::shared_ptr<LevelTile>> &getWalls() const {
         return rooms[currentRoom]->getWalls();
     }
-    std::vector<AttackTarget> getTargets() const {
+
+    std::vector<AttackTarget *> getTargets() const {
         return rooms[currentRoom]->getTargets();
     }
+
     unsigned int getCurrentRoom() const {
         return currentRoom;
     }

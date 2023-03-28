@@ -19,30 +19,32 @@ void MeleeAttack::hit() {
             auto &currentTarget = *i;
             bool enemyCancelled = false;
 
-            if (hitBox.getGlobalBounds().intersects(currentTarget.getCollisionbox().getGlobalBounds())) {
+            if (hitBox.getGlobalBounds().intersects(currentTarget->getCollisionbox().getGlobalBounds())) {
 
 
                 sf::Vector2f knockbackDirection;
 
-                if (std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
 
-                    knockbackDirection.x = (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
-                                           std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
+                if (std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
+
+                    knockbackDirection.x = (currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                           std::abs(
+                                                   currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x);
                 } else knockbackDirection.x = 0;
 
-                if(std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y)>1.f) {
-                    knockbackDirection.y = (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
-                                           std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
-                }
-                else knockbackDirection.y=0;
+                if (std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
+                    knockbackDirection.y = (currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                           std::abs(
+                                                   currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y);
+                } else knockbackDirection.y = 0;
 
-                if(checkDeath(currentTarget)){
-                    currentTarget.kill(damage);
+                if (checkDeath(currentTarget)) {
+                    //currentTarget.kill(damage);
+                    currentTarget->receiveDamage(knockbackDirection * knockback, damage);
                     targets.erase(i++);
-                    enemyCancelled=true;
-                }
-
-                currentTarget.receiveDamage(knockbackDirection * knockback, damage, 0.4f);
+                    enemyCancelled = true;
+                } else
+                    currentTarget->receiveDamage(knockbackDirection * knockback, damage);
 
             }
             if(not enemyCancelled){

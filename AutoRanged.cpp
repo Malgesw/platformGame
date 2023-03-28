@@ -22,10 +22,13 @@ void AutoRanged::update(const float &dt, sf::Vector2f centerPosition, bool orien
 
 
 void AutoRanged::attackPlayer(sf::Vector2f centerPosition) {
-    auto a = hitBox.getPosition();
-    auto b = targets.begin()->getCollisionbox().getPosition();
+    if (not targets.empty()) {
+        auto a = hitBox.getPosition();
+        auto b = (*targets.begin())->getCollisionbox().getPosition();
 
-    if (findDistance(a, b) < scanRange) {
-        hit(findDirection(a, b));
+        if (findDistance(a, b) < scanRange) {
+            hit(findDirection(a, b));
+        }
     }
+
 }

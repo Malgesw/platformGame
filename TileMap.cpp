@@ -174,7 +174,7 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                                                    enemy->spritePointer(), 400.f);
     } else
         std::cout << "errore nell' inizializzazione" << std::endl;
-    std::vector<AttackTarget> targets;
+    std::vector<AttackTarget *> targets;
     targets.push_back(player.generateTarget());
     enemyAttack->addTargets(targets);
 
@@ -235,14 +235,14 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                             rooms[roomNumber]->getDimY() +
                                                                             rooms[roomNumber]->getDimY() / 2.f));
         rooms[roomNumber]->addItem(item_d);
-        std::vector<AttackTarget> newTargets;
+        std::vector<AttackTarget *> newTargets;
         newTargets.push_back(player.generateTarget());
 
-        for (auto &r: rooms) {
+        /*for (auto &r: rooms) {
             for (auto &e: r->getEnemies()) {
                 e->addTargets(newTargets);
             }
-        }
+        }*/
     }
 
 }

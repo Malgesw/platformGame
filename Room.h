@@ -44,7 +44,7 @@ public:
     std::list<std::unique_ptr<GameCharacter>> &getEnemies() {
         return enemies;
     }
-    std::vector<AttackTarget> getTargets();
+    std::vector<AttackTarget *> getTargets();
     sf::View &getCamera(){
         return camera;
     }

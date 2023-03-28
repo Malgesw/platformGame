@@ -18,7 +18,9 @@ public:
     Attack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short *typeOfSprite);
     ~Attack() override = default;
     sf::RectangleShape &getHitBox();
-    void addTargets(const std::vector<AttackTarget> &newTargets);
+
+    void addTargets(const std::vector<AttackTarget *> &newTargets);
+
     void clearTargets();
     void attach(Observer *o) override;    void detach(Observer *o) override;
 
@@ -37,11 +39,11 @@ protected:
     int damage;
     float knockback;
     sf::RectangleShape hitBox;
-    std::list<AttackTarget> targets;
+    std::list<AttackTarget *> targets;
     std::list<Observer *> observers;
     unsigned short *typeOfSprite;
 
-    bool checkDeath(const AttackTarget& target) const;
+    bool checkDeath(AttackTarget *target) const;
 };
 
 
