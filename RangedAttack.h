@@ -4,6 +4,7 @@
 #include "Attack.h"
 #include "Bullet.h"
 
+
 class RangedAttack :public Attack{
 
 public:
