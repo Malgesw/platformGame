@@ -14,13 +14,15 @@ const sf::RectangleShape &AttackTarget::getHitbox() const {
     return *hitbox;
 }
 
-void AttackTarget::receiveDamage(sf::Vector2f newKnockback, int lifeRemoved) {
+void AttackTarget::receiveDamage(sf::Vector2f newKnockback, float lifeRemoved) {
 
     if (collisionbox == nullptr or hitbox == nullptr or knockback == nullptr or hp == nullptr) {
         throw std::runtime_error("target not valid");
     }
-    *knockback += newKnockback;
-    *hp -= lifeRemoved;
+    if (*status != 1) {
+        *knockback += newKnockback;
+        *hp -= lifeRemoved;
+    }
     /* nextKnockback = newKnockback;
      nextHp = lifeRemoved;
      timer.restart();
@@ -36,7 +38,7 @@ void AttackTarget::kill(int lifeRemoved) {
 
 void
 AttackTarget::update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *newHitbox, sf::Vector2f *newKnockback,
-                     int *newHp) {
+                     float *newHp) {
     collisionbox = newCollisionbox;
     hitbox = newHitbox;
     knockback = newKnockback;
@@ -54,7 +56,7 @@ AttackTarget::update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *ne
      */
 }
 
-int AttackTarget::getHp() const {
+float AttackTarget::getHp() const {
     return *hp;
 }
 

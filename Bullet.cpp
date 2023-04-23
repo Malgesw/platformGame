@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Vector2f size, int speed, int damage, int knockback, sf::Texture *texture, int maxCollisions)
+Bullet::Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions)
         : speed(speed), damage(damage), knockback(knockback), maxCollisions(maxCollisions) {
 
 
@@ -19,7 +19,7 @@ std::list<AttackTarget *>::const_iterator Bullet::update(const float &dt, const 
     if (active) {
 
 
-        body.move(direction * dt * static_cast<float>(speed));
+        body.move(direction * dt * speed);
 
         auto i = targets.begin();
 
@@ -30,75 +30,83 @@ std::list<AttackTarget *>::const_iterator Bullet::update(const float &dt, const 
                 if (currentTarget->getHp() <= damage) {
                     enemyDestroyed = i;
                     //currentTarget.kill(damage);
-                    currentTarget->receiveDamage(static_cast<float>(knockback) * direction, damage);
+                    currentTarget->receiveDamage(knockback * direction, damage);
                 }
                 collided = true;
-                currentTarget->receiveDamage(static_cast<float>(knockback) * direction, damage);
+                currentTarget->receiveDamage(knockback * direction, damage);
             }
             i++;
         }
 
-
+        float Tolerance = std::sqrt(speed) * dt * 100;
         for (auto &o: walls) {
 
             if (std::abs(o->getGlobalBounds().top - body.getGlobalBounds().top) < 400 and
                 std::abs(o->getGlobalBounds().left - body.getGlobalBounds().left) < 600) {
 
-                sf::FloatRect Bounds = body.getGlobalBounds();
+                sf::FloatRect playerBounds = body.getGlobalBounds();
                 sf::FloatRect objectBounds;
-                sf::FloatRect bulletpos = Bounds;
+                sf::FloatRect nextPlayerPos = playerBounds;
+                nextPlayerPos.left += speed * direction.x * dt;
+                nextPlayerPos.top += speed * direction.y * dt;
 
 
                 objectBounds = o->getGlobalBounds();
-                if (objectBounds.intersects(bulletpos)) {
+                if (objectBounds.intersects(nextPlayerPos)) {
 
 
                     //Bottom
-                    if (Bounds.top < objectBounds.top &&
-                        Bounds.top + Bounds.height < objectBounds.top + objectBounds.height &&
-                        Bounds.left < objectBounds.left + objectBounds.width &&
-                        Bounds.left + Bounds.width > objectBounds.left) {
-
+                    if (playerBounds.top < objectBounds.top &&
+                        playerBounds.top + playerBounds.height < objectBounds.top + objectBounds.height &&
+                        playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                        playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
                         direction.y = -direction.y;
+                        body.setPosition(playerBounds.left, objectBounds.top - playerBounds.height);
                         collisionsCounter++;
+
                     }
 
                         //Top
-                    else if (Bounds.top > objectBounds.top &&
-                             Bounds.top + Bounds.height > objectBounds.top + objectBounds.height &&
-                             Bounds.left < objectBounds.left + objectBounds.width &&
-                             Bounds.left + Bounds.width > objectBounds.left) {
-
+                    else if (playerBounds.top > objectBounds.top &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + objectBounds.height &&
+                             playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                             playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
                         direction.y = -direction.y;
+                        body.setPosition(playerBounds.left, objectBounds.top + objectBounds.height);
                         collisionsCounter++;
+
                     }
 
 
                         //Right
-                    else if (Bounds.left < objectBounds.left &&
-                             Bounds.left + Bounds.width < objectBounds.left + objectBounds.width &&
-                             Bounds.top < objectBounds.top + objectBounds.height &&
-                             Bounds.top + Bounds.height > objectBounds.top) {
-
+                    else if (playerBounds.left < objectBounds.left &&
+                             playerBounds.left + playerBounds.width < objectBounds.left + objectBounds.width &&
+                             playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
                         direction.x = -direction.x;
+                        body.setPosition(objectBounds.left - playerBounds.width, playerBounds.top);
                         collisionsCounter++;
+
                     }
 
                         //Left
-                    else if (Bounds.left > objectBounds.left &&
-                             Bounds.left + Bounds.width > objectBounds.left + objectBounds.width &&
-                             Bounds.top < objectBounds.top + objectBounds.height &&
-                             Bounds.top + Bounds.height > objectBounds.top) {
-
+                    else if (playerBounds.left > objectBounds.left &&
+                             playerBounds.left + playerBounds.width > objectBounds.left + objectBounds.width &&
+                             playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
                         direction.x = -direction.x;
+                        body.setPosition(objectBounds.left + objectBounds.width, playerBounds.top);
                         collisionsCounter++;
+
                     }
 
 
                 }
 
 
+
             }
+
         }
     }
         return enemyDestroyed;
@@ -124,7 +132,7 @@ bool Bullet::isActive() const {
 }
 
 bool Bullet::isCollided() const {
-    if (collisionsCounter >= maxCollisions) return true;
+    if ((collisionsCounter >= maxCollisions) or collided) return true;
     else return false;
 }
 

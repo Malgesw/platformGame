@@ -10,7 +10,7 @@
 class Bullet {
 
 public:
-    Bullet(sf::Vector2f size, int speed, int damage, int knockback, sf::Texture *texture, int maxCollisions);
+    Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions);
 
     virtual std::list<AttackTarget *>::const_iterator update(const float &dt, const std::list<AttackTarget *> &targets,
                                                              const std::vector<std::shared_ptr<LevelTile>> &walls);
@@ -27,10 +27,10 @@ public:
 
 protected:
 
-    int speed;
+    float speed;
     sf::Vector2f direction;
-    int damage;
-    int knockback;
+    float damage;
+    float knockback;
     bool active = false;
     bool collided = false;
     sf::RectangleShape body;

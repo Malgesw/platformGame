@@ -1,7 +1,7 @@
 #include "GameCharacter.h"
 
 
-GameCharacter::GameCharacter(int healthPoints, int mana)
+GameCharacter::GameCharacter(float healthPoints, float mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
           previousTypeOfSprite(IDLERIGHT) {}
 
@@ -69,19 +69,19 @@ Animation& GameCharacter::getAnimation(){
 }
 */
 
-int GameCharacter::getHp() const {
+float GameCharacter::getHp() const {
     return hp;
 }
 
-void GameCharacter::setHp(int healthPoints) {
+void GameCharacter::setHp(float healthPoints) {
     GameCharacter::hp = healthPoints;
 }
 
-int GameCharacter::getEnergy() const {
+float GameCharacter::getEnergy() const {
     return energy;
 }
 
-void GameCharacter::setEnergy(int mana) {
+void GameCharacter::setEnergy(float mana) {
     GameCharacter::energy = mana;
 }
 

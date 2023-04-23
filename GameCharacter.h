@@ -15,7 +15,7 @@
 class GameCharacter {
 
 public:
-    GameCharacter(int healthPoints, int mana);
+    GameCharacter(float healthPoints, float mana);
 
     void setMovement(std::unique_ptr<Movement> newMovement);
 
@@ -35,13 +35,13 @@ public:
     Animation &getAnimation();
     */
 
-    int getHp() const;
+    float getHp() const;
 
-    void setHp(int hp);
+    void setHp(float hp);
 
-    int getEnergy() const;
+    float getEnergy() const;
 
-    void setEnergy(int energy);
+    void setEnergy(float energy);
 
     AttackTarget *generateTarget();
 
@@ -99,21 +99,21 @@ public:
         typeOfSprite = type;
     }
 
-    int getStartHp() const {
+    float getStartHp() const {
         return startHp;
     }
 
-    int getStartEnergy() const {
+    float getStartEnergy() const {
         return startEnergy;
     }
 
 
 private:
 
-    int hp;
-    int energy;
-    int startHp;
-    int startEnergy;
+    float hp;
+    float energy;
+    float startHp;
+    float startEnergy;
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;

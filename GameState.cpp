@@ -50,7 +50,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
 
 void GameState::update(const float &dt) {
     updateMousePosition();
-    int currentPlayerLife;
+    float currentPlayerLife;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()) {
         pauseClock.restart();
