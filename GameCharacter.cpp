@@ -53,8 +53,10 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     movement->update(dt, mainCharacterPos);
     attack->update(dt, hitboxCenter, isFacingRight(), objects);
+    specialAbility->update();
 
     animation->update(*movement, dt, previousTypeOfSprite);
+
 
 }
 

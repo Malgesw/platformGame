@@ -9,7 +9,7 @@
 
 class Shell : public SpecialAbility {
 public:
-    Shell(unsigned short int *typeOfSprite);
+    explicit Shell(unsigned short int *typeOfSprite);
 
     void update() override;
 };

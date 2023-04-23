@@ -17,11 +17,13 @@ public:
 
     unsigned short int getStatus() const;
 
+    virtual void update() = 0;
+
 protected:
     unsigned short int *typeOfSprite;
     unsigned short int status = 0;
 
-    virtual void update() = 0;
+
 };
 
 
