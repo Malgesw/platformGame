@@ -1,7 +1,7 @@
 #include "AttackTarget.h"
 
 AttackTarget::AttackTarget() :
-        collisionbox(nullptr), hitbox(nullptr), knockback(nullptr), hp(nullptr) {
+        collisionbox(nullptr), hitbox(nullptr), knockback(nullptr), hp(nullptr), status(0) {
 
 }
 
@@ -19,7 +19,7 @@ void AttackTarget::receiveDamage(sf::Vector2f newKnockback, float lifeRemoved) {
     if (collisionbox == nullptr or hitbox == nullptr or knockback == nullptr or hp == nullptr) {
         throw std::runtime_error("target not valid");
     }
-    if (*status != 1) {
+    if (status != INVINCIBLE) {
         *knockback += newKnockback;
         *hp -= lifeRemoved;
     }
@@ -38,11 +38,12 @@ void AttackTarget::kill(int lifeRemoved) {
 
 void
 AttackTarget::update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *newHitbox, sf::Vector2f *newKnockback,
-                     float *newHp) {
+                     float *newHp, unsigned short int newStatus) {
     collisionbox = newCollisionbox;
     hitbox = newHitbox;
     knockback = newKnockback;
     hp = newHp;
+    status = newStatus;
 
     /*
     if (incomingDamage) {

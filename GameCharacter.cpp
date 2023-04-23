@@ -3,7 +3,9 @@
 
 GameCharacter::GameCharacter(float healthPoints, float mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
-          previousTypeOfSprite(IDLERIGHT) {}
+          previousTypeOfSprite(IDLERIGHT) {
+    specialAbility = std::make_unique<Shell>(&typeOfSprite);
+}
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
     if (newMovement== nullptr) throw std::runtime_error("Movement passed is not valid");
@@ -39,7 +41,8 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
         throw std::runtime_error("character's components not valid");
     }
 
-    selfTarget.update(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp);
+    selfTarget.update(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp,
+                      specialAbility->getStatus());
 
     previousTypeOfSprite = typeOfSprite;
 

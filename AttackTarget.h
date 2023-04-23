@@ -2,6 +2,7 @@
 #define PLATFORMGAME_ATTACKTARGET_H
 
 #include "headers.h"
+#include "SpecialAbility.h"
 
 class AttackTarget {
 public:
@@ -17,7 +18,7 @@ public:
     //void kill(int lifeRemoved);
 
     void update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *newHitbox, sf::Vector2f *newKnockback,
-                float *newHp);
+                float *newHp, unsigned short int newStatus);
 
     float getHp() const;
 
@@ -30,7 +31,7 @@ private:
     //sf::Vector2f nextKnockback;
     //float nextDelay;
     float *hp;
-    unsigned short int *status;
+    unsigned short int status;
     //int nextHp;
     //bool incomingDamage = false;
 

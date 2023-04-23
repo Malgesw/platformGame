@@ -10,7 +10,7 @@
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"
 #include "exceptions.h"
-
+#include "Shell.h"
 
 class GameCharacter {
 
@@ -117,9 +117,11 @@ private:
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
+    std::unique_ptr<SpecialAbility> specialAbility;
     std::unique_ptr<Movement> backupMovement;
     std::unique_ptr<Attack> backupAttack;
     std::unique_ptr<Animation> backupAnimation;
+    std::unique_ptr<SpecialAbility> backupSpecialAbility;
     AttackTarget selfTarget;
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;

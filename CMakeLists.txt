@@ -14,7 +14,7 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         Bullet.cpp Bullet.h RangedAttack.cpp RangedAttack.h spriteType.h AutoRanged.cpp AutoRanged.h NoAttack.cpp NoAttack.h
         NoMovement.cpp NoMovement.h usefulFunctions.cpp
         usefulFunctions.h InvalidComponent.cpp InvalidComponent.h
-        exceptions.h StarRangedAttack.cpp StarRangedAttack.h Item.cpp Item.h Droid.cpp Droid.h SpecialAbility.cpp SpecialAbility.h)
+        exceptions.h StarRangedAttack.cpp StarRangedAttack.h Item.cpp Item.h Droid.cpp Droid.h SpecialAbility.cpp SpecialAbility.h NoSpecialAbility.cpp NoSpecialAbility.h Shell.cpp Shell.h)
 
 
 add_executable(platformGame main.cpp)
