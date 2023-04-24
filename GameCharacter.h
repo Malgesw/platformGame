@@ -12,7 +12,7 @@
 #include "exceptions.h"
 #include "Shell.h"
 
-class GameCharacter {
+class GameCharacter : public Subject {
 
 public:
     GameCharacter(float healthPoints, float mana);
@@ -115,12 +115,18 @@ public:
 
     void restoreOldComponents();
 
+    void attach(Observer *o) override;
+
+    void detach(Observer *o) override;
+
+    void notify(unsigned short category) const override;
+
 private:
 
     float hp;
     float energy;
     float startHp;
-    float startEnergy;
+    float startEnergy = 10.f;
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
@@ -133,7 +139,9 @@ private:
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;
     bool isDroidActivated = false;
-    const float energyConsuption = 0.01f;
+    bool firstActivated = true;
+    const float energyConsuption = 0.25f;
+    std::list<Observer *> observers;
 
 
 };

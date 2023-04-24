@@ -1,7 +1,3 @@
-//
-// Created by alessio on 04/10/22.
-//
-
 #include "Achievement.h"
 
 #include <cmath>
@@ -17,10 +13,18 @@ Achievement::Achievement() {
 
 void Achievement::getNews(unsigned short category) {
 
-
     if (category == ENEMYKILLED) {
         enemiesKilled++;
         newAchievement = true;
+        achievementType = ENEMYKILLED;
+    } else if (category == DROIDACTIVATED) {
+        std::cout << "from Achievement.cpp : droid activated" << std::endl;
+        newAchievement = true;
+        achievementType = DROIDACTIVATED;
+    } else if (category == RESETACHIEVEMENTS) {
+        newAchievement = true;
+        achievementType = NOACHIEVEMENT;
+        enemiesKilled = 0;
     } else throw std::runtime_error("Invalid achievement category");
 }
 
@@ -28,23 +32,30 @@ void Achievement::getNews(unsigned short category) {
 
 void Achievement::checkAchievements(){
 
-    if(newAchievement and enemiesKilled==1) {
+    if (newAchievement and enemiesKilled == 1 and achievementType == ENEMYKILLED) {
         text.setString("first enemy killed, keep on");
-        fontOpacity=255;
-        newAchievement=false;
+        fontOpacity = 255;
+        newAchievement = false;
     }
 
-    if(newAchievement and enemiesKilled==2){
+    if (newAchievement and enemiesKilled == 2 and achievementType == ENEMYKILLED) {
         text.setString("double kill!");
-        fontOpacity=255;
-        newAchievement=false;
+        fontOpacity = 255;
+        newAchievement = false;
     }
 
-    if(newAchievement and enemiesKilled==3){
+    if (newAchievement and enemiesKilled == 3 and achievementType == ENEMYKILLED) {
         text.setString("rampage!");
-        fontOpacity=255;
-        newAchievement=false;
+        fontOpacity = 255;
+        newAchievement = false;
     }
+
+    if (newAchievement and achievementType == DROIDACTIVATED) {
+        text.setString("Droid activated!");
+        fontOpacity = 255;
+        newAchievement = false;
+    }
+
 
 }
 

@@ -38,6 +38,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     tileMap = std::make_unique<TileMap>(*player);
     player->addWalls(tileMap->getWalls());
     player->addTargets(tileMap->getTargets());
+    player->attach(&achievementCounter);
     pauseMenu = std::make_unique<PauseMenu>(window, font, false);
     deathMenu = std::make_unique<PauseMenu>(window, font, true);
     deathMessage.setFont(font);
@@ -169,7 +170,6 @@ void GameState::update(const float &dt) {
                 energyBar.setSize(
                         sf::Vector2f(static_cast<float>(player->getEnergy() / maxPlayerEnergy) * energyBar.getSize().x,
                                      energyBar.getSize().y));
-                std::cout << energyBar.getSize().x << ", " << energyBar.getSize().y << std::endl;
             }
             if (player->getHp() <= 0) {
                 death = true;
