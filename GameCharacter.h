@@ -107,6 +107,13 @@ public:
         return startEnergy;
     }
 
+    void setDroidState(bool droidState) {
+        isDroidActivated = droidState;
+    }
+
+    void saveOldComponents();
+
+    void restoreOldComponents();
 
 private:
 
@@ -123,6 +130,8 @@ private:
     AttackTarget selfTarget;
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;
+    bool isDroidActivated = false;
+    const float energyConsuption = 0.01f;
 
 
 };

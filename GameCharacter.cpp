@@ -3,7 +3,8 @@
 
 GameCharacter::GameCharacter(int healthPoints, int mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
-          previousTypeOfSprite(IDLERIGHT) {}
+          previousTypeOfSprite(IDLERIGHT) {
+}
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
     if (newMovement== nullptr) throw std::runtime_error("Movement passed is not valid");
@@ -52,6 +53,15 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
     attack->update(dt, hitboxCenter, isFacingRight(), objects);
 
     animation->update(*movement, dt, previousTypeOfSprite);
+
+    if (isDroidActivated) {
+        if (energy > 0) {
+            energy -= energyConsuption * dt;
+        } else {
+            restoreOldComponents();
+            isDroidActivated = false;
+        }
+    }
 
 }
 
@@ -198,4 +208,14 @@ void GameCharacter::clearTargets() {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
     else attack->clearTargets();
+}
+
+void GameCharacter::saveOldComponents() {
+    backupAnimation = std::move(animation);
+    backupMovement = std::move(movement);
+}
+
+void GameCharacter::restoreOldComponents() {
+    animation = std::move(backupAnimation);
+    backupMovement = std::move(backupMovement);
 }

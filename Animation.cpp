@@ -1,23 +1,24 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer,unsigned short *typeOfSprite) :
-imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(typeOfSprite) {
+Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer,
+                     unsigned short *typeOfSprite) :
+        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(typeOfSprite) {
 
     totalTime = 0.f;
     currentImage.x = 0;
-    positionCorrection.x=25.f;
-    positionCorrection.y=0.f;
+    positionCorrection.x = 25.f;
+    positionCorrection.y = 0.f;
 
     sprite.width = texture->getSize().x / (float) imageCount.x;
     sprite.height = texture->getSize().y / (float) imageCount.y;
 
-    animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
+    animationBox.setSize(sf::Vector2f(size.x * 1.5f, size.y * 1.5f));
     animationBox.setTexture(texture);
     faceRight = true;
     isRepeatable = true;
-    if(isplayer) {
+    if (isplayer) {
         animationLeftOffset = -57.6f;
-        animationRightOffset=-19.2f;
+        animationRightOffset = -19.2f;
     }
 
 }
