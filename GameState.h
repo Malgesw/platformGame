@@ -31,9 +31,9 @@ private:
 
     bool keyReleased = true;
     bool death = false;
-    const int startPlayerLife = 10;
-    const int startPlayerEnergy = 0;
-    const int maxPlayerEnergy = 10;
+    const float startPlayerLife = 10;
+    const float startPlayerEnergy = 0;
+    const float maxPlayerEnergy = 10;
     const sf::Vector2f startPlayerPosition = sf::Vector2f(300.f, 2880.f);
     std::unique_ptr<GameCharacter> player;
     sf::Vector2f mainCharacterPos;

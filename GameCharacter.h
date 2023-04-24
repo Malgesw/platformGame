@@ -10,12 +10,12 @@
 #include "WalkingMovement.h"
 #include "FlyingMovement.h"
 #include "exceptions.h"
-
+#include "Shell.h"
 
 class GameCharacter {
 
 public:
-    GameCharacter(int healthPoints, int mana);
+    GameCharacter(float healthPoints, float mana);
 
     void setMovement(std::unique_ptr<Movement> newMovement);
 
@@ -35,13 +35,13 @@ public:
     Animation &getAnimation();
     */
 
-    int getHp() const;
+    float getHp() const;
 
-    void setHp(int hp);
+    void setHp(float hp);
 
-    int getEnergy() const;
+    float getEnergy() const;
 
-    void setEnergy(int energy);
+    void setEnergy(float energy);
 
     AttackTarget *generateTarget();
 
@@ -99,11 +99,11 @@ public:
         typeOfSprite = type;
     }
 
-    int getStartHp() const {
+    float getStartHp() const {
         return startHp;
     }
 
-    int getStartEnergy() const {
+    float getStartEnergy() const {
         return startEnergy;
     }
 
@@ -117,16 +117,18 @@ public:
 
 private:
 
-    int hp;
-    int energy;
-    int startHp;
-    int startEnergy;
+    float hp;
+    float energy;
+    float startHp;
+    float startEnergy;
     std::unique_ptr<Movement> movement;
     std::unique_ptr<Attack> attack;
     std::unique_ptr<Animation> animation;
+    std::unique_ptr<SpecialAbility> specialAbility;
     std::unique_ptr<Movement> backupMovement;
     std::unique_ptr<Attack> backupAttack;
     std::unique_ptr<Animation> backupAnimation;
+    std::unique_ptr<SpecialAbility> backupSpecialAbility;
     AttackTarget selfTarget;
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;

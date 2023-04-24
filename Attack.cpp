@@ -112,8 +112,6 @@ void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientati
                     const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     if (incomingAttack) {
-        std::cout << "from attack.cpp   delay timer is " << delay.getElapsedTime().asSeconds() << std::endl;
-        std::cout << "from attack.cpp   delay is " << attackDelay << std::endl;
         if (delay.getElapsedTime().asSeconds() > attackDelay) {
 
 

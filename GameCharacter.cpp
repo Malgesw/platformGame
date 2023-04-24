@@ -1,9 +1,10 @@
 #include "GameCharacter.h"
 
 
-GameCharacter::GameCharacter(int healthPoints, int mana)
+GameCharacter::GameCharacter(float healthPoints, float mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
           previousTypeOfSprite(IDLERIGHT) {
+    specialAbility = std::make_unique<Shell>(&typeOfSprite);
 }
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
@@ -40,7 +41,8 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
         throw std::runtime_error("character's components not valid");
     }
 
-    selfTarget.update(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp);
+    selfTarget.update(&movement->getCollisions(), &attack->getHitBox(), &movement->getKnockback(), &hp,
+                      specialAbility->getStatus());
 
     previousTypeOfSprite = typeOfSprite;
 
@@ -79,19 +81,19 @@ Animation& GameCharacter::getAnimation(){
 }
 */
 
-int GameCharacter::getHp() const {
+float GameCharacter::getHp() const {
     return hp;
 }
 
-void GameCharacter::setHp(int healthPoints) {
+void GameCharacter::setHp(float healthPoints) {
     GameCharacter::hp = healthPoints;
 }
 
-int GameCharacter::getEnergy() const {
+float GameCharacter::getEnergy() const {
     return energy;
 }
 
-void GameCharacter::setEnergy(int mana) {
+void GameCharacter::setEnergy(float mana) {
     GameCharacter::energy = mana;
 }
 

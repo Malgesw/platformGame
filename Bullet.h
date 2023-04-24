@@ -10,26 +10,33 @@
 class Bullet {
 
 public:
-    Bullet(sf::Vector2f size, int speed,  int damage, int knockback,sf::Texture* texture);
+    Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions);
 
-    std::list<AttackTarget *>::const_iterator update(const float &dt, const std::list<AttackTarget *> &targets,
-                                                     const std::vector<std::shared_ptr<LevelTile>> &walls);
+    virtual std::list<AttackTarget *>::const_iterator update(const float &dt, const std::list<AttackTarget *> &targets,
+                                                             const std::vector<std::shared_ptr<LevelTile>> &walls);
 
     void render(sf::RenderTarget &target);
-    void shoot(sf::Vector2f startposition,sf::Vector2f direction);
-    void setDirection(sf::Vector2f newDirection);
-    bool isActive();
-    bool isCollided();
 
-private:
-    int speed;
+    void shoot(sf::Vector2f startposition, sf::Vector2f direction);
+
+    void setDirection(sf::Vector2f newDirection);
+
+    bool isActive() const;
+
+    virtual bool isCollided() const;
+
+protected:
+
+    float speed;
     sf::Vector2f direction;
-    int damage;
-    int knockback;
-    bool active=false;
-    bool collided=false;
+    float damage;
+    float knockback;
+    bool active = false;
+    bool collided = false;
     sf::RectangleShape body;
     std::unique_ptr<Animation> animation;
+    int maxCollisions;
+    int collisionsCounter = 0;
 
 
 };
