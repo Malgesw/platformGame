@@ -2,7 +2,7 @@
 
 
 GameCharacter::GameCharacter(float healthPoints, float mana)
-        : hp(healthPoints), energy(mana), startHp(healthPoints), startEnergy(mana), typeOfSprite(IDLERIGHT),
+        : hp(healthPoints), energy(mana), startHp(healthPoints), typeOfSprite(IDLERIGHT),
           previousTypeOfSprite(IDLERIGHT) {
     specialAbility = std::make_unique<Shell>(&typeOfSprite);
 }
@@ -57,6 +57,19 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     animation->update(*movement, dt, previousTypeOfSprite);
 
+    if (isDroidActivated) {
+        if (firstActivated) {
+            notify(DROIDACTIVATED);
+            firstActivated = false;
+        }
+        if (energy > 0) {
+            energy -= energyConsuption * dt;
+        } else {
+            restoreOldComponents();
+            isDroidActivated = false;
+            firstActivated = true;
+        }
+    }
 
 }
 
@@ -203,4 +216,28 @@ void GameCharacter::clearTargets() {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
     else attack->clearTargets();
+}
+
+void GameCharacter::saveOldComponents() {
+    backupAnimation = std::move(animation);
+    backupMovement = std::move(movement);
+}
+
+void GameCharacter::restoreOldComponents() {
+    animation = std::move(backupAnimation);
+    backupMovement = std::move(backupMovement);
+}
+
+void GameCharacter::attach(Observer *o) {
+    observers.push_back(o);
+}
+
+void GameCharacter::detach(Observer *o) {
+    observers.remove(o);
+}
+
+void GameCharacter::notify(unsigned short category) const {
+    for (auto &o: observers) {
+        o->getNews(category);
+    }
 }

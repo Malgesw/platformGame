@@ -206,6 +206,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
     if (type == 'i') {
         auto tex = new sf::Texture;
         tex->loadFromFile("./images/taco.png");
+        auto animation = std::make_unique<Animation>(tex, sf::Vector2i(4, 1), 0.30f, size);
         std::unique_ptr<Item> item_i = std::make_unique<Item>(tex, size,
                                                               sf::Vector2f(
                                                                       static_cast<float>(position.x) *
@@ -213,7 +214,8 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                       rooms[roomNumber]->getDimX() / 2.f,
                                                                       static_cast<float>(position.y) *
                                                                       rooms[roomNumber]->getDimY() +
-                                                                      rooms[roomNumber]->getDimY() / 2.f));
+                                                                      rooms[roomNumber]->getDimY() / 2.f),
+                                                              std::move(animation));
         rooms[roomNumber]->addItem(item_i);
     } else {
         auto text = new sf::Texture;

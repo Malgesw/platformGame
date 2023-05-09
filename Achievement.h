@@ -1,13 +1,8 @@
-//
-// Created by alessio on 04/10/22.
-//
-
 #ifndef PLATFORMGAME_ACHIEVEMENT_H
 #define PLATFORMGAME_ACHIEVEMENT_H
 
 #include "Observer.h"
 #include "headers.h"
-
 
 class Achievement: public Observer{
 
@@ -28,7 +23,8 @@ private:
     bool newAchievement= false;
     sf::Clock timeCounter;
     sf::Text text;
-    int fontOpacity=0;
+    int fontOpacity = 0;
+    int achievementType = NOACHIEVEMENT;
 };
 
 

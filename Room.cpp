@@ -163,9 +163,9 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
 
     //_______________________________UPDATING ITEMS
         for (auto &it: items) {
+            it->update(dt);
             if (player.getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
                 it->setState(false); //if taken, the item is removed from the map
-                //HP-GAIN LIKE ITEM
                 it->use(player);
 
             }

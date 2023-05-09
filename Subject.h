@@ -1,7 +1,3 @@
-//
-// Created by alessio on 02/10/22.
-//
-
 #ifndef PLATFORMGAME_SUBJECT_H
 #define PLATFORMGAME_SUBJECT_H
 

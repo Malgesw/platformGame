@@ -65,7 +65,7 @@ void Attack::hit() {
     }
 }
 
-void Attack::applyCollisionDamage() {
+/*void Attack::applyCollisionDamage() {
 
     auto i = targets.begin();
 
@@ -105,7 +105,7 @@ void Attack::applyCollisionDamage() {
         }
 
     }
-}
+}*/
 
 
 void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,

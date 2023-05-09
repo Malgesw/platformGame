@@ -10,13 +10,12 @@ public:
 
     Droid(std::unique_ptr<Animation> animation, std::unique_ptr<Movement> movement,
           sf::Texture *texture, sf::Vector2f size, sf::Vector2f position) :
-            animation(std::move(animation)), movement(std::move(movement)), Item(texture, size, position) {
+            movement(std::move(movement)), Item(texture, size, position, std::move(animation)) {
     }
 
     void use(GameCharacter &player) override;
 
 private:
-    std::unique_ptr<Animation> animation;
     std::unique_ptr<Movement> movement;
 };
 

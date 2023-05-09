@@ -6,9 +6,11 @@
 class Item {
 
 public:
-    Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position);
+    Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position, std::unique_ptr<Animation> animation);
 
     void render(sf::RenderTarget &target);
+
+    void update(const float &dt);
 
     virtual void use(GameCharacter &player);
 
@@ -32,6 +34,7 @@ protected:
     sf::RectangleShape body;
     sf::Vector2f position;
     bool onMap;
+    std::unique_ptr<Animation> animation;
 };
 
 
