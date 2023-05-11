@@ -9,6 +9,7 @@
 #include "Room.h"
 #include "NoMovement.h"
 #include "NoSpecialAbility.h"
+#include "NoAttack.h"
 #include <string>
 
 class TileMap {

@@ -225,10 +225,10 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                               sf::Vector2f(
                                                                       static_cast<float>(position.x) *
                                                                       rooms[roomNumber]->getDimX() +
-                                                                      rooms[roomNumber]->getDimX() / 2.f,
+                                                                      rooms[roomNumber]->getDimX() / 4.f,
                                                                       static_cast<float>(position.y) *
                                                                       rooms[roomNumber]->getDimY() +
-                                                                      rooms[roomNumber]->getDimY() / 2.f),
+                                                                      rooms[roomNumber]->getDimY() / 4.f),
                                                               std::move(animation), 1);
         rooms[roomNumber]->addItem(item_i);
     } else if (type == 's') {
@@ -257,7 +257,9 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 3), 0.3f,
                                                                                  sf::Vector2f(168, 126), true,
                                                                                  player.spritePointer());
+        std::unique_ptr<Attack> playerAttack = std::make_unique<NoAttack>();
         std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
+                                                               std::move(playerAttack),
                                                                size,
                                                                sf::Vector2f(static_cast<float>(position.x) *
                                                                             rooms[roomNumber]->getDimX() +

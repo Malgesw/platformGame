@@ -146,7 +146,7 @@ void Animation::render(sf::RenderTarget &target) {
 void Animation::update(sf::FloatRect body, const float &dt) {
 
     sf::IntRect animationRect(sprite.left, sprite.top,sprite.width, sprite.height);
-    animationBox.setPosition(body.left -body.width / 4.f,body.top -body.height / 4.f);
+    animationBox.setPosition(body.left, body.top);
 
     totalTime+=dt;
     if(totalTime >= switchTime) {

@@ -221,11 +221,14 @@ void GameCharacter::clearTargets() {
 void GameCharacter::saveOldComponents() {
     backupAnimation = std::move(animation);
     backupMovement = std::move(movement);
+    backupAttack = std::move(attack);
 }
 
 void GameCharacter::restoreOldComponents() {
+    backupMovement->getCollisions().setPosition(movement->getPosition());
     animation = std::move(backupAnimation);
-    backupMovement = std::move(backupMovement);
+    movement = std::move(backupMovement);
+    attack = std::move(backupAttack);
 }
 
 void GameCharacter::attach(Observer *o) {
