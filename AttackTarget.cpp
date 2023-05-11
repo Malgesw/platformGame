@@ -23,6 +23,7 @@ void AttackTarget::receiveDamage(sf::Vector2f newKnockback, float lifeRemoved) {
         *knockback += newKnockback;
         *hp -= lifeRemoved;
     }
+
     /* nextKnockback = newKnockback;
      nextHp = lifeRemoved;
      timer.restart();

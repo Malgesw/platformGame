@@ -8,7 +8,7 @@
 #include "spriteType.h"
 
 enum statusType {
-    NORMAL = 0, INVINCIBLE = 1
+    NORMAL = 0, INVINCIBLE = 1, SPECIALATTACK = 2
 };
 
 class SpecialAbility {
@@ -17,11 +17,13 @@ public:
 
     unsigned short int getStatus() const;
 
+    virtual void update() = 0;
+
 protected:
     unsigned short int *typeOfSprite;
     unsigned short int status = 0;
 
-    virtual void update() = 0;
+
 };
 
 
