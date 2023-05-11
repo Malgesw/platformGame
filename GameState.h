@@ -12,6 +12,7 @@
 #include "Achievement.h"
 #include "NoAttack.h"
 #include "GlidingMovement.h"
+#include "StarRangedAttack.h"
 
 class GameState : public State {
 

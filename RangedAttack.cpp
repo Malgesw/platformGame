@@ -1,6 +1,6 @@
 #include "RangedAttack.h"
 
-RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, float attackSpeed, int hitDamage,
+RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, float attackSpeed, float hitDamage,
                            float newKnockback, unsigned short *typeOfSprite, bool isPlayer) :
         Attack(sf::Vector2f(50.f, 50.f), attackSpeed, 0.f, hitDamage, newKnockback, typeOfSprite),
         bulletSize(newBulletSize), bulletSpeed(newBulletSpeed) {
@@ -13,6 +13,7 @@ RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, flo
 
 
     bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
+
 }
 
 void RangedAttack::doDamage() {

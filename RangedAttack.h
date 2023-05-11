@@ -9,7 +9,7 @@ class RangedAttack :public Attack{
 
 public:
 
-    RangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, int hitDamage, float knockback,
+    RangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
                  unsigned short *typeOfSprite, bool isPlayer);
 
 

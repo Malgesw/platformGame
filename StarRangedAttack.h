@@ -9,7 +9,7 @@
 
 class StarRangedAttack : public RangedAttack {
 public:
-    StarRangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, int hitDamage, float knockback,
+    StarRangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
                      unsigned short *typeOfSprite, bool isPlayer);
 
 

@@ -5,7 +5,7 @@
 #include "AutoRanged.h"
 
 
-AutoRanged::AutoRanged(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, int hitDamage, float knockback,
+AutoRanged::AutoRanged(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
                        unsigned short *typeOfSprite, float scanRange) : RangedAttack(bulletSize, bulletSpeed,
                                                                                      attackSpeed,
                                                                                      hitDamage, knockback, typeOfSprite,
