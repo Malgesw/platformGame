@@ -27,12 +27,12 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-   // target.draw(attack->getHitBox());
-  //  target.draw(movement->getCollisions());
-    animation->render(target);
-    attack->render(target);
-
-
+    // target.draw(attack->getHitBox());
+    //target.draw(movement->getCollisions());
+    if (hp > 0) {
+        animation->render(target);
+        attack->render(target);
+    }
 }
 
 void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos) {

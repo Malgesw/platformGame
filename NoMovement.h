@@ -9,7 +9,7 @@
 
 class NoMovement : public Movement {
 public:
-    NoMovement(sf::Vector2f startPosition, sf::Vector2f size);
+    NoMovement(sf::Vector2f startPosition, sf::Vector2f size, unsigned short *typeOfSprite);
 
     void moveLeft() final {};
 

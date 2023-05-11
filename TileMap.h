@@ -1,11 +1,14 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
+
 #include <SFML/Graphics.hpp>
 #include "LevelTile.h"
 #include "GameCharacter.h"
 #include "headers.h"
 #include "Droid.h"
 #include "Room.h"
+#include "NoMovement.h"
+#include "NoSpecialAbility.h"
 #include <string>
 
 class TileMap {
@@ -13,8 +16,11 @@ class TileMap {
 public:
 
     explicit TileMap(GameCharacter &player);
+
     ~TileMap();
+
     void render(sf::RenderTarget &target);
+
     void update(const float &dt, GameCharacter &player, sf::RenderWindow *window);
     void spawnEnemies(GameCharacter &player);
 

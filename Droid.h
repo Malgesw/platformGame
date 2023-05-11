@@ -9,8 +9,8 @@ class Droid : public Item {
 public:
 
     Droid(std::unique_ptr<Animation> animation, std::unique_ptr<Movement> movement,
-          sf::Texture *texture, sf::Vector2f size, sf::Vector2f position) :
-            movement(std::move(movement)), Item(texture, size, position, std::move(animation)) {
+          sf::Vector2f size, sf::Vector2f position, std::unique_ptr<Animation> itemAnimation) :
+            movement(std::move(movement)), Item(size, position, std::move(itemAnimation)) {
     }
 
     void use(GameCharacter &player) override;

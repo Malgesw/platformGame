@@ -6,7 +6,7 @@
 class Item {
 
 public:
-    Item(sf::Texture *texture, sf::Vector2f size, sf::Vector2f position, std::unique_ptr<Animation> animation);
+    Item(sf::Vector2f size, sf::Vector2f position, std::unique_ptr<Animation> animation, float lifeGain = 0);
 
     void render(sf::RenderTarget &target);
 
@@ -35,6 +35,7 @@ protected:
     sf::Vector2f position;
     bool onMap;
     std::unique_ptr<Animation> animation;
+    float lifeGain = 0.f;
 };
 
 

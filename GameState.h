@@ -10,6 +10,7 @@
 #include "MeleeAttack.h"
 #include "RangedAttack.h"
 #include "Achievement.h"
+#include "NoAttack.h"
 
 class GameState : public State {
 

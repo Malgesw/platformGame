@@ -31,7 +31,7 @@ public:
 
     void notify(unsigned short category) const override;
 
-    void hit();
+    virtual void hit();
 
     virtual void update(const float &dt, sf::Vector2f centerPosition, bool orientation,
                         const std::vector<std::shared_ptr<LevelTile>> &walls) = 0;

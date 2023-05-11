@@ -167,7 +167,6 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
             if (player.getGlobalBounds().intersects(it->getBody().getGlobalBounds())) {
                 it->setState(false); //if taken, the item is removed from the map
                 it->use(player);
-
             }
         }
 

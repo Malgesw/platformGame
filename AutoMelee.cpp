@@ -1,9 +1,10 @@
 #include "AutoMelee.h"
 
-AutoMelee::AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short * typeOfSprite) : MeleeAttack(size, speed,
-                                                                                                   hitDamage,
-                                                                                                   knockback,typeOfSprite) {
-    attackoffset=96.f;
+AutoMelee::AutoMelee(sf::Vector2f size, float speed, int hitDamage, float knockback, float delay,
+                     unsigned short *typeOfSprite) : MeleeAttack(size, speed,
+                                                                 hitDamage,
+                                                                 knockback, delay, typeOfSprite) {
+    attackoffset = 96.f;
 
 }
 

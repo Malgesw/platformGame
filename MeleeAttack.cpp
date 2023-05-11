@@ -1,7 +1,8 @@
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback, unsigned short *typeOfSprite)
-        : Attack(size, speed, 0.4f,
+MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback, float delay,
+                         unsigned short *typeOfSprite)
+        : Attack(size, speed, delay,
                  hitDamage,
                  knockback, typeOfSprite) {
 }

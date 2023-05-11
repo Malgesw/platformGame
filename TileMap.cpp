@@ -4,7 +4,7 @@
 TileMap::TileMap(GameCharacter &player) {
 
     enum enemy {
-        flying = 0, walking = 1
+        flying = 0, walking = 1, boss = 2
     };
 
     textures.push_back(new sf::Texture);
@@ -13,6 +13,7 @@ TileMap::TileMap(GameCharacter &player) {
     textures[walking]->loadFromFile("./images/cyberMonkey2.png");
     tilesTextures.push_back(new sf::Texture);
     tilesTextures[0]->loadFromFile("./images/tilesheet.png");
+    textures.push_back(new sf::Texture); //Boss
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
@@ -92,6 +93,8 @@ void TileMap::placeItems(GameCharacter &player) {
     generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), 'i', player);
     generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), 'd', player);
     generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), 'i', player);
+    generateItem(0, sf::Vector2i(29, 25),
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
 }
 
 void TileMap::clearEnemies() {
@@ -137,16 +140,26 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                                                                   std::stof(enemyIni.GetValue("movement","jHeight")),
                                                      std::stof(enemyIni.GetValue("movement","turnBackTime")),enemy->spritePointer());
     }
-    else if(strcmp(enemyIni.GetValue("movement","type"),"F") == 0){
+    else if (strcmp(enemyIni.GetValue("movement", "type"), "F") == 0) {
 
-        enemyMovement= std::make_unique<AutoFlying>(std::stof(enemyIni.GetValue("movement","speed")),
-                                                     sf::Vector2f (static_cast<float>(startPosition.x)*rooms[roomNumber]->getDimX(),
-                                                                   static_cast<float>(startPosition.y)*rooms[roomNumber]->getDimY()),
-                                                     sf::Vector2f(std::stof(enemyIni.GetValue("general","sizeX")),
-                                                                  std::stof(enemyIni.GetValue("general","sizeY"))),
+        enemyMovement = std::make_unique<AutoFlying>(std::stof(enemyIni.GetValue("movement", "speed")),
+                                                     sf::Vector2f(static_cast<float>(startPosition.x) *
+                                                                  rooms[roomNumber]->getDimX(),
+                                                                  static_cast<float>(startPosition.y) *
+                                                                  rooms[roomNumber]->getDimY()),
+                                                     sf::Vector2f(std::stof(enemyIni.GetValue("general", "sizeX")),
+                                                                  std::stof(enemyIni.GetValue("general", "sizeY"))),
                                                      rooms[roomNumber]->getWalls(),
-                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),rooms[roomNumber]->getDimY()),enemy->spritePointer());
+                                                     sf::Vector2f(rooms[roomNumber]->getDimX(),
+                                                                  rooms[roomNumber]->getDimY()),
+                                                     enemy->spritePointer());
 
+    } else if (strcmp(enemyIni.GetValue("movement", "type"), "N") == 0) {
+        enemyMovement = std::make_unique<NoMovement>(
+                sf::Vector2f(static_cast<float>(startPosition.x) * rooms[roomNumber]->getDimX(),
+                             static_cast<float>(startPosition.y) * rooms[roomNumber]->getDimY()),
+                sf::Vector2f(std::stof(enemyIni.GetValue("general", "sizeX")),
+                             std::stof(enemyIni.GetValue("general", "sizeY"))), enemy->spritePointer());
     }
     enemyMovement->addWalls(rooms[roomNumber]->getWalls());
 
@@ -162,6 +175,7 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                                                   std::stof(enemyIni.GetValue("attack", "speed")),
                                                   std::stof(enemyIni.GetValue("attack", "damage")),
                                                   std::stof(enemyIni.GetValue("attack", "knockback")),
+                                                  std::stof(enemyIni.GetValue("attack", "delay")),
                                                   enemy->spritePointer());
     } else if (strcmp(enemyIni.GetValue("attack", "type"), "R") == 0) {
 
@@ -207,7 +221,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         auto tex = new sf::Texture;
         tex->loadFromFile("./images/taco.png");
         auto animation = std::make_unique<Animation>(tex, sf::Vector2i(4, 1), 0.30f, size);
-        std::unique_ptr<Item> item_i = std::make_unique<Item>(tex, size,
+        std::unique_ptr<Item> item_i = std::make_unique<Item>(size,
                                                               sf::Vector2f(
                                                                       static_cast<float>(position.x) *
                                                                       rooms[roomNumber]->getDimX() +
@@ -215,11 +229,26 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                       static_cast<float>(position.y) *
                                                                       rooms[roomNumber]->getDimY() +
                                                                       rooms[roomNumber]->getDimY() / 2.f),
-                                                              std::move(animation));
+                                                              std::move(animation), 1);
         rooms[roomNumber]->addItem(item_i);
-    } else {
+    } else if (type == 's') {
+        auto tex = new sf::Texture;
+        sf::Image transparent;
+        transparent.create(rooms[currentRoom]->getDimX(), rooms[currentRoom]->getDimY(), sf::Color::Red);
+        tex->loadFromImage(transparent);
+        auto animation = std::make_unique<Animation>(tex, sf::Vector2i(4, 1), 0.30f, size);
+        std::unique_ptr<Item> item_s = std::make_unique<Item>(size,
+                                                              sf::Vector2f(
+                                                                      static_cast<float>(position.x) *
+                                                                      rooms[roomNumber]->getDimX(),
+                                                                      static_cast<float>(position.y) *
+                                                                      rooms[roomNumber]->getDimY()),
+                                                              std::move(animation), -1000000);
+        rooms[roomNumber]->addItem(item_s);
+    } else if (type == 'd') {
         auto text = new sf::Texture;
         text->loadFromFile("./images/playerSheet.png");
+        auto animation = std::make_unique<Animation>(text, sf::Vector2i(1, 1), 0.30f, size);
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(
                 position.x * rooms[currentRoom]->getDimX(),
                 position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer());
@@ -229,13 +258,14 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                                  sf::Vector2f(168, 126), true,
                                                                                  player.spritePointer());
         std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
-                                                               text, size,
+                                                               size,
                                                                sf::Vector2f(static_cast<float>(position.x) *
                                                                             rooms[roomNumber]->getDimX() +
                                                                             rooms[roomNumber]->getDimX() / 2.f,
                                                                             static_cast<float>(position.y) *
                                                                             rooms[roomNumber]->getDimY() +
-                                                                            rooms[roomNumber]->getDimY() / 2.f));
+                                                                            rooms[roomNumber]->getDimY() / 2.f),
+                                                               std::move(animation));
         rooms[roomNumber]->addItem(item_d);
         std::vector<AttackTarget *> newTargets;
         newTargets.push_back(player.generateTarget());

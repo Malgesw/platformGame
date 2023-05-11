@@ -16,6 +16,8 @@ public:
                 const std::vector<std::shared_ptr<LevelTile>> &walls) override {};
 
     void render(sf::RenderTarget &target) override {};
+
+    void hit() override {};
 private:
     void doDamage() override {};
 };
