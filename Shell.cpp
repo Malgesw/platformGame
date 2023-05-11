@@ -1,6 +1,4 @@
-//
-// Created by alessio on 23/04/23.
-//
+
 
 #include "Shell.h"
 
@@ -9,6 +7,11 @@ Shell::Shell(unsigned short *typeOfSprite) : SpecialAbility(typeOfSprite) {
 }
 
 void Shell::update() {
-    if (*typeOfSprite == IDLELEFT or *typeOfSprite == IDLERIGHT)status = INVINCIBLE;
+
+    if (*typeOfSprite != IDLELEFT and *typeOfSprite != IDLERIGHT)
+        timer.restart();
+
+    if ((*typeOfSprite == IDLELEFT or *typeOfSprite == IDLERIGHT) and timer.getElapsedTime().asSeconds() > delay)
+        status = INVINCIBLE;
     else status = NORMAL;
 }

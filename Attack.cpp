@@ -1,7 +1,7 @@
 #include "Attack.h"
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, float delay, int hitDamage, float knockback,
+Attack::Attack(sf::Vector2f size, float speed, float delay, float hitDamage, float knockback,
                unsigned short *typeOfSprite) :
         attackSpeed(speed), damage(hitDamage), knockback(knockback), typeOfSprite(typeOfSprite), attackDelay(delay) {
 
@@ -26,7 +26,7 @@ void Attack::clearTargets() {
 
 bool Attack::checkDeath(AttackTarget *target) const {
 
-    if (target->getHp() <= damage) {
+    if (target->getHp() <= damage and target->getStatus() != INVINCIBLE) {
         notify(ENEMYKILLED);
         return true;
     } else {

@@ -15,7 +15,7 @@ class Attack :public Subject{
 
 public:
 
-    Attack(sf::Vector2f size, float speed, float delay, int hitDamage, float knockback, unsigned short *typeOfSprite);
+    Attack(sf::Vector2f size, float speed, float delay, float hitDamage, float knockback, unsigned short *typeOfSprite);
 
     ~Attack() override = default;
 
@@ -48,7 +48,7 @@ protected:
     sf::Clock delay;
     float attackSpeed;
     float attackDelay;
-    int damage;
+    float damage;
     float knockback;
     sf::RectangleShape hitBox;
     std::list<AttackTarget *> targets;

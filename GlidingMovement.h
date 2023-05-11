@@ -1,6 +1,3 @@
-//
-// Created by nicco on 11/05/2023.
-//
 
 #ifndef PLATFORMGAME_GLIDINGMOVEMENT_H
 #define PLATFORMGAME_GLIDINGMOVEMENT_H

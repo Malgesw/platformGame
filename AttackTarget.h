@@ -22,6 +22,10 @@ public:
 
     float getHp() const;
 
+    unsigned short int getStatus() const {
+        return status;
+    }
+
 
 private:
     //sf::Clock timer;
