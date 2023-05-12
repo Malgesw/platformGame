@@ -198,33 +198,48 @@ void GameCharacter::addWalls(const std::vector<std::shared_ptr<LevelTile>> &newW
 
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
     else movement->addWalls(newWalls);
+    if (backupMovement != nullptr) backupMovement->addWalls(newWalls);
 }
 
 void GameCharacter::clearWalls() {
 
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
     else movement->clearWalls();
+    if (backupMovement != nullptr) backupMovement->clearWalls();
 }
 
 void GameCharacter::addTargets(const std::vector<AttackTarget *> &newTargets) {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
     else attack->addTargets(newTargets);
+    if (backupAttack != nullptr) backupAttack->addTargets(newTargets);
 }
 
 void GameCharacter::clearTargets() {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
     else attack->clearTargets();
+    if (backupAttack != nullptr) backupAttack->clearTargets();
 }
 
 void GameCharacter::saveOldComponents() {
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else if (animation == nullptr)throw InvalidComponent(*this, ANIMATION);
     backupAnimation = std::move(animation);
     backupMovement = std::move(movement);
     backupAttack = std::move(attack);
 }
 
+bool GameCharacter::savedComponentsPresent() {
+    if (backupMovement != nullptr and backupAttack != nullptr and backupAnimation != nullptr)
+        return true;
+    else
+        return false;
+}
+
 void GameCharacter::restoreOldComponents() {
+
     backupMovement->getCollisions().setPosition(movement->getPosition());
     animation = std::move(backupAnimation);
     movement = std::move(backupMovement);

@@ -130,17 +130,70 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
 
 
     //________________________________UPDATING MAP
+    float Tolerance = std::sqrt(std::abs(player.getVelocity().x) + std::abs(player.getVelocity().y)) * dt * 100;
     for (int i = 0; i < mapSize.y; i++) {
         for (int j = 0; j < mapSize.x; j++) {
             if (tiles[i][j]->isExit() &&
                 tiles[i][j]->getGlobalBounds().intersects(player.getGlobalBounds())) {
+                /*
                 if (player.getVelocity().x >= 0.f)
 
                     currentRoom++;
 
                 else
                     currentRoom--;
+                    */
 
+
+
+                sf::FloatRect playerBounds = player.getGlobalBounds();
+                sf::FloatRect objectBounds;
+                sf::FloatRect nextPlayerPos = playerBounds;
+                nextPlayerPos.left += player.getVelocity().x * dt;
+                nextPlayerPos.top += player.getVelocity().y * dt;
+
+
+                objectBounds = tiles[i][j]->getGlobalBounds();
+                if (objectBounds.intersects(nextPlayerPos)) {
+
+
+                    //Bottom
+                    if (playerBounds.top < objectBounds.top &&
+                        playerBounds.top + playerBounds.height < objectBounds.top + objectBounds.height &&
+                        playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                        playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
+
+                        currentRoom++;
+                    }
+
+                        //Top
+                    else if (playerBounds.top > objectBounds.top &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + objectBounds.height &&
+                             playerBounds.left < objectBounds.left + objectBounds.width - Tolerance &&
+                             playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
+
+                        currentRoom--;
+                    }
+
+
+                        //Right
+                    else if (playerBounds.left < objectBounds.left &&
+                             playerBounds.left + playerBounds.width < objectBounds.left + objectBounds.width &&
+                             playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
+
+                        currentRoom++;
+                    }
+
+                        //Left
+                    else if (playerBounds.left > objectBounds.left &&
+                             playerBounds.left + playerBounds.width > objectBounds.left + objectBounds.width &&
+                             playerBounds.top < objectBounds.top + objectBounds.height - Tolerance &&
+                             playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
+
+                        currentRoom--;
+                    }
+                }
             }
         }
     }

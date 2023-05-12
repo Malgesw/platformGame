@@ -107,6 +107,7 @@ void GameState::update(const float &dt) {
             player->addTargets(tileMap->getRoom()->getTargets());
             hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
             player->setHp(startPlayerLife);
+            player->setEnergy(0.f);
         }
 
         if (deathMenu->isButtonPressed("EXIT_MENU")) {

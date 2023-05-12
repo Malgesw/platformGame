@@ -115,6 +115,8 @@ public:
 
     void restoreOldComponents();
 
+    bool savedComponentsPresent();
+
     void attach(Observer *o) override;
 
     void detach(Observer *o) override;
