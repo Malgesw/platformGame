@@ -11,6 +11,7 @@
 #include "FlyingMovement.h"
 #include "exceptions.h"
 #include "Shell.h"
+#include "NoSpecialAbility.h"
 
 class GameCharacter : public Subject {
 

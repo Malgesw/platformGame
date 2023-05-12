@@ -46,10 +46,7 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
                           const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     Attack::update(dt, centerPosition, facingRight, walls);
-    hitBox.setPosition(facingRight ? centerPosition.x - hitBox.getSize().x / 2 - attackoffset : centerPosition.x -
-                                                                                                hitBox.getSize().x / 2 +
-                                                                                                attackoffset,
-                       centerPosition.y - hitBox.getSize().y / 2);
+    hitBox.setPosition(centerPosition - hitBox.getSize() / 2.f);
 
 
     for (auto &b: bullets) {
@@ -72,8 +69,8 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
         }
     }
 
-    nextBulletDirection=sf::Vector2f(facingRight?1.f:-1.f,0.f);
-    nextBulletStartPosition=centerPosition;
+    nextBulletDirection = sf::Vector2f(facingRight ? 1.f : -1.f, 0.f);
+    nextBulletStartPosition = centerPosition - hitBox.getSize() / 2.f;
 
 }
 

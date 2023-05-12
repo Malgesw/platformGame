@@ -4,7 +4,7 @@
 GameCharacter::GameCharacter(float healthPoints, float mana)
         : hp(healthPoints), energy(mana), startHp(healthPoints), typeOfSprite(IDLERIGHT),
           previousTypeOfSprite(IDLERIGHT) {
-    specialAbility = std::make_unique<Shell>(&typeOfSprite);
+    specialAbility = std::make_unique<NoSpecialAbility>();
 }
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
@@ -27,7 +27,7 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-    // target.draw(attack->getHitBox());
+    target.draw(attack->getHitBox());
     //target.draw(movement->getCollisions());
     if (hp > 0) {
         animation->render(target);
@@ -46,10 +46,11 @@ void GameCharacter::update(const float &dt, const std::vector<std::shared_ptr<Le
 
     previousTypeOfSprite = typeOfSprite;
 
-    sf::Vector2f hitboxCenter(
-            isFacingRight() ? movement->getCollisions().getPosition().x + movement->getCollisions().getSize().x
-                            : movement->getPosition().x,
-            movement->getCollisions().getPosition().y + movement->getCollisions().getSize().y / 2);
+    //sf::Vector2f hitboxCenter(
+    //        isFacingRight() ? movement->getCollisions().getPosition().x + movement->getCollisions().getSize().x
+    //                        : movement->getPosition().x,
+    //        movement->getCollisions().getPosition().y + movement->getCollisions().getSize().y / 2);
+    sf::Vector2f hitboxCenter(movement->getCollisions().getPosition() + movement->getCollisions().getSize() / 2.f);
 
     movement->update(dt, mainCharacterPos);
     attack->update(dt, hitboxCenter, isFacingRight(), objects);

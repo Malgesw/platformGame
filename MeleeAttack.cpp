@@ -61,8 +61,8 @@ void MeleeAttack::doDamage() {
 void MeleeAttack::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
     Attack::update(dt,centerPosition, facingRight,walls);
-    hitBox.setPosition(facingRight ? centerPosition.x - hitBox.getSize().x / 2 - attackoffset : centerPosition.x -
-                                                                                                hitBox.getSize().x / 2 +
+    hitBox.setPosition(facingRight ? centerPosition.x - hitBox.getSize().x / 2 + attackoffset : centerPosition.x -
+                                                                                                hitBox.getSize().x / 2 -
                                                                                                 attackoffset,
                        centerPosition.y - hitBox.getSize().y / 2);
 }

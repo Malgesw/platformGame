@@ -16,7 +16,7 @@ public:
     void render(sf::RenderTarget &target)override{};
 
 protected:
-    float attackoffset=0.f;
+    float attackoffset = 200.f;
     void doDamage() override;
 
 };
