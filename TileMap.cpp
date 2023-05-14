@@ -17,7 +17,7 @@ TileMap::TileMap(GameCharacter &player) {
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
-    addRoom("room3.ini", player, sf::Vector2i(16, 3));
+    addRoom("room3.ini", player, sf::Vector2i(120, 17));
     currentRoom = 0;
 
     spawnEnemies(player);

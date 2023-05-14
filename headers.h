@@ -18,6 +18,6 @@
 #include "SFML/Network.hpp"
 #include "SFML/System.hpp"
 
-#include "simpleini/SimpleIni.h"
+#include "simpleini/simpleini-master/SimpleIni.h"
 
 #endif //PLATFORMGAME_HEADERS_H
