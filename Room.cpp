@@ -81,8 +81,65 @@ void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tile
                 case '9':
                     row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, SPIKESX));
                     break;
+                case 'q':
+                    row.push_back(
+                            std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALLOUT_VERT1));
+                    break;
+                case 'w':
+                    row.push_back(
+                            std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALLOUT_VERT2));
+                    break;
+                case 'e':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALLOUT_HOR));
+                    break;
+                case 'r':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_UL));
+                    break;
+                case 't':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_OUT_NE));
+                    break;
+                case 'y':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_OUT_NW));
+                    break;
+                case 'u':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, DEC_PODUP));
+                    break;
+                case 'i':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, DEC_PODDOWN));
+                    break;
+                case 'o':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_UR));
+                    break;
+                case 'p':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL_HOR));
+                    break;
+                case 'a':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_OUT_SE));
+                    break;
+                case 's':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, INT_OUT_SW));
+                    break;
+                case 'd':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, BG));
+                    break;
+                case 'f':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, ANGLE_NW));
+                    break;
+                case 'g':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, ANGLE_NE));
+                    break;
+                case 'h':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, ANGLE_SW));
+                    break;
+                case 'j':
+                    row.push_back(std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, ANGLE_SE));
+                    break;
+                case 'k':
+                    row.push_back(
+                            std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL_OUT_FLOOR));
+                    break;
                 default:
-                    throw std::runtime_error("invalid tile");
+                    throw std::runtime_error("invalid tile texture");
 
             }
         }
@@ -92,7 +149,15 @@ void Room::initFloor(const std::string& roomName,std::vector<sf::Texture*> &tile
     for(int i=0;i<mapSize.y;i++){
         for(int j=0;j<mapSize.x;j++){
             if (tiles[i][j]->getTileType() == WALL or tiles[i][j]->getTileType() == WALL2 or
-                tiles[i][j]->getTileType() == WALL3 or tiles[i][j]->getTileType() == WALL4)
+                tiles[i][j]->getTileType() == WALL3 or tiles[i][j]->getTileType() == WALL4 or
+                tiles[i][j]->getTileType() == WALLOUT_VERT1 or tiles[i][j]->getTileType() == WALLOUT_VERT2 or
+                tiles[i][j]->getTileType() == WALLOUT_HOR or tiles[i][j]->getTileType() == INT_UL or
+                tiles[i][j]->getTileType() == INT_UR or tiles[i][j]->getTileType() == INT_OUT_NE or
+                tiles[i][j]->getTileType() == INT_OUT_NW or tiles[i][j]->getTileType() == INT_OUT_SE or
+                tiles[i][j]->getTileType() == INT_OUT_SW or tiles[i][j]->getTileType() == ANGLE_SW or
+                tiles[i][j]->getTileType() == ANGLE_SE or tiles[i][j]->getTileType() == ANGLE_NW or
+                tiles[i][j]->getTileType() == ANGLE_NE or tiles[i][j]->getTileType() == WALL_OUT_FLOOR or
+                tiles[i][j]->getTileType() == WALL_HOR)
                 walls.push_back(tiles[i][j]);
             else if (tiles[i][j]->getTileType() == DOOR)
                 doors.push_back(tiles[i][j]);

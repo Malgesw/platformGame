@@ -20,7 +20,7 @@ TileMap::TileMap(GameCharacter& player) {
      tilesTextures.push_back(new sf::Texture);
      */
 
-    tilesTextures[0]->loadFromFile("./images/tilesheet.png");
+    tilesTextures[0]->loadFromFile("./images/tilesheetWIP.png");
     /* tilesTextures[1]->loadFromFile("./images/tilesheet.png", sf::IntRect(1000,0,2000,2000));
      tilesTextures[2]->loadFromFile("./images/door.png");
      tilesTextures[3]->loadFromFile("./images/tilesheet.png", sf::IntRect(0,0,1000,975));
@@ -30,7 +30,7 @@ TileMap::TileMap(GameCharacter& player) {
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(16, 16));
-    addRoom("room3.ini", player, sf::Vector2i(16, 3));
+    addRoom("room3.ini", player, sf::Vector2i(120, 17));
     currentRoom = 0;
 
     spawnEnemies(player);

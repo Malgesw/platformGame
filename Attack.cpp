@@ -16,6 +16,7 @@ void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
 
     for(auto &t : newTargets){
         targets.push_back(t);
+        targetscount++;
     }
 }
 
@@ -57,9 +58,15 @@ void Attack::hit() {
     }
 }
 
-void Attack::update(const float &dt,sf::Vector2f centerPosition, bool orientation,const std::vector<std::shared_ptr<LevelTile>> &walls) {
+void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,
+                    const std::vector<std::shared_ptr<LevelTile>> &walls) {
     for (auto &t: targets) {
         t.update();
     }
+
+}
+
+int Attack::getTargetscount() const {
+    return targetscount;
 }
 

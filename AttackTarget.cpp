@@ -23,6 +23,7 @@ void AttackTarget::receiveDamage(sf::Vector2f newKnockback, int lifeRemoved, flo
     timer.restart();
     incomingDamage = true;
     nextDelay = delay;
+
 }
 
 void AttackTarget::kill(int lifeRemoved) {
@@ -34,12 +35,9 @@ void AttackTarget::update() {
     if (incomingDamage) {
 
         if (timer.getElapsedTime().asSeconds() > nextDelay) {
-            std::cout<<"prima: "<<*hp<<std::endl;
             *knockback += nextKnockback;
             *hp -= nextHp;
             incomingDamage = false;
-            std::cout<<"dopo: "<<*hp<<std::endl;
-
         }
     }
 }

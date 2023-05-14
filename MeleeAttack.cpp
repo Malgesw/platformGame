@@ -7,14 +7,16 @@ MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float kn
 
 void MeleeAttack::hit() {
 
-    if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
+
+    if (cooldown.getElapsedTime().asSeconds() >= attackSpeed) {
+
 
         Attack::hit();
         cooldown.restart();
 
         auto i = targets.begin();
 
-        while (i!=targets.end()) {
+        while (i != targets.end()) {
 
             auto &currentTarget = *i;
             bool enemyCancelled = false;

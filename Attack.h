@@ -35,8 +35,13 @@ protected:
     std::list<AttackTarget> targets;
     std::list<Observer *> observers;
     unsigned short *typeOfSprite;
+    int targetscount = 0;
+public:
+    int getTargetscount() const;
 
-    bool checkDeath(const AttackTarget& target) const;
+protected:
+
+    bool checkDeath(const AttackTarget &target) const;
 };
 
 
