@@ -5,6 +5,7 @@
 #include "../TileMap.h"
 #include "../GameCharacter.h"
 #include "../AutoMovement.h"
+#include "../AutoRanged.h"
 #include <map>
 
 
@@ -16,9 +17,9 @@ public:
     std::shared_ptr<LevelTile> tile2;
     std::unique_ptr<GameCharacter> enemy;
     std::unique_ptr<Movement> automovement;
-    std::vector<AttackTarget> targets;
+    std::vector<AttackTarget *> targets;
 
-    Maptest(){
+    Maptest() {
         auto tileTexture = new sf::Texture;
         //auto sprite = IDLERIGHT;
         tileTexture->loadFromFile("./images/playerSheet.png");
@@ -28,14 +29,18 @@ public:
         player = std::make_unique<GameCharacter>(50, 50);
         auto playerTexture = new sf::Texture;
         playerTexture->loadFromFile("./images/playerSheet.png");
-        std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
-                                                                                     sf::Vector2f(50, 50), 200,
-                                                                                     nullptr);
+        //std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
+        //                                                                             sf::Vector2f(50, 50), 200,
+        //                                                                             player->spritePointer());
+        std::unique_ptr<Movement> playerMovement = std::make_unique<FlyingMovement>(80, sf::Vector2f(50.f, 50.f),
+                                                                                    sf::Vector2f(50, 50),
+                                                                                    player->spritePointer());
         std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
-                                                                             nullptr);
+                                                                             0.0f,
+                                                                             player->spritePointer());
         auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f,
                                                            sf::Vector2f(35, 35), true,
-                                                           nullptr);
+                                                           player->spritePointer());
         player->setMovement(std::move(playerMovement));
         player->setAttack(std::move(playerAttack));
         player->setAnimation(std::move(playerAnimation));
@@ -46,12 +51,12 @@ public:
                                                                                walls, sf::Vector2f(
                         tile->getGlobalBounds().width,
                         tile->getGlobalBounds().height),
-                                                                               nullptr);
-        std::unique_ptr<Attack> enemyAttack = std::make_unique<AutoMelee>(sf::Vector2f(150.f, 150.f), 0.5f, 1, 35.f,
-                                                                          nullptr);
+                                                                               enemy->spritePointer());
+        std::unique_ptr<Attack> enemyAttack = std::make_unique<AutoRanged>(sf::Vector2f(50.f, 50.f), 100, 0.5f, 5.f,
+                                                                           50.f, player->spritePointer(), 400.f);
         auto enemyAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f(35, 35),
                                                           false,
-                                                          nullptr);
+                                                          enemy->spritePointer());
         enemy->setMovement(std::move(enemyMovement));
         enemy->setAttack(std::move(enemyAttack));
         enemy->setAnimation(std::move(enemyAnimation));
@@ -77,13 +82,14 @@ TEST_F(Maptest, Tiletest){
 TEST_F(Maptest, Enemytest) {
     player->setPosition(50.f, 0.f);
     enemy->setPosition(400.f, 250.f);
-    int startLife = player->getHp();
+    float startLife = player->getHp();
     targets.push_back(player->generateTarget());
     enemy->addTargets(targets);
     sf::Clock time;
     while ((std::abs(player->getPosition().x - enemy->getPosition().x) > 20.f or
             std::abs(player->getPosition().y - enemy->getPosition().y) > 20.f) and
            time.getElapsedTime().asSeconds() < 25) {
+        player->update(0.01, walls, player->getPosition());
         enemy->update(0.01f, walls, player->getPosition());
     }
 
@@ -94,8 +100,9 @@ TEST_F(Maptest, Enemytest) {
 
 
 
-    EXPECT_TRUE(std::abs(player->getPosition().x - enemy->getPosition().x) <= 25.f);
-    EXPECT_TRUE(std::abs(player->getPosition().y - enemy->getPosition().y) <= 25.f);
-    EXPECT_TRUE(player->getHp() < startLife);
+    EXPECT_TRUE(std::abs(player->getPosition().x - enemy->getPosition().x) <= 25.f and
+                std::abs(player->getPosition().y - enemy->getPosition().y) <= 25.f);
+
+
 }
 

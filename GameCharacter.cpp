@@ -27,7 +27,7 @@ void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
 void GameCharacter::render(sf::RenderTarget &target) {
 
 
-    target.draw(attack->getHitBox());
+    //target.draw(attack->getHitBox());
     //target.draw(movement->getCollisions());
     if (hp > 0) {
         animation->render(target);
