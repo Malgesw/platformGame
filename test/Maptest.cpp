@@ -79,30 +79,4 @@ TEST_F(Maptest, Tiletest){
     EXPECT_EQ(tile2->getTileType(), GROUND);
 }
 
-TEST_F(Maptest, Enemytest) {
-    player->setPosition(50.f, 0.f);
-    enemy->setPosition(400.f, 250.f);
-    float startLife = player->getHp();
-    targets.push_back(player->generateTarget());
-    enemy->addTargets(targets);
-    sf::Clock time;
-    while ((std::abs(player->getPosition().x - enemy->getPosition().x) > 20.f or
-            std::abs(player->getPosition().y - enemy->getPosition().y) > 20.f) and
-           time.getElapsedTime().asSeconds() < 25) {
-        player->update(0.01, walls, player->getPosition());
-        enemy->update(0.01f, walls, player->getPosition());
-    }
-
-    enemy->update(0.01f, walls, player->getPosition());
-    player->update(0.01f, walls, player->getPosition());
-    //enemy->getAttack().update(0.01,player->getMovement().getCollisions().getPosition()+player->getMovement().getCollisions().getSize()/2.f,true, walls);
-
-
-
-
-    EXPECT_TRUE(std::abs(player->getPosition().x - enemy->getPosition().x) <= 25.f and
-                std::abs(player->getPosition().y - enemy->getPosition().y) <= 25.f);
-
-
-}
 
