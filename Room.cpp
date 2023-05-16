@@ -1,5 +1,6 @@
 #include "Room.h"
 
+
 Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::vector<sf::Texture * > & textures ,sf::Vector2i mapSize,std::vector<sf::Texture*> &tilesTextures)
 :player(mainCharacter),mapSize(mapSize){
 
@@ -195,7 +196,9 @@ void Room::render(sf::RenderTarget &target) {
     target.setView(camera);
 }
 
-void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window) {
+unsigned short int Room::update(const float &dt, unsigned int &currentRoom, sf::RenderWindow *window) {
+
+    unsigned short int collisionType;
 
     //________________________________UPDATING VIEW
 
@@ -235,6 +238,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
                         playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
 
                         currentRoom++;
+                        collisionType = BOTTOM;
+                        std::cout << "from room.cpp bottom" << std::endl;
                     }
 
                         //Top
@@ -244,6 +249,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
                              playerBounds.left + playerBounds.width > objectBounds.left + Tolerance) {
 
                         currentRoom--;
+                        collisionType = TOP;
+                        std::cout << "from room.cpp top" << std::endl;
                     }
 
 
@@ -254,6 +261,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
                              playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
 
                         currentRoom++;
+                        collisionType = RIGHT;
+                        std::cout << "from room.cpp right" << std::endl;
                     }
 
                         //Left
@@ -263,6 +272,8 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
                              playerBounds.top + playerBounds.height > objectBounds.top + Tolerance) {
 
                         currentRoom--;
+                        collisionType = LEFT;
+                        std::cout << "from room.cpp left" << std::endl;
                     }
                 }
             }
@@ -301,6 +312,7 @@ void Room::update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* w
             else
                 j++;
         }
+    return collisionType;
     }
 
 

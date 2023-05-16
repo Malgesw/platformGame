@@ -33,21 +33,24 @@ void TileMap::render(sf::RenderTarget &target) {
 void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *window) {
 
     unsigned int room = currentRoom;
+    unsigned short int collisionType;
 
-    rooms[currentRoom]->update(dt, currentRoom, window);
+    collisionType = rooms[currentRoom]->update(dt, currentRoom, window);
     std::vector<std::shared_ptr<LevelTile>> doors = rooms[currentRoom]->getDoors();
 
     if (currentRoom < room) {
         player.setPosition(
-                doors[doors.size() - 1]->getPosition().x - rooms[currentRoom]->getDimX(),
-                doors[doors.size() - 1]->getPosition().y);
+                doors[doors.size() - 1]->getPosition().x -
+                (collisionType == LEFT ? rooms[currentRoom]->getDimX() : 0.f),
+                doors[doors.size() - 1]->getPosition().y -
+                (collisionType == TOP ? 2.f * rooms[currentRoom]->getDimY() : 0.f));
         player.clearWalls();
         player.addWalls(rooms[currentRoom]->getWalls());
         player.clearTargets();
         player.addTargets(rooms[currentRoom]->getTargets());
-    }
-    else if(currentRoom > room && currentRoom < 3) {
-        player.setPosition(doors[0]->getPosition().x + rooms[currentRoom]->getDimX(), doors[0]->getPosition().y);
+    } else if (currentRoom > room && currentRoom < maxRoom) {
+        player.setPosition(doors[0]->getPosition().x + (collisionType == RIGHT ? rooms[currentRoom]->getDimX() : 0.f),
+                           doors[0]->getPosition().y + (collisionType == BOTTOM ? rooms[currentRoom]->getDimY() : 0.f));
         player.clearWalls();
         player.addWalls(rooms[currentRoom]->getWalls());
         player.clearTargets();

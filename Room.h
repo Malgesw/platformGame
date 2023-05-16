@@ -11,6 +11,10 @@
 #include "AutoMelee.h"
 #include "RangedAttack.h"
 
+enum collisionType {
+    BOTTOM = 0, TOP = 1, RIGHT = 2, LEFT = 3
+};
+
 class Room {
 
 public:
@@ -19,7 +23,9 @@ public:
          sf::Vector2i mapSize, std::vector<sf::Texture *> &tilesTextures);
 
     void render(sf::RenderTarget &target);
-    void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
+
+    unsigned short int update(const float &dt, unsigned int &currentRoom, sf::RenderWindow *window);
+
     const sf::Vector2i &getMapSize() const;
 
     void addEnemy(std::unique_ptr<GameCharacter> &enemy);
