@@ -70,6 +70,7 @@ private:
     sf::View camera;
     sf::RectangleShape bg;
     sf::Texture *bgtexture;
+    sf::Texture *bgtexture3;
 
     void initRoom(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures);
 

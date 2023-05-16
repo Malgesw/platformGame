@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.21)
-project(platformGame)
+cmake_minimum_required(VERSION 3.20)
+project(platformGameTests)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -10,7 +10,7 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         TileMap.cpp TileMap.h AutoWalking.cpp AutoWalking.h Attack.cpp Attack.h AStar.cpp AStar.h Pathfinder.cpp
         Pathfinder.h AutoFlying.cpp AutoFlying.h AutoMovement.h AttackTarget.cpp AttackTarget.h Room.cpp Room.h AutoAttack.h
         Animation.cpp Animation.h DropDownList.cpp DropDownList.h MeleeAttack.cpp MeleeAttack.h AutoMelee.cpp AutoMelee.h
-        simpleini/SimpleIni.h Observer.h Subject.h Achievement.cpp Achievement.h
+        simpleini/simpleini-master/SimpleIni.h Observer.h Subject.h Achievement.cpp Achievement.h
         Bullet.cpp Bullet.h RangedAttack.cpp RangedAttack.h spriteType.h AutoRanged.cpp AutoRanged.h NoAttack.cpp NoAttack.h
         NoMovement.cpp NoMovement.h usefulFunctions.cpp
         usefulFunctions.h InvalidComponent.cpp InvalidComponent.h
@@ -18,12 +18,13 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
         NoSpecialAbility.cpp NoSpecialAbility.h Shell.cpp Shell.h SpecialAttack.cpp SpecialAttack.h GlidingMovement.cpp GlidingMovement.h)
 
 
-add_executable(platformGame main.cpp)
+add_executable(platformGametests main.cpp)
+set(SFML_STATIC_LIBRARIES TRUE)
+set(SFML_DIR C:/SFML/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics audio network REQUIRED)
 
-
-include_directories(${SFML_INCLUDE_DIRS})
+include_directories(C:/SFML/include)
 add_library(core ${SOURCE_FILES})
 target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
-target_link_libraries(platformGame core)
+target_link_libraries(platformGametests core)
 add_subdirectory(test)
