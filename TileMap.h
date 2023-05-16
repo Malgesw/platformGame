@@ -12,6 +12,10 @@
 #include "NoAttack.h"
 #include <string>
 
+enum ItemType {
+    TACO = 0, DEATHZONE = 1, SHELLDROID = 2, GLIDINGDROID = 3
+};
+
 class TileMap {
 
 public:
@@ -59,7 +63,8 @@ private:
 
     void generateEnemy(int roomNumber, std::string configFile, sf::Vector2i startPosition, GameCharacter &player);
 
-    void generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, char type, GameCharacter &player);
+    void generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, unsigned short int type,
+                      GameCharacter &player);
 
 };
 

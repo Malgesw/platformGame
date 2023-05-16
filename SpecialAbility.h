@@ -19,6 +19,8 @@ public:
 
     virtual void update() = 0;
 
+    virtual ~SpecialAbility() = default;
+
 protected:
     unsigned short int *typeOfSprite;
     unsigned short int status = 0;

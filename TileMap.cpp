@@ -8,7 +8,7 @@ TileMap::TileMap(GameCharacter &player) {
     };
 
     textures.push_back(new sf::Texture);
-    textures[flying]->loadFromFile("./images/flyingEnemySheet.png");
+    textures[flying]->loadFromFile("./images/flyingEnemySheetfixed.png");
     textures.push_back(new sf::Texture);
     textures[walking]->loadFromFile("./images/cyberMonkey2.png");
     tilesTextures.push_back(new sf::Texture);
@@ -94,16 +94,19 @@ void TileMap::spawnEnemies(GameCharacter &player) {
 }
 
 void TileMap::placeItems(GameCharacter &player) {
-    generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(80.f, 80.f), 'i', player);
-    generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), 'i', player);
-    generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), 'd', player);
-    generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), 'i', player);
+    generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
+    generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(0, sf::Vector2i(29, 25),
-                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
+                 player);
     generateItem(2, sf::Vector2i(2, 12),
-                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
+                 player);
     generateItem(2, sf::Vector2i(1, 12),
-                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
+                 player);
 }
 
 void TileMap::clearEnemies() {
@@ -224,9 +227,10 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
 
 }
 
-void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, char type, GameCharacter &player) {
+void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f size, unsigned short int type,
+                           GameCharacter &player) {
 
-    if (type == 'i') {
+    if (type == TACO) {
         auto tex = new sf::Texture;
         tex->loadFromFile("./images/taco.png");
         auto animation = std::make_unique<Animation>(tex, sf::Vector2i(4, 1), 0.30f, size);
@@ -240,7 +244,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                       rooms[roomNumber]->getDimY() / 4.f),
                                                               std::move(animation), 1);
         rooms[roomNumber]->addItem(item_i);
-    } else if (type == 's') {
+    } else if (type == DEATHZONE) {
         auto tex = new sf::Texture;
         sf::Image transparent;
         transparent.create(rooms[currentRoom]->getDimX(), rooms[currentRoom]->getDimY(), sf::Color::Red);
@@ -254,7 +258,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
                                                                       rooms[roomNumber]->getDimY()),
                                                               std::move(animation), -1000000);
         rooms[roomNumber]->addItem(item_s);
-    } else if (type == 'd') {
+    } else if (type == SHELLDROID) {
         auto text = new sf::Texture;
         text->loadFromFile("./images/playerSheet.png");
         auto animation = std::make_unique<Animation>(text, sf::Vector2i(1, 1), 0.30f, size);
@@ -266,9 +270,10 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 3), 0.3f,
                                                                                  sf::Vector2f(168, 126), true,
                                                                                  player.spritePointer());
+        std::unique_ptr<SpecialAbility> playerSpecialAbility = std::make_unique<Shell>(player.spritePointer());
         std::unique_ptr<Attack> playerAttack = std::make_unique<NoAttack>();
         std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
-                                                               std::move(playerAttack),
+                                                               std::move(playerAttack), std::move(playerSpecialAbility),
                                                                size,
                                                                sf::Vector2f(static_cast<float>(position.x) *
                                                                             rooms[roomNumber]->getDimX() +

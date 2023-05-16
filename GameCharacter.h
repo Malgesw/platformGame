@@ -24,6 +24,8 @@ public:
 
     void setAttack(std::unique_ptr<Attack> attack);
 
+    void setSpecialAbility(std::unique_ptr<SpecialAbility> newSpecialAbility);
+
     void render(sf::RenderTarget &target);
 
     void update(const float &dt, const std::vector<std::shared_ptr<LevelTile>> &objects, sf::Vector2f mainCharacterPos);

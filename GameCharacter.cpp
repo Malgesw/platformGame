@@ -13,14 +13,19 @@ void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {
 }
 
 
-void GameCharacter::setAttack( std::unique_ptr<Attack> newAttack) {
-    if (newAttack== nullptr) throw std::runtime_error("Attack passed is not valid");
+void GameCharacter::setAttack(std::unique_ptr<Attack> newAttack) {
+    if (newAttack == nullptr) throw std::runtime_error("Attack passed is not valid");
     attack = std::move(newAttack);
 }
 
 void GameCharacter::setAnimation(std::unique_ptr<Animation> newAnimation) {
-    if (newAnimation== nullptr) throw std::runtime_error("Animation passed is not valid");
+    if (newAnimation == nullptr) throw std::runtime_error("Animation passed is not valid");
     animation = std::move(newAnimation);
+}
+
+void GameCharacter::setSpecialAbility(std::unique_ptr<SpecialAbility> newSpecialAbility) {
+    if (newSpecialAbility == nullptr) throw std::runtime_error("Special ability passed is not valid");
+    specialAbility = std::move(newSpecialAbility);
 }
 
 
