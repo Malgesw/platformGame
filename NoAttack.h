@@ -18,6 +18,8 @@ public:
     void render(sf::RenderTarget &target) override {};
 
     void hit() override {};
+
+    void clearRelatedObjects() override {};
 private:
     void doDamage() override {};
 };

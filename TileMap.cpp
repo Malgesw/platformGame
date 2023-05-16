@@ -47,6 +47,7 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
         player.clearWalls();
         player.addWalls(rooms[currentRoom]->getWalls());
         player.clearTargets();
+        player.clearRelatedObjects();
         player.addTargets(rooms[currentRoom]->getTargets());
     } else if (currentRoom > room && currentRoom < maxRoom) {
         player.setPosition(doors[0]->getPosition().x + (collisionType == RIGHT ? rooms[currentRoom]->getDimX() : 0.f),
@@ -54,6 +55,7 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
         player.clearWalls();
         player.addWalls(rooms[currentRoom]->getWalls());
         player.clearTargets();
+        player.clearRelatedObjects();
         player.addTargets(rooms[currentRoom]->getTargets());
     }
 

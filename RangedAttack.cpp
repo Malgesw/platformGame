@@ -18,10 +18,10 @@ RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, flo
 
 void RangedAttack::doDamage() {
 
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
     auto i = bullets.begin();
     while (i != bullets.end() and (*i).isActive()) i++;
     if (i != bullets.end()) (*i).shoot(nextBulletStartPosition, nextBulletDirection);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
 
 }
 
@@ -76,11 +76,15 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
 
 void RangedAttack::render(sf::RenderTarget &target) {
 
-    for(auto &b : bullets) {
+    for (auto &b: bullets) {
 
         if (b.isActive())
             b.render(target);
     }
+}
+
+void RangedAttack::clearRelatedObjects() {
+    bullets.clear();
 }
 
 

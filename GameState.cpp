@@ -104,10 +104,12 @@ void GameState::update(const float &dt) {
             player->clearWalls();
             player->addWalls(tileMap->getRoom()->getWalls());
             player->clearTargets();
+            player->clearRelatedObjects();
             player->addTargets(tileMap->getRoom()->getTargets());
             hpBar.setSize(sf::Vector2f(statusBar.getSize().x / 1.5f, statusBar.getSize().y / 4.6f));
             player->setHp(startPlayerLife);
             player->setEnergy(0.f);
+            player->notify(RESETACHIEVEMENTS);
         }
 
         if (deathMenu->isButtonPressed("EXIT_MENU")) {

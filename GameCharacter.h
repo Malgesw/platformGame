@@ -118,6 +118,8 @@ public:
 
     bool savedComponentsPresent();
 
+    void clearRelatedObjects();
+
     void attach(Observer *o) override;
 
     void detach(Observer *o) override;

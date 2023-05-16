@@ -247,6 +247,11 @@ void GameCharacter::restoreOldComponents() {
     attack = std::move(backupAttack);
 }
 
+void GameCharacter::clearRelatedObjects() {
+    if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else attack->clearRelatedObjects();
+}
+
 void GameCharacter::attach(Observer *o) {
     observers.push_back(o);
 }

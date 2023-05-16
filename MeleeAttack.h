@@ -5,7 +5,7 @@
 #include "LevelTile.h"
 
 
-class MeleeAttack :public Attack{
+class MeleeAttack : public Attack {
 
 public:
     MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback, float delay,
@@ -13,10 +13,14 @@ public:
 
     void update(const float &dt, sf::Vector2f centerPosition, bool orientation,
                 const std::vector<std::shared_ptr<LevelTile>> &walls) override;
-    void render(sf::RenderTarget &target)override{};
+
+    void render(sf::RenderTarget &target) override {};
+
+    void clearRelatedObjects() override {};
 
 protected:
     float attackoffset = 200.f;
+
     void doDamage() override;
 
 };

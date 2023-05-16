@@ -25,7 +25,8 @@ std::list<AttackTarget *>::const_iterator Bullet::update(const float &dt, const 
 
         while (i!=targets.end()) {
             auto &currentTarget = *i;
-            if (body.getGlobalBounds().intersects((currentTarget->getCollisionbox().getGlobalBounds()))) {
+            if (/*currentTarget->isValid() and*/ body.getGlobalBounds().intersects(
+                    (currentTarget->getCollisionbox().getGlobalBounds()))) {
 
                 if (currentTarget->getHp() <= damage and currentTarget->getStatus() != INVINCIBLE) {
                     enemyDestroyed = i;

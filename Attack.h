@@ -38,6 +38,8 @@ public:
 
     virtual void render(sf::RenderTarget &target) = 0;
 
+    virtual void clearRelatedObjects() = 0;
+
 
 protected:
 

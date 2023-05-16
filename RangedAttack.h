@@ -20,6 +20,8 @@ public:
 
     void render(sf::RenderTarget &target) override;
 
+    void clearRelatedObjects() override;
+
 
 protected:
     sf::Texture *texture;

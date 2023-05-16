@@ -20,6 +20,13 @@ public:
     void update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *newHitbox, sf::Vector2f *newKnockback,
                 float *newHp, unsigned short int newStatus);
 
+    bool isValid() {
+        if (hitbox != nullptr and collisionbox != nullptr and hp != nullptr and knockback != nullptr)
+            return true;
+        else
+            return false;
+    }
+
     float getHp() const;
 
     unsigned short int getStatus() const {
