@@ -12,7 +12,7 @@ TileMap::TileMap(GameCharacter &player) {
     textures.push_back(new sf::Texture);
     textures[walking]->loadFromFile("./images/cyberMonkey2.png");
     tilesTextures.push_back(new sf::Texture);
-    tilesTextures[0]->loadFromFile("./images/tilesheet.png");
+    tilesTextures[0]->loadFromFile("./images/tilesheetWIP.png");
     textures.push_back(new sf::Texture); //Boss
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
@@ -94,6 +94,10 @@ void TileMap::placeItems(GameCharacter &player) {
     generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), 'd', player);
     generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), 'i', player);
     generateItem(0, sf::Vector2i(29, 25),
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
+    generateItem(2, sf::Vector2i(2, 12),
+                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
+    generateItem(2, sf::Vector2i(1, 12),
                  sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), 's', player);
 }
 

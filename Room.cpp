@@ -8,8 +8,14 @@ Room::Room(const std::string& roomName,GameCharacter &mainCharacter,const std::v
     dimY = 180.f;
     bg.setSize(sf::Vector2f(static_cast<float>(mapSize.x) * dimX, static_cast<float>(mapSize.y) * dimY));
     bgtexture = new sf::Texture;
+    bgtexture3 = new sf::Texture;
     bgtexture->loadFromFile("./images/map2bg.png");
-    bg.setTexture(bgtexture);
+    bgtexture3->loadFromFile("./images/bg-3.png");
+    if (roomName != "room1.ini" and roomName != "room2.ini")
+        bg.setTexture(bgtexture3);
+    else
+        bg.setTexture(bgtexture);
+
     initRoom(roomName, tilesTextures);
     camera.setSize(1920.f, 1080.f);
     if (dimY * static_cast<float>(mapSize.y) < 1080.f) {
