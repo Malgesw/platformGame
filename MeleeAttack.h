@@ -8,7 +8,7 @@
 class MeleeAttack : public Attack {
 
 public:
-    MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback, float delay,
+    MeleeAttack(sf::Vector2f size, float speed, float hitDamage, float knockback, float delay, float attackOffset,
                 unsigned short *typeOfSprite);
 
     void update(const float &dt, sf::Vector2f centerPosition, bool orientation,

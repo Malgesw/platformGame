@@ -31,9 +31,10 @@ void GameCharacter::setSpecialAbility(std::unique_ptr<SpecialAbility> newSpecial
 
 void GameCharacter::render(sf::RenderTarget &target) {
 
-
-    //target.draw(attack->getHitBox());
-    //target.draw(movement->getCollisions());
+#if DEBUG
+    target.draw(attack->getHitBox());
+    target.draw(movement->getCollisions());
+#endif
     if (hp > 0) {
         animation->render(target);
         attack->render(target);
@@ -251,6 +252,7 @@ void GameCharacter::restoreOldComponents() {
     movement = std::move(backupMovement);
     attack = std::move(backupAttack);
 }
+
 
 void GameCharacter::clearRelatedObjects() {
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);

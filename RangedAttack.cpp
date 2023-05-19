@@ -1,8 +1,8 @@
 #include "RangedAttack.h"
 
 RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, float attackSpeed, float hitDamage,
-                           float newKnockback, unsigned short *typeOfSprite, bool isPlayer) :
-        Attack(sf::Vector2f(50.f, 50.f), attackSpeed, 0.f, hitDamage, newKnockback, typeOfSprite),
+                           float newKnockback, float delay, unsigned short *typeOfSprite, bool isPlayer) :
+        Attack(sf::Vector2f(50.f, 50.f), attackSpeed, delay, hitDamage, newKnockback, typeOfSprite),
         bulletSize(newBulletSize), bulletSpeed(newBulletSpeed) {
 
     texture = new sf::Texture;

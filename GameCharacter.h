@@ -12,6 +12,7 @@
 #include "exceptions.h"
 #include "Shell.h"
 #include "NoSpecialAbility.h"
+#define DEBUG 0
 
 class GameCharacter : public Subject {
 

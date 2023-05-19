@@ -6,9 +6,11 @@
 
 
 AutoRanged::AutoRanged(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
+                       float delay,
                        unsigned short *typeOfSprite, float scanRange) : RangedAttack(bulletSize, bulletSpeed,
                                                                                      attackSpeed,
-                                                                                     hitDamage, knockback, typeOfSprite,
+                                                                                     hitDamage, knockback, delay,
+                                                                                     typeOfSprite,
                                                                                      false), scanRange(scanRange) {
 
 }

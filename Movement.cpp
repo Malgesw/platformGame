@@ -144,6 +144,8 @@ void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
     checkCollisions();
     collisionBox.move(0, velocity.y * dt);
 
+    //std::cout<<"from Movement cpp  isOnGround is "<<isOnGround<<" isFacingRight is "<<isFacingRight<<" and isMoving is "<<isMoving<<std::endl;
+
     //setting animation type
     if (*typeOfSprite != ATTACKRIGHT and *typeOfSprite != ATTACKLEFT) {
         if ((not isOnGround) and (not isFacingRight)) *typeOfSprite = JUMPLEFT;
@@ -151,7 +153,10 @@ void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
         else if (isOnGround and isMoving and (not isFacingRight)) *typeOfSprite = MOVELEFT;
         else if (isOnGround and isMoving and isFacingRight) *typeOfSprite = MOVERIGHT;
         else if (isOnGround and (not isMoving) and (not isFacingRight)) *typeOfSprite = IDLELEFT;
-        else *typeOfSprite = IDLERIGHT;
+        else if (isOnGround and (not isMoving) and (isFacingRight)) *typeOfSprite = IDLERIGHT;
+        else
+            std::cout << "from Movement cpp  isOnGround is " << isOnGround << " isFacingRight is " << isFacingRight
+                      << " and isMoving is " << isMoving << std::endl;
     }
 
 

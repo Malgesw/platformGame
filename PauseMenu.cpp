@@ -4,14 +4,15 @@ PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu)
 
     initButtons();
 
-    background.setSize(static_cast<sf::Vector2f>(5.f * window->getView().getSize()));
+    background.setSize(static_cast<sf::Vector2f>(1.5f * window->getView().getSize()));
     background.setFillColor(sf::Color(sf::Color(20, 20, 20, 100)));
 
 }
 
-void PauseMenu::update(sf::Vector2f &mousePos) {
-    for(auto &b : buttons)
+void PauseMenu::update(sf::Vector2f &mousePos, sf::Vector2f cameraPos) {
+    for (auto &b: buttons)
         b.second->update(mousePos);
+    background.setPosition(cameraPos);
 }
 
 void PauseMenu::render(sf::RenderTarget &target) {

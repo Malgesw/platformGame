@@ -23,7 +23,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     hpBar.setFillColor(sf::Color(40, 223, 90));
     energyBar.setFillColor(sf::Color(123, 234, 209));
     player = std::make_unique<GameCharacter>(startPlayerLife, startPlayerEnergy);
-    std::unique_ptr<Movement> playerMovement = std::make_unique<GlidingMovement>(380, startPlayerPosition,
+    std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, startPlayerPosition,
                                                                                  sf::Vector2f(120, 126), 2000,
                                                                                  player->spritePointer());
     //std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
@@ -37,7 +37,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player->setAttack(std::move(playerAttack));
     player->setAnimation(std::move(playerAnimation));
     player->setMovement(std::move(playerMovement));
-    tileMap = std::make_unique<TileMap>(*player);
+    tileMap = std::make_unique<TileMap>(*player, &achievementCounter);
     player->addWalls(tileMap->getWalls());
     player->addTargets(tileMap->getTargets());
     player->attach(&achievementCounter);
@@ -64,9 +64,12 @@ void GameState::update(const float &dt) {
     }
 
     if (isPaused) {
-        pauseMenu->update(mousePos);
-        pauseMenu->moveButton("CONTINUE", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y - 2.f*tileMap->getRoom()->getCamera().getSize().y/5.f));
+        pauseMenu->update(mousePos, tileMap->getRoom()->getCamera().getCenter() -
+                                    tileMap->getRoom()->getCamera().getSize() / 2.f);
+        pauseMenu->moveButton("CONTINUE", sf::Vector2f(
+                tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x / 8.f,
+                tileMap->getRoom()->getCamera().getCenter().y -
+                2.f * tileMap->getRoom()->getCamera().getSize().y / 5.f));
         pauseMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x/8.f,
                                                         tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y/5.f));
         pauseMenu->resizeButton("CONTINUE",sf::Vector2f(tileMap->getRoom()->getCamera().getSize().x/4.f,tileMap->getRoom()->getCamera().getSize().y/8.f));
@@ -83,9 +86,11 @@ void GameState::update(const float &dt) {
 
     }
     else if(death){
-        deathMenu->update(mousePos);
-        deathMenu->moveButton("RESTART", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
-                                                       tileMap->getRoom()->getCamera().getCenter().y-tileMap->getRoom()->getCamera().getSize().y/5.f));
+        deathMenu->update(mousePos, tileMap->getRoom()->getCamera().getCenter() -
+                                    tileMap->getRoom()->getCamera().getSize() / 2.f);
+        deathMenu->moveButton("RESTART", sf::Vector2f(
+                tileMap->getRoom()->getCamera().getCenter().x - tileMap->getRoom()->getCamera().getSize().x / 10.f,
+                tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y / 5.f));
         deathMenu->moveButton("EXIT_MENU", sf::Vector2f(tileMap->getRoom()->getCamera().getCenter().x-tileMap->getRoom()->getCamera().getSize().x/10.f,
                                                         tileMap->getRoom()->getCamera().getCenter().y));
         deathMenu->resizeButton("RESTART",sf::Vector2f (tileMap->getRoom()->getCamera().getSize().x/4.f,tileMap->getRoom()->getCamera().getSize().y/8.f));

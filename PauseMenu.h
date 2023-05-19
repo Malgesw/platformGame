@@ -12,7 +12,8 @@ public:
     PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu);
     ~PauseMenu() = default;
 
-    void update(sf::Vector2f &mousePos);
+    void update(sf::Vector2f &mousePos, sf::Vector2f cameraPos);
+
     void render(sf::RenderTarget &target);
     bool isButtonPressed(const std::string &button);
     void moveButton(const std::string& buttonName, sf::Vector2f newPos);

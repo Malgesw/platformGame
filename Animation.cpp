@@ -2,7 +2,8 @@
 
 Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size, bool isplayer,
                      unsigned short *typeOfSprite) :
-        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(typeOfSprite) {
+        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(typeOfSprite),
+        isPlayer(isplayer) {
 
     totalTime = 0.f;
     currentImage.x = 0;
@@ -23,14 +24,15 @@ Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switch
 
 }
 
-Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size):
-        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(nullptr),totalTime(0.f),faceRight(true),isRepeatable(true){
+Animation::Animation(sf::Texture *texture, sf::Vector2i imageCount, float switchTime, sf::Vector2f size) :
+        imageCount(imageCount), switchTime(switchTime), texture(texture), typeOfSprite(nullptr), totalTime(0.f),
+        faceRight(true), isRepeatable(true), isPlayer(false) {
 
     currentImage.x = 0;
     currentImage.y = 0;
     sprite.width = texture->getSize().x / (float) imageCount.x;
     sprite.height = texture->getSize().y / (float) imageCount.y;
-    animationBox.setSize(sf::Vector2f(size.x*1.5f, size.y*1.5f));
+    animationBox.setSize(sf::Vector2f(size.x * 1.5f, size.y * 1.5f));
     animationBox.setTexture(texture);
 }
 
@@ -119,6 +121,10 @@ void Animation::update(Movement &playerMovement, const float &dt, unsigned short
         else
             *typeOfSprite = IDLERIGHT;
     }
+
+    if (isPlayer and *typeOfSprite == IDLERIGHT and prevTypeOfSprite == JUMPRIGHT)
+        std::cout << "from animation cpp stio'" << std::endl;
+
 
     if ((*typeOfSprite == ATTACKRIGHT or *typeOfSprite == ATTACKLEFT) and
         (prevTypeOfSprite != ATTACKRIGHT and prevTypeOfSprite != ATTACKLEFT))

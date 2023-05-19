@@ -55,6 +55,7 @@ private:
     float animationRightOffset=0.f;
     unsigned short *typeOfSprite;
     bool isRepeatable;
+    bool isPlayer;
 };
 
 

@@ -5,8 +5,8 @@
 #include "StarRangedAttack.h"
 
 StarRangedAttack::StarRangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage,
-                                   float knockback, unsigned short *typeOfSprite, bool isPlayer) :
-        RangedAttack(bulletSize, bulletSpeed, attackSpeed, hitDamage, knockback, typeOfSprite, isPlayer) {
+                                   float knockback, float delay, unsigned short *typeOfSprite, bool isPlayer) :
+        RangedAttack(bulletSize, bulletSpeed, attackSpeed, hitDamage, knockback, delay, typeOfSprite, isPlayer) {
 
 }
 

@@ -10,6 +10,7 @@ class RangedAttack :public Attack{
 public:
 
     RangedAttack(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
+                 float delay,
                  unsigned short *typeOfSprite, bool isPlayer);
 
 
@@ -30,7 +31,6 @@ protected:
     std::vector<Bullet> bullets;
     sf::Vector2f nextBulletDirection;
     sf::Vector2f nextBulletStartPosition;
-    float attackoffset = 0.f;
 
     void doDamage() override;
 

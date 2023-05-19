@@ -13,6 +13,7 @@ class AutoRanged: public  RangedAttack,AutoAttack{
 
 public:
     AutoRanged(sf::Vector2f bulletSize, float bulletSpeed, float attackSpeed, float hitDamage, float knockback,
+               float delay,
                unsigned short *typeOfSprite, float ScanRange);
 
     void update(const float &dt, sf::Vector2f centerPosition, bool orientation,

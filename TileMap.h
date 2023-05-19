@@ -10,6 +10,8 @@
 #include "NoMovement.h"
 #include "NoSpecialAbility.h"
 #include "NoAttack.h"
+#include "Achievement.h"
+#include "GlidingMovement.h"
 #include <string>
 
 enum ItemType {
@@ -20,7 +22,7 @@ class TileMap {
 
 public:
 
-    explicit TileMap(GameCharacter &player);
+    TileMap(GameCharacter &player, Achievement *achievementCounter);
 
     ~TileMap();
 
@@ -58,6 +60,7 @@ private:
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
     unsigned int maxRoom = 3;
+    Achievement *achievementCounter;
 
     void addRoom(const std::string& roomName, GameCharacter& mainCharacter,sf::Vector2i roomSize);
 
