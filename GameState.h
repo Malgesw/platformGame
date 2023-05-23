@@ -32,7 +32,8 @@ public:
 
 private:
 
-    bool keyReleased = true;
+    bool jumpKeyReleased = true;
+    bool attackKeyReleased = true;
     bool death = false;
     const float startPlayerLife = 10;
     const float startPlayerEnergy = 0;

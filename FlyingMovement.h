@@ -6,7 +6,9 @@
 class FlyingMovement : public Movement{
 
 public:
-    FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, unsigned short * typeOfSprite);
+    FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, unsigned short *typeOfSprite,
+                   bool isPlayer);
+
     void moveUp() override;
     void moveDown() override;
     void moveLeft() override;

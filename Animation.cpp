@@ -93,6 +93,8 @@ void Animation::update(Movement &playerMovement, const float &dt, unsigned short
             row = 0;
             break;
     }
+    if (*typeOfSprite != ATTACKLEFT and *typeOfSprite != ATTACKRIGHT)
+        lastNonAttackSprite = *typeOfSprite;
 
     /*if(currentImage.x == imageCount.x-1 && row == 3){
         currentImage.x = 0;
@@ -103,32 +105,34 @@ void Animation::update(Movement &playerMovement, const float &dt, unsigned short
     currentImage.y = row;
     totalTime += dt;
     float t = switchTime;
-    if(row > 0) {
+    if (row > 0) {
         //if(row == 3)
-            //switchTime += 0.10f;
+        //switchTime += 0.10f;
         //else
-            switchTime -= 0.15f;
+        switchTime -= 0.15f;
     }
-
-    if(totalTime >= switchTime){
-        totalTime -= switchTime;
-        if (isRepeatable) {
-            currentImage.x++;
-            if (currentImage.x == imageCount.x)
-                currentImage.x = 0;
-        } else if (currentImage.x < imageCount.x - 1)
-            currentImage.x++;
-        else
-            *typeOfSprite = IDLERIGHT;
-    }
-
-    if (isPlayer and *typeOfSprite == IDLERIGHT and prevTypeOfSprite == JUMPRIGHT)
-        std::cout << "from animation cpp stio'" << std::endl;
 
 
     if ((*typeOfSprite == ATTACKRIGHT or *typeOfSprite == ATTACKLEFT) and
         (prevTypeOfSprite != ATTACKRIGHT and prevTypeOfSprite != ATTACKLEFT))
         currentImage.x = 0;
+
+
+    if (totalTime >= switchTime) {
+        totalTime -= switchTime;
+        if (isRepeatable) {
+            currentImage.x++;
+            if (currentImage.x == imageCount.x)
+                currentImage.x = 0;
+        } else {
+            if (currentImage.x < imageCount.x - 1) {
+                currentImage.x++;
+            } else {
+                *typeOfSprite = lastNonAttackSprite;
+            }
+        }
+
+    }
 
     sprite.top = currentImage.y * sprite.height;
     if (faceRight) {

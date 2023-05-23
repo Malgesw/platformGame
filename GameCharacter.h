@@ -91,7 +91,7 @@ public:
                 movement->getPosition().y + movement->getCollisions().getGlobalBounds().height / 2.f};
     }
 
-    unsigned short &getSpriteType() {
+    unsigned short getSpriteType() const {
         return typeOfSprite;
     }
 
@@ -113,6 +113,10 @@ public:
 
     void setDroidState(bool droidState) {
         isDroidActivated = droidState;
+    }
+
+    void setCurrentImageX(int newCurrentImage) {
+        animation->setCurrentImage(sf::Vector2i(newCurrentImage, animation->getCurrentRow()));
     }
 
     void saveOldComponents();

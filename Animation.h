@@ -51,8 +51,10 @@ private:
     bool faceRight;
     sf::RectangleShape animationBox;
     sf::Vector2f positionCorrection;
-    float animationLeftOffset=0.f;
-    float animationRightOffset=0.f;
+    float animationLeftOffset = 0.f;
+    float animationRightOffset = 0.f;
+    unsigned short int lastNonAttackSprite = JUMPRIGHT;
+    int attackAnimationFinished;
     unsigned short *typeOfSprite;
     bool isRepeatable;
     bool isPlayer;

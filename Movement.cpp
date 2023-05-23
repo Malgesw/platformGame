@@ -23,14 +23,15 @@ void Movement::moveRight() {
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type,unsigned short *typeOfSprite)
-:speed(velocity),dt(0.01f),typeOfMovement(type),typeOfSprite(typeOfSprite){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, char type,
+                   unsigned short *typeOfSprite, bool isPlayer)
+        : speed(velocity), dt(0.01f), typeOfMovement(type), typeOfSprite(typeOfSprite), isPlayer(isPlayer) {
 
-    collisionBox=sf::RectangleShape(size);
+    collisionBox = sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::White);
     *typeOfSprite = IDLERIGHT;
-    knockback=sf::Vector2f (0,0);
+    knockback = sf::Vector2f(0, 0);
 }
 
 
@@ -154,9 +155,6 @@ void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
         else if (isOnGround and isMoving and isFacingRight) *typeOfSprite = MOVERIGHT;
         else if (isOnGround and (not isMoving) and (not isFacingRight)) *typeOfSprite = IDLELEFT;
         else if (isOnGround and (not isMoving) and (isFacingRight)) *typeOfSprite = IDLERIGHT;
-        else
-            std::cout << "from Movement cpp  isOnGround is " << isOnGround << " isFacingRight is " << isFacingRight
-                      << " and isMoving is " << isMoving << std::endl;
     }
 
 

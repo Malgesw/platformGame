@@ -266,15 +266,17 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         text->loadFromFile("./images/ballDroid.png");
         auto animation = std::make_unique<Animation>(text, sf::Vector2i(5, 1), 0.30f, size);
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(
-                position.x * rooms[currentRoom]->getDimX(),
-                position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer());
+                                                                                             position.x * rooms[currentRoom]->getDimX(),
+                                                                                             position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer(),
+                                                                                     true);
         playerMovement->addWalls(rooms[currentRoom]->getWalls());
         //auto playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player.spritePointer(),true);
         std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 4), 0.3f,
                                                                                  sf::Vector2f(168, 126) / 1.1f, true,
                                                                                  player.spritePointer());
         std::unique_ptr<SpecialAbility> playerSpecialAbility = std::make_unique<Shell>(player.spritePointer());
-        std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(120.f, 126.f), 0.5f, 1, 200.f,
+        std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(120.f, 126.f), 1.0f, 1.5f,
+                                                                             200.f,
                                                                              0.f, 40.f, player.spritePointer());
         playerAttack->addTargets(rooms[currentRoom]->getTargets());
         playerAttack->attach(achievementCounter);
@@ -302,10 +304,11 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         text->loadFromFile("./images/glidingDroidsheet.png");
         auto animation = std::make_unique<Animation>(text, sf::Vector2i(5, 1), 0.30f, size);
         std::unique_ptr<Movement> playerMovement = std::make_unique<GlidingMovement>(380, sf::Vector2f(
-                position.x * rooms[currentRoom]->getDimX(),
-                position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer());
+                                                                                             position.x * rooms[currentRoom]->getDimX(),
+                                                                                             position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer(),
+                                                                                     true);
         playerMovement->addWalls(rooms[currentRoom]->getWalls());
-        auto playerAttack = std::make_unique<RangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 0.5f, 1,
+        auto playerAttack = std::make_unique<RangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 1.0f, 1,
                                                            150.f, 0.3f, player.spritePointer(), true);
         std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 4), 0.3f,
                                                                                  sf::Vector2f(168, 126) / 1.1f, true,

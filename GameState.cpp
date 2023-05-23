@@ -25,7 +25,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     player = std::make_unique<GameCharacter>(startPlayerLife, startPlayerEnergy);
     std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, startPlayerPosition,
                                                                                  sf::Vector2f(120, 126), 2000,
-                                                                                 player->spritePointer());
+                                                                                 player->spritePointer(), true);
     //std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (216.f,126.f),0.5f,1,200.f,player->spritePointer());
     //std::unique_ptr<Attack> playerAttack = std::make_unique<StarRangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 0.5f, 1,
     //    150.f, player->spritePointer(), true);
@@ -197,8 +197,11 @@ void GameState::update(const float &dt) {
 }
 void GameState::updatePlayerPos() {
 
-    if(textEvent.type==sf::Event::KeyReleased and textEvent.key.code==(sf::Keyboard::Key(keyBinds.at("Jump")))){
-        keyReleased=true;
+    if (textEvent.type == sf::Event::KeyReleased and textEvent.key.code == (sf::Keyboard::Key(keyBinds.at("Jump")))) {
+        jumpKeyReleased = true;
+    }
+    if (textEvent.type == sf::Event::KeyReleased and textEvent.key.code == (sf::Keyboard::Key(keyBinds.at("Shoot")))) {
+        attackKeyReleased = true;
     }
 
     player->setVelocity(player->getVelocity().x * 0.5f, player->getVelocity().y);
@@ -211,14 +214,17 @@ void GameState::updatePlayerPos() {
 
     //WHEN PLAYER JUMPS
 
-    if (keyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))) {
-        keyReleased = false;
+    if (jumpKeyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Jump")))) {
+        jumpKeyReleased = false;
         player->moveUp();
     }
 
     //WHEN PLAYER SHOOTS
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))){
+    if (attackKeyReleased and sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("Shoot")))) {
+        attackKeyReleased = false;
         player->hit();
+        //if(player->getSpriteType()==ATTACKRIGHT or player->getSpriteType()==ATTACKLEFT)
+        //    player->setCurrentImageX(0);
     }
 }
 

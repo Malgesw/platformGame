@@ -10,7 +10,9 @@
 class WalkingMovement : public Movement{
 
 public:
-    WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height, unsigned short * typeOfSprite);
+    WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, float height,
+                    unsigned short *typeOfSprite, bool isPlayer);
+
     void moveUp() override;
     void moveDown() override;
     void moveLeft() override;

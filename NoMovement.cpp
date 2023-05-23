@@ -8,6 +8,7 @@ NoMovement::NoMovement(sf::Vector2f startPosition, sf::Vector2f size, unsigned s
                                                                                                                startPosition,
                                                                                                                size,
                                                                                                                'N',
-                                                                                                               typeOfSprite) {
+                                                                                                               typeOfSprite,
+                                                                                                               false) {
 
 }

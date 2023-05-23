@@ -9,7 +9,9 @@
 class Movement{
 
 public:
-    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type, unsigned short* typeOfSprite);
+    Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, char type, unsigned short *typeOfSprite,
+             bool isPlayer);
+
     virtual ~Movement();
     virtual void moveLeft()=0;
     virtual void moveRight()=0;
@@ -40,6 +42,7 @@ protected:
     bool isFacingRight = true;
     bool isOnGround = true;
     bool inertia = true;
+    bool isPlayer;
     unsigned short *typeOfSprite;
 
     virtual void applyKnockback();

@@ -4,8 +4,9 @@
 
 #include "WalkingMovement.h"
 
-WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,float height, unsigned short * typeOfSprite)
-: Movement(velocity,startPosition,size,'W',typeOfSprite),jumpHeight(height){
+WalkingMovement::WalkingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, float height,
+                                 unsigned short *typeOfSprite, bool isPlayer)
+        : Movement(velocity, startPosition, size, 'W', typeOfSprite, isPlayer), jumpHeight(height) {
 
 
 }

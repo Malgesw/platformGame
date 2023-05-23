@@ -6,8 +6,8 @@
 
 
 GlidingMovement::GlidingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, float height,
-                                 unsigned short *typeOfSprite)
-        : Movement(velocity, startPosition, size, 'G', typeOfSprite), jumpHeight(height) {
+                                 unsigned short *typeOfSprite, bool isPlayer)
+        : Movement(velocity, startPosition, size, 'G', typeOfSprite, isPlayer), jumpHeight(height) {
 
 
 }

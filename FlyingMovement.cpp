@@ -1,6 +1,8 @@
 #include "FlyingMovement.h"
 
-FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, unsigned short * typeOfSprite) : Movement(velocity,startPosition,size,'F',typeOfSprite) {
+FlyingMovement::FlyingMovement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,
+                               unsigned short *typeOfSprite, bool isPlayer) : Movement(velocity, startPosition, size,
+                                                                                       'F', typeOfSprite, isPlayer) {
 
 }
 

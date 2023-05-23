@@ -49,10 +49,12 @@ void Attack::notify(unsigned short category) const {
     }
 }
 
-void Attack::hit() {
+bool Attack::hit() {
 
+    bool canAttack = false;
     if (cooldown.getElapsedTime().asSeconds() > attackSpeed) {
         cooldown.restart();
+        canAttack = true;
         if (*typeOfSprite == MOVERIGHT or *typeOfSprite == JUMPRIGHT or *typeOfSprite == IDLERIGHT or
             *typeOfSprite == ATTACKRIGHT) {
             *typeOfSprite = ATTACKRIGHT;
@@ -63,6 +65,7 @@ void Attack::hit() {
         incomingAttack = true;
         delay.restart();
     }
+    return canAttack;
 }
 
 /*void Attack::applyCollisionDamage() {

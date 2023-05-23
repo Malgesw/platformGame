@@ -2,8 +2,8 @@
 
 
 GameCharacter::GameCharacter(float healthPoints, float mana)
-        : hp(healthPoints), energy(mana), startHp(healthPoints), typeOfSprite(IDLERIGHT),
-          previousTypeOfSprite(IDLERIGHT) {
+        : hp(healthPoints), energy(mana), startHp(healthPoints), typeOfSprite(JUMPRIGHT),
+          previousTypeOfSprite(JUMPRIGHT) {
     specialAbility = std::make_unique<NoSpecialAbility>();
 }
 
@@ -146,8 +146,11 @@ void GameCharacter::moveDown() {
 
 void GameCharacter::hit() {
 
+    bool canAttack;
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
-    else attack->hit();
+    else canAttack = attack->hit();
+    if (canAttack && (typeOfSprite == ATTACKRIGHT or typeOfSprite == ATTACKLEFT))
+        setCurrentImageX(0);
 }
 
 sf::Vector2f GameCharacter::getVelocity() const {

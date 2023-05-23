@@ -17,7 +17,9 @@ public:
 
     void render(sf::RenderTarget &target) override {};
 
-    void hit() override {};
+    bool hit() override {
+        return false;
+    };
 
     void clearRelatedObjects() override {};
 private:
