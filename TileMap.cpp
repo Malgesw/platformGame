@@ -1,6 +1,7 @@
 #include "TileMap.h"
 #include "AutoRanged.h"
 
+
 TileMap::TileMap(GameCharacter &player, Achievement *achievementCounter) : achievementCounter(achievementCounter) {
 
     enum enemy {
@@ -91,6 +92,7 @@ void TileMap::spawnEnemies(GameCharacter &player) {
     generateEnemy(0, "./Levels/WalkingEnemy.ini", sf::Vector2i(20, 6), player);
     generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);
     generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
+    generateEnemy(2, "./Levels/Boss.ini", sf::Vector2i(15, 10), player);
 }
 
 void TileMap::placeItems(GameCharacter &player) {
@@ -173,6 +175,22 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                              static_cast<float>(startPosition.y) * rooms[roomNumber]->getDimY()),
                 sf::Vector2f(std::stof(enemyIni.GetValue("general", "sizeX")),
                              std::stof(enemyIni.GetValue("general", "sizeY"))), enemy->spritePointer());
+
+    } else if (strcmp(enemyIni.GetValue("movement", "type"), "P") == 0) {
+
+        enemyMovement = std::make_unique<PeriodicFlying>(std::stof(enemyIni.GetValue("movement", "speed")),
+                                                         sf::Vector2f(static_cast<float>(startPosition.x) *
+                                                                      rooms[roomNumber]->getDimX(),
+                                                                      static_cast<float>(startPosition.y) *
+                                                                      rooms[roomNumber]->getDimY()),
+                                                         sf::Vector2f(std::stof(enemyIni.GetValue("general", "sizeX")),
+                                                                      std::stof(enemyIni.GetValue("general", "sizeY"))),
+                                                         rooms[roomNumber]->getWalls(),
+                                                         std::stof(enemyIni.GetValue("movement", "turnBackTime")),
+                                                         enemy->spritePointer());
+
+        std::unique_ptr<SpecialAbility> enemyAbility = std::make_unique<Resilience>(enemy->spritePointer());
+        enemy->setSpecialAbility(std::move(enemyAbility));
     }
     enemyMovement->addWalls(rooms[roomNumber]->getWalls());
 
@@ -201,8 +219,19 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                                                    std::stof(enemyIni.GetValue("attack", "knockback")),
                                                    std::stof(enemyIni.GetValue("attack", "delay")),
                                                    enemy->spritePointer(), 400.f);
+    } else if (strcmp(enemyIni.GetValue("attack", "type"), "S") == 0) {
+
+        enemyAttack = std::make_unique<AutoStarRanged>(
+                sf::Vector2f(std::stof(enemyIni.GetValue("attack", "bulletSize")),
+                             std::stof(enemyIni.GetValue("attack", "bulletSize"))),
+                std::stof(enemyIni.GetValue("attack", "bulletSpeed")),
+                std::stof(enemyIni.GetValue("attack", "speed")),
+                std::stof(enemyIni.GetValue("attack", "damage")),
+                std::stof(enemyIni.GetValue("attack", "knockback")),
+                std::stof(enemyIni.GetValue("attack", "delay")),
+                enemy->spritePointer(), 1000.f);
     } else
-        std::cout << "errore nell' inizializzazione" << std::endl;
+        std::cout << "errore nell' inizializzazi" << std::endl;
     std::vector<AttackTarget *> targets;
     targets.push_back(player.generateTarget());
     enemyAttack->addTargets(targets);
@@ -301,7 +330,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         }*/
     } else if (type == GLIDINGDROID) {
         auto text = new sf::Texture;
-        text->loadFromFile("./images/glidingDroidsheet.png");
+        text->loadFromFile("./images/jb_spritesheetnew.png");
         auto animation = std::make_unique<Animation>(text, sf::Vector2i(5, 1), 0.30f, size);
         std::unique_ptr<Movement> playerMovement = std::make_unique<GlidingMovement>(380, sf::Vector2f(
                                                                                              position.x * rooms[currentRoom]->getDimX(),

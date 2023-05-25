@@ -8,7 +8,7 @@
 #include "spriteType.h"
 
 enum statusType {
-    NORMAL = 0, INVINCIBLE = 1, SPECIALATTACK = 2
+    NORMAL = 0, INVINCIBLE = 1, UNMOVABLE = 2
 };
 
 class SpecialAbility {

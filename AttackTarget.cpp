@@ -20,7 +20,8 @@ void AttackTarget::receiveDamage(sf::Vector2f newKnockback, float lifeRemoved) {
         throw std::runtime_error("target not valid");
     }
     if (status != INVINCIBLE) {
-        *knockback += newKnockback;
+        if (status != UNMOVABLE)
+            *knockback += newKnockback;
         *hp -= lifeRemoved;
     }
 

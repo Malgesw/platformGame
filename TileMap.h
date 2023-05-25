@@ -12,6 +12,9 @@
 #include "NoAttack.h"
 #include "Achievement.h"
 #include "GlidingMovement.h"
+#include "AutoStarRanged.h"
+#include "PeriodicFlying.h"
+#include "Resilience.h"
 #include <string>
 
 enum ItemType {
