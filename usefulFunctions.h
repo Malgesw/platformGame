@@ -1,7 +1,3 @@
-//
-// Created by alessio on 06/03/23.
-//
-
 #ifndef PLATFORMGAME_USEFULFUNCTIONS_H
 #define PLATFORMGAME_USEFULFUNCTIONS_H
 

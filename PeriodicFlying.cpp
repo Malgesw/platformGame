@@ -1,7 +1,3 @@
-//
-// Created by nicco on 23/05/2023.
-//
-
 #include "PeriodicFlying.h"
 
 PeriodicFlying::PeriodicFlying(float movementSpeed, sf::Vector2f startPosition, sf::Vector2f size,
@@ -15,11 +11,9 @@ PeriodicFlying::PeriodicFlying(float movementSpeed, sf::Vector2f startPosition, 
 
 void PeriodicFlying::rest() {
 
-    if (timeCounter.getElapsedTime().asSeconds() < (turnbackTime / 2) && *typeOfSprite != ATTACKRIGHT &&
-        *typeOfSprite != ATTACKLEFT) {
+    if (timeCounter.getElapsedTime().asSeconds() < (turnbackTime / 2)) {
         moveUp();
-    } else if (timeCounter.getElapsedTime().asSeconds() < turnbackTime && *typeOfSprite != ATTACKLEFT &&
-               *typeOfSprite != ATTACKRIGHT) {
+    } else if (timeCounter.getElapsedTime().asSeconds() < turnbackTime) {
         FlyingMovement::moveDown();
     } else {
         timeCounter.restart();
@@ -31,6 +25,7 @@ void PeriodicFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
 }
 
 void PeriodicFlying::update(const float &deltaTime, sf::Vector2f playerPosition) {
+    *typeOfSprite = IDLELEFT;
     rest();
     Movement::update(deltaTime, playerPosition);
 }

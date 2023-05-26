@@ -239,6 +239,7 @@ void GameCharacter::saveOldComponents() {
     backupAnimation = std::move(animation);
     backupMovement = std::move(movement);
     backupAttack = std::move(attack);
+    backupSpecialAbility = std::move(specialAbility);
 }
 
 bool GameCharacter::savedComponentsPresent() {
@@ -254,6 +255,7 @@ void GameCharacter::restoreOldComponents() {
     animation = std::move(backupAnimation);
     movement = std::move(backupMovement);
     attack = std::move(backupAttack);
+    specialAbility = std::move(backupSpecialAbility);
 }
 
 
