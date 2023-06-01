@@ -4,23 +4,26 @@
 #include "Observer.h"
 #include "headers.h"
 
-class Achievement: public Observer{
+class Achievement : public Observer {
 
 public:
     explicit Achievement();
-    ~Achievement() override= default;
+
+    ~Achievement() override = default;
 
     void setFont(const sf::Font &font);
 
     void getNews(unsigned short category) override;
 
-    void checkAchievements();
-    void update(const sf::View& view, const float& dt);
+    bool checkAchievements();
+
+    bool update(const sf::View &view, const float &dt);
+
     void render(sf::RenderTarget &target);
 
 private:
-    int enemiesKilled=0;
-    bool newAchievement= false;
+    int enemiesKilled = 0;
+    bool newAchievement = false;
     sf::Clock timeCounter;
     sf::Text text;
     int fontOpacity = 0;

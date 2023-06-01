@@ -32,9 +32,9 @@ std::list<AttackTarget *>::const_iterator Bullet::update(const float &dt, const 
                     enemyDestroyed = i;
                     //currentTarget.kill(damage);
                     currentTarget->receiveDamage(knockback * direction, damage);
-                }
+                } else
+                    currentTarget->receiveDamage(knockback * direction, damage);
                 collided = true;
-                currentTarget->receiveDamage(knockback * direction, damage);
             }
             i++;
         }

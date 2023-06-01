@@ -48,12 +48,11 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     deathMessage.setCharacterSize(20);
     deathMessage.setFillColor(sf::Color::White);
     deathMessage.setPosition(tileMap->getRoom()->getCamera().getSize() / 3.f);
-
 }
 
 void GameState::update(const float &dt) {
     updateMousePosition();
-    float currentPlayerLife;
+    //float currentPlayerLife;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(keyBinds.at("CLOSE"))) && isReady()) {
         pauseClock.restart();
@@ -125,21 +124,21 @@ void GameState::update(const float &dt) {
     }
     else {
         //std::cout<<"fps is "<<1/dt<<std::endl;
-        currentPlayerLife = player->getHp();
-        if (invincibilityTimer.getElapsedTime().asSeconds() > invincibilityTime) {
-            isInvincible = false;
-        }
+        //currentPlayerLife = player->getHp();
+        //if (invincibilityTimer.getElapsedTime().asSeconds() > invincibilityTime) {
+        // isInvincible = false;
+        //}
 
         if (dt > 0.05f) {
             updatePlayerPos();
             player->update(0.05f, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(0.05f, *player, window);
-            if (isInvincible)
+            /*if (isInvincible)
                 player->setHp(currentPlayerLife);
             else if (currentPlayerLife < player->getHp()) {
                 isInvincible = true;
                 invincibilityTimer.restart();
-            }
+            }*/
 
             achievementCounter.update(tileMap->getRoom()->getCamera(), 0.1f);
 
@@ -147,14 +146,35 @@ void GameState::update(const float &dt) {
             updatePlayerPos();
             player->update(dt, tileMap->getWalls(), mainCharacterPos);
             tileMap->update(dt, *player, window);
-            if (isInvincible) {
+            /*if (isInvincible) {
                 player->setHp(currentPlayerLife);
 
             } else if (currentPlayerLife > player->getHp()) {
                 isInvincible = true;
                 invincibilityTimer.restart();
+            }*/
+            if (achievementCounter.update(tileMap->getRoom()->getCamera(), dt)) {
+                player->setHp(0);
+                deathMessage.setString("Congratulations, you killed the boss!");
+                //deathMessage.setPosition(sf::Vector2f(deathMessage.getPosition().x, deathMessage.getPosition().y));
+                //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - deathMessage.getGlobalBounds().width,
+                //   tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y / 3.f);
+                deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x -
+                                         tileMap->getRoom()->getCamera().getSize().x / 6.5f,
+                                         tileMap->getRoom()->getCamera().getCenter().y -
+                                         tileMap->getRoom()->getCamera().getSize().y / 3.f);
+                deathMessage.setFillColor(sf::Color::Yellow);
+            } else {
+                //deathMessage.setString("You died, you are dead. Very!");
+                deathMessage.setString("                 You died!        ");
+                deathMessage.setFillColor(sf::Color::Red);
+                //deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x - deathMessage.getGlobalBounds().width,
+                //       tileMap->getRoom()->getCamera().getCenter().y - tileMap->getRoom()->getCamera().getSize().y / 3.f);
+                deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x -
+                                         tileMap->getRoom()->getCamera().getSize().x / 8.5f,
+                                         tileMap->getRoom()->getCamera().getCenter().y -
+                                         tileMap->getRoom()->getCamera().getSize().y / 3.f);
             }
-            achievementCounter.update(tileMap->getRoom()->getCamera(), dt);
 
             //___________________UPDATING STATUS BAR
 
@@ -183,10 +203,6 @@ void GameState::update(const float &dt) {
             }
             if (player->getHp() <= 0) {
                 death = true;
-                deathMessage.setPosition(tileMap->getRoom()->getCamera().getCenter().x -
-                                         tileMap->getRoom()->getCamera().getSize().x / 8.5f,
-                                         tileMap->getRoom()->getCamera().getCenter().y -
-                                         tileMap->getRoom()->getCamera().getSize().y / 3.f);
                 deathMessage.setCharacterSize(
                         static_cast<unsigned int>(2.f * tileMap->getRoom()->getCamera().getSize().y / 45.f));
             }

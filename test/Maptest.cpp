@@ -34,9 +34,9 @@ public:
         //                                                                             player->spritePointer());
         std::unique_ptr<Movement> playerMovement = std::make_unique<FlyingMovement>(80, sf::Vector2f(50.f, 50.f),
                                                                                     sf::Vector2f(50, 50),
-                                                                                    player->spritePointer());
+                                                                                    player->spritePointer(), true);
         std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
-                                                                             0.0f,
+                                                                             0.0f, 0.f,
                                                                              player->spritePointer());
         auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f,
                                                            sf::Vector2f(35, 35), true,
@@ -53,7 +53,7 @@ public:
                         tile->getGlobalBounds().height),
                                                                                enemy->spritePointer());
         std::unique_ptr<Attack> enemyAttack = std::make_unique<AutoRanged>(sf::Vector2f(50.f, 50.f), 100, 0.5f, 5.f,
-                                                                           50.f, player->spritePointer(), 400.f);
+                                                                           50.f, 0.f, player->spritePointer(), 400.f);
         auto enemyAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f(35, 35),
                                                           false,
                                                           enemy->spritePointer());

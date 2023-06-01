@@ -239,7 +239,6 @@ unsigned short int Room::update(const float &dt, unsigned int &currentRoom, sf::
 
                         currentRoom++;
                         collisionType = BOTTOM;
-                        std::cout << "from room.cpp bottom" << std::endl;
                     }
 
                         //Top
@@ -250,7 +249,6 @@ unsigned short int Room::update(const float &dt, unsigned int &currentRoom, sf::
 
                         currentRoom--;
                         collisionType = TOP;
-                        std::cout << "from room.cpp top" << std::endl;
                     }
 
 
@@ -262,7 +260,6 @@ unsigned short int Room::update(const float &dt, unsigned int &currentRoom, sf::
 
                         currentRoom++;
                         collisionType = RIGHT;
-                        std::cout << "from room.cpp right" << std::endl;
                     }
 
                         //Left
@@ -273,7 +270,6 @@ unsigned short int Room::update(const float &dt, unsigned int &currentRoom, sf::
 
                         currentRoom--;
                         collisionType = LEFT;
-                        std::cout << "from room.cpp left" << std::endl;
                     }
                 }
             }

@@ -32,9 +32,9 @@ public:
         player = std::make_unique<GameCharacter>(50, 50);
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
                                                                                      sf::Vector2f(25, 35), 200,
-                                                                                     player->spritePointer());
+                                                                                     player->spritePointer(), true);
         std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
-                                                                             0.0f, player->spritePointer());
+                                                                             0.0f, 0.f, player->spritePointer());
         auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f,
                                                            sf::Vector2f(35, 35), true, player->spritePointer());
         player->setMovement(std::move(playerMovement));
@@ -43,11 +43,12 @@ public:
         player->addWalls(walls);
         std::unique_ptr<Movement> droidMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
                                                                                     sf::Vector2f(25, 35), 200,
-                                                                                    player->spritePointer());
+                                                                                    player->spritePointer(), true);
         std::unique_ptr<Attack> droidAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
-                                                                            0.0f, player->spritePointer());
+                                                                            0.0f, 0.f, player->spritePointer());
         auto droidAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f(35, 35),
                                                           true, player->spritePointer());
+        std::unique_ptr<SpecialAbility> droidSpecialAbility = std::make_unique<NoSpecialAbility>();
         auto tacoTexture = new sf::Texture;
         tacoTexture->loadFromFile("./images/taco.png");
         auto tacoAnimation = std::make_unique<Animation>(tacoTexture, sf::Vector2i(4, 1), 0.3f, sf::Vector2f(50, 50));
@@ -55,6 +56,7 @@ public:
         deathZone = std::make_unique<Item>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 0.f), std::move(tacoAnimation),
                                            -1000000);
         droid = std::make_unique<Droid>(std::move(droidAnimation), std::move(droidMovement), std::move(droidAttack),
+                                        std::move(droidSpecialAbility),
                                         sf::Vector2f(50.f, 50.f), sf::Vector2f(0.f, 0.f), std::move(tacoAnimation));
 
     }

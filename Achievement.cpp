@@ -33,7 +33,10 @@ void Achievement::getNews(unsigned short category) {
 
 
 
-void Achievement::checkAchievements(){
+bool Achievement::checkAchievements() {
+
+    bool result = false;
+
 
     if (newAchievement and enemiesKilled == 1 and achievementType == ENEMYKILLED) {
         text.setString("first enemy killed, keep on");
@@ -60,27 +63,29 @@ void Achievement::checkAchievements(){
     }
 
     if (newAchievement and achievementType == BOSSKILLED) {
-        text.setString("Congratulations, you killed the boss!");
-        fontOpacity = 255;
-        newAchievement = false;
+        //text.setString("Congratulations, you killed the boss!");
+        //fontOpacity = 255;
+        //newAchievement = false;
+        result = true;
     }
-
-
+    return result;
 }
 
 
-void Achievement::update(const sf::View& view, const float& dt ) {
-    text.setFillColor(sf::Color(255,0,0,fontOpacity));
-    text.setPosition(view.getCenter().x-text.getGlobalBounds().width/2.f,view.getCenter().y-view.getSize().y/3.f-text.getGlobalBounds().height/2.f);
-    text.setCharacterSize(static_cast<unsigned int>(4.f*view.getSize().y/65.f));
-    checkAchievements();
+bool Achievement::update(const sf::View &view, const float &dt) {
+    text.setFillColor(sf::Color(255, 0, 0, fontOpacity));
+    text.setPosition(view.getCenter().x - text.getGlobalBounds().width / 2.f,
+                     view.getCenter().y - view.getSize().y / 3.f - text.getGlobalBounds().height / 2.f);
+    text.setCharacterSize(static_cast<unsigned int>(4.f * view.getSize().y / 65.f));
+    bool result = checkAchievements();
     //_____________________________TEXT FADE OUT EFFECT
-    if (fontOpacity>0){
-        fontOpacity= fontOpacity- static_cast<int>(std::round(dt * 100));
+    if (fontOpacity > 0) {
+        fontOpacity = fontOpacity - static_cast<int>(std::round(dt * 100));
     }
-    if (fontOpacity<0) {
+    if (fontOpacity < 0) {
         fontOpacity = 0;
     }
+    return result;
 }
 
 

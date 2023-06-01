@@ -17,7 +17,7 @@ TileMap::TileMap(GameCharacter &player, Achievement *achievementCounter) : achie
     textures.push_back(new sf::Texture); //Boss
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
-    addRoom("room2.ini", player, sf::Vector2i(16, 16));
+    addRoom("room2.ini", player, sf::Vector2i(48, 26));
     addRoom("room3.ini", player, sf::Vector2i(120, 17));
     currentRoom = 0;
 

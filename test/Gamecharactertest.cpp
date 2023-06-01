@@ -21,9 +21,9 @@ public:
         player = std::make_unique<GameCharacter>(50, 50);
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
                                                                                      sf::Vector2f(25, 35), 200,
-                                                                                     player->spritePointer());
+                                                                                     player->spritePointer(), true);
         std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
-                                                                             0.0f, player->spritePointer());
+                                                                             0.0f, 0.f, player->spritePointer());
         auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f,
                                                            sf::Vector2f(35, 35), true, player->spritePointer());
         player->setMovement(std::move(playerMovement));
