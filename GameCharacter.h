@@ -17,7 +17,7 @@
 class GameCharacter : public Subject {
 
 public:
-    GameCharacter(float healthPoints, float mana);
+    GameCharacter(float healthPoints, float mana, bool isBoss = false);
 
     void setMovement(std::unique_ptr<Movement> newMovement);
 
@@ -151,6 +151,7 @@ private:
     unsigned short typeOfSprite;
     unsigned short previousTypeOfSprite;
     bool isDroidActivated = false;
+    bool isBoss;
     bool firstActivated = true;
     const float energyConsuption = 0.25f;
     std::list<Observer *> observers;

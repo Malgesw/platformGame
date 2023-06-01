@@ -137,8 +137,9 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
 
     //________________generating character
 
-    auto enemy= std::make_unique<GameCharacter>(std::stoi(enemyIni.GetValue("general","life")),
-                                                std::stoi(enemyIni.GetValue("general","energy")));
+    auto enemy = std::make_unique<GameCharacter>(std::stoi(enemyIni.GetValue("general", "life")),
+                                                 std::stoi(enemyIni.GetValue("general", "energy")),
+                                                 not strcmp(enemyIni.GetValue("general", "isBoss"), "true"));
 
 
     //________________generating movement

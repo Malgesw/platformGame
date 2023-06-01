@@ -1,10 +1,12 @@
 #include "GameCharacter.h"
 
 
-GameCharacter::GameCharacter(float healthPoints, float mana)
-        : hp(healthPoints), energy(mana), startHp(healthPoints), typeOfSprite(JUMPRIGHT),
-          previousTypeOfSprite(JUMPRIGHT) {
+GameCharacter::GameCharacter(float healthPoints, float mana, bool isBoss)
+        : hp(healthPoints), startEnergy(mana), startHp(healthPoints), typeOfSprite(JUMPRIGHT), energy(0),
+          previousTypeOfSprite(JUMPRIGHT), isBoss(isBoss) {
+
     specialAbility = std::make_unique<NoSpecialAbility>();
+    selfTarget = AttackTarget(isBoss);
 }
 
 void GameCharacter::setMovement(std::unique_ptr<Movement> newMovement) {

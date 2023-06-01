@@ -25,6 +25,9 @@ void Achievement::getNews(unsigned short category) {
         newAchievement = true;
         achievementType = NOACHIEVEMENT;
         enemiesKilled = 0;
+    } else if (category == BOSSKILLED) {
+        newAchievement = true;
+        achievementType = BOSSKILLED;
     } else throw std::runtime_error("Invalid achievement category");
 }
 
@@ -52,6 +55,12 @@ void Achievement::checkAchievements(){
 
     if (newAchievement and achievementType == DROIDACTIVATED) {
         text.setString("Droid activated!");
+        fontOpacity = 255;
+        newAchievement = false;
+    }
+
+    if (newAchievement and achievementType == BOSSKILLED) {
+        text.setString("Congratulations, you killed the boss!");
         fontOpacity = 255;
         newAchievement = false;
     }

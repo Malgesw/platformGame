@@ -54,7 +54,10 @@ void RangedAttack::update(const float &dt, sf::Vector2f centerPosition, bool fac
         auto i=b.update(dt,targets,walls);
         if (i!=targets.end()){
 
-            Attack::notify(ENEMYKILLED);
+            if ((*i)->getBoss())
+                Attack::notify(BOSSKILLED);
+            else
+                Attack::notify(ENEMYKILLED);
             targets.erase(i);
         }
     }

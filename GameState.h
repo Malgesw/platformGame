@@ -37,7 +37,7 @@ private:
     bool death = false;
     const float startPlayerLife = 10;
     const float startPlayerEnergy = 0;
-    const float maxPlayerEnergy = 10;
+    const float maxPlayerEnergy = 20;
     const sf::Vector2f startPlayerPosition = sf::Vector2f(300.f, 2880.f);
     std::unique_ptr<GameCharacter> player;
     sf::Vector2f mainCharacterPos;

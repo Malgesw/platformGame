@@ -22,7 +22,7 @@ GameState::GameState(sf::RenderWindow *window, std::stack<std::unique_ptr<State>
     statusBar.setTexture(statusBarTexture);
     hpBar.setFillColor(sf::Color(40, 223, 90));
     energyBar.setFillColor(sf::Color(123, 234, 209));
-    player = std::make_unique<GameCharacter>(startPlayerLife, startPlayerEnergy);
+    player = std::make_unique<GameCharacter>(startPlayerLife, maxPlayerEnergy);
     std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, startPlayerPosition,
                                                                                  sf::Vector2f(120, 126), 2000,
                                                                                  player->spritePointer(), true);

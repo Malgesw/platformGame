@@ -7,7 +7,7 @@
 class AttackTarget {
 public:
 
-    AttackTarget();
+    explicit AttackTarget(bool isBoss = false);
 
     const sf::RectangleShape &getHitbox() const;
 
@@ -29,6 +29,10 @@ public:
 
     float getHp() const;
 
+    bool getBoss() const {
+        return isBoss;
+    }
+
     unsigned short int getStatus() const {
         return status;
     }
@@ -43,6 +47,7 @@ private:
     //float nextDelay;
     float *hp;
     unsigned short int status;
+    bool isBoss;
     //int nextHp;
     //bool incomingDamage = false;
 

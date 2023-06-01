@@ -1,7 +1,7 @@
 #include "AttackTarget.h"
 
-AttackTarget::AttackTarget() :
-        collisionbox(nullptr), hitbox(nullptr), knockback(nullptr), hp(nullptr), status(0) {
+AttackTarget::AttackTarget(bool isBoss) :
+        collisionbox(nullptr), hitbox(nullptr), knockback(nullptr), hp(nullptr), status(0), isBoss(isBoss) {
 
 }
 

@@ -27,7 +27,11 @@ void Attack::clearTargets() {
 bool Attack::checkDeath(AttackTarget *target) const {
 
     if (target->getHp() <= damage and target->getStatus() != INVINCIBLE) {
-        notify(ENEMYKILLED);
+
+        if (target->getBoss())
+            notify(BOSSKILLED);
+        else
+            notify(ENEMYKILLED);
         return true;
     } else {
         return false;
