@@ -24,6 +24,15 @@ void Attack::clearTargets() {
     targets.clear();
 }
 
+std::vector<AttackTarget *> Attack::getTargets() const {
+    std::vector<AttackTarget *> currentTargets;
+    for (auto &t: targets) {
+        currentTargets.push_back(t);
+    }
+    return currentTargets;
+}
+
+
 bool Attack::checkDeath(AttackTarget *target) const {
 
     if (target->getHp() <= damage and target->getStatus() != INVINCIBLE) {
@@ -129,5 +138,6 @@ void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientati
     }
 
 }
+
 
 

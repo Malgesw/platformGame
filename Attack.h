@@ -25,6 +25,8 @@ public:
 
     void clearTargets();
 
+    std::vector<AttackTarget *> getTargets() const;
+
     void attach(Observer *o) override;
 
     void detach(Observer *o) override;

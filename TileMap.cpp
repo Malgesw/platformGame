@@ -18,7 +18,9 @@ TileMap::TileMap(GameCharacter &player, Achievement *achievementCounter) : achie
 
     addRoom("room1.ini", player, sf::Vector2i(48, 27));
     addRoom("room2.ini", player, sf::Vector2i(48, 26));
-    addRoom("room3.ini", player, sf::Vector2i(120, 17));
+    addRoom("room3.ini", player, sf::Vector2i(80, 17));
+    addRoom("room4.ini", player, sf::Vector2i(26, 14));
+
     currentRoom = 0;
 
     spawnEnemies(player);
@@ -90,26 +92,46 @@ void TileMap::update(const float &dt, GameCharacter &player, sf::RenderWindow *w
 
 void TileMap::spawnEnemies(GameCharacter &player) {
     generateEnemy(0, "./Levels/WalkingEnemy.ini", sf::Vector2i(20, 6), player);
-    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);
+    generateEnemy(1, "./Levels/WalkingEnemy.ini", sf::Vector2i(25, 9), player);
+    generateEnemy(1, "./Levels/WalkingEnemy.ini", sf::Vector2i(18, 9), player);
+    generateEnemy(1, "./Levels/WalkingEnemy.ini", sf::Vector2i(30, 23), player);
+    generateEnemy(1, "./Levels/WalkingEnemy.ini", sf::Vector2i(34, 23), player);
+    generateEnemy(2, "./Levels/WalkingEnemy.ini", sf::Vector2i(15, 8), player);
+    generateEnemy(2, "./Levels/WalkingEnemy.ini", sf::Vector2i(39, 10), player);
+    generateEnemy(2, "./Levels/WalkingEnemy.ini", sf::Vector2i(58, 8), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(40, 3), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(40, 14), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(40, 24), player);
+
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 3), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 14), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 24), player);
+
+    generateEnemy(1, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);
+    generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(25, 4), player);
+    generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(45, 6), player);
+
     generateEnemy(2, "./Levels/FlyingEnemy.ini", sf::Vector2i(8, 1), player);
-    generateEnemy(2, "./Levels/Boss.ini", sf::Vector2i(15, 10), player);
+    generateEnemy(3, "./Levels/Boss.ini", sf::Vector2i(12, 10), player);
 }
 
 void TileMap::placeItems(GameCharacter &player) {
     generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
-    generateItem(0, sf::Vector2i(6, 14), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
+    generateItem(1, sf::Vector2i(32, 22), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
     generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), TACO, player);
-    generateItem(0, sf::Vector2i(29, 25),
-                 sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
-                 player);
     generateItem(2, sf::Vector2i(2, 12),
                  sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
                  player);
     generateItem(2, sf::Vector2i(1, 12),
                  sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
                  player);
+    for (int i = 0; i < rooms[2]->getMapSize().x; i++) {
+        generateItem(2, sf::Vector2i(i, rooms[2]->getMapSize().y - 1),
+                     sf::Vector2f(rooms[2]->getDimX() / 1.5f, rooms[2]->getDimY() / 1.5f), DEATHZONE,
+                     player);
+    }
 }
 
 void TileMap::clearEnemies() {
@@ -168,7 +190,8 @@ void TileMap::generateEnemy(int roomNumber, std::string configFile, sf::Vector2i
                                                      rooms[roomNumber]->getWalls(),
                                                      sf::Vector2f(rooms[roomNumber]->getDimX(),
                                                                   rooms[roomNumber]->getDimY()),
-                                                     enemy->spritePointer());
+                                                     enemy->spritePointer(),
+                                                     sf::Vector2f(rooms[roomNumber]->getMapSize()));
 
     } else if (strcmp(enemyIni.GetValue("movement", "type"), "N") == 0) {
         enemyMovement = std::make_unique<NoMovement>(
@@ -280,7 +303,7 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
     } else if (type == DEATHZONE) {
         auto tex = new sf::Texture;
         sf::Image transparent;
-        transparent.create(rooms[currentRoom]->getDimX(), rooms[currentRoom]->getDimY(), sf::Color::Red);
+        transparent.create(rooms[currentRoom]->getDimX(), rooms[currentRoom]->getDimY(), sf::Color::Transparent);
         tex->loadFromImage(transparent);
         auto animation = std::make_unique<Animation>(tex, sf::Vector2i(4, 1), 0.30f, size);
         std::unique_ptr<Item> item_s = std::make_unique<Item>(size,

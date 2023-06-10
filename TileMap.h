@@ -62,7 +62,7 @@ private:
     std::vector<sf::Texture*> tilesTextures;
     std::vector<std::unique_ptr<Room>> rooms;
     unsigned int currentRoom;
-    unsigned int maxRoom = 3;
+    unsigned int maxRoom = 4;
     Achievement *achievementCounter;
 
     void addRoom(const std::string& roomName, GameCharacter& mainCharacter,sf::Vector2i roomSize);

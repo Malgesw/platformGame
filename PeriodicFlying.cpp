@@ -25,7 +25,10 @@ void PeriodicFlying::aggro(const float &dt, sf::Vector2f playerPosition) {
 }
 
 void PeriodicFlying::update(const float &deltaTime, sf::Vector2f playerPosition) {
-    *typeOfSprite = IDLELEFT;
     rest();
     Movement::update(deltaTime, playerPosition);
+    if (playerPosition.x > collisionBox.getPosition().x + collisionBox.getSize().x / 2) {
+        *typeOfSprite = IDLERIGHT;
+    } else
+        *typeOfSprite = IDLELEFT;
 }

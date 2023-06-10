@@ -17,16 +17,28 @@ public:
     virtual void moveRight()=0;
     virtual void moveUp()=0;
     virtual void moveDown()=0;
+
     bool onGround() const;
+
     virtual bool checkCollisions();
+
     void setVelocity(float x, float y);
+
     virtual void update(const float &deltaTime, sf::Vector2f playerPosition);
+
     sf::Vector2f getVelocity() const;
-    sf::RectangleShape& getCollisions();
-    sf::Vector2f& getKnockback();
+
+    sf::RectangleShape &getCollisions();
+
+    sf::Vector2f &getKnockback();
+
     sf::Vector2f getPosition() const;
-    void addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls);
+
+    void addWalls(const std::vector<std::shared_ptr<LevelTile>> &newWalls);
+
     void clearWalls();
+
+    const std::vector<std::shared_ptr<LevelTile>> &getWalls();
 
 
 protected:

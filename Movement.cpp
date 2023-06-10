@@ -185,13 +185,17 @@ void Movement::clearWalls() {
 
 void Movement::applyKnockback() {
 
-    collisionBox.move(knockback*dt*7.f);
-    knockback=knockback-knockback*dt*7.f;
+    collisionBox.move(knockback * dt * 7.f);
+    knockback = knockback - knockback * dt * 7.f;
 
 }
 
 sf::Vector2f &Movement::getKnockback() {
     return knockback;
+}
+
+const std::vector<std::shared_ptr<LevelTile>> &Movement::getWalls() {
+    return barriers;
 }
 
 

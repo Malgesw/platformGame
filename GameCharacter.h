@@ -81,9 +81,13 @@ public:
 
     void clearWalls();
 
+    const std::vector<std::shared_ptr<LevelTile>> &getWalls();
+
     void addTargets(const std::vector<AttackTarget *> &newTargets);
 
     void clearTargets();
+
+    std::vector<AttackTarget *> getTargets() const;
 
 
     sf::Vector2f getCenter() {

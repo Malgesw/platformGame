@@ -220,6 +220,13 @@ void GameCharacter::clearWalls() {
     if (backupMovement != nullptr) backupMovement->clearWalls();
 }
 
+const std::vector<std::shared_ptr<LevelTile>> &GameCharacter::getWalls() {
+    if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
+    else return movement->getWalls();
+
+}
+
+
 void GameCharacter::addTargets(const std::vector<AttackTarget *> &newTargets) {
 
     if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
@@ -233,6 +240,13 @@ void GameCharacter::clearTargets() {
     else attack->clearTargets();
     if (backupAttack != nullptr) backupAttack->clearTargets();
 }
+
+std::vector<AttackTarget *> GameCharacter::getTargets() const {
+
+    if (attack == nullptr)throw InvalidComponent(*this, ATTACK);
+    else return attack->getTargets();
+}
+
 
 void GameCharacter::saveOldComponents() {
     if (movement == nullptr)throw InvalidComponent(*this, MOVEMENT);
@@ -279,3 +293,6 @@ void GameCharacter::notify(unsigned short category) const {
         o->getNews(category);
     }
 }
+
+
+

@@ -1,7 +1,10 @@
 #include "Droid.h"
 
 void Droid::use(GameCharacter &player) {
-
+    playerMovement->clearWalls();
+    playerMovement->addWalls(player.getWalls());
+    playerAttack->clearTargets();
+    playerAttack->addTargets(player.getTargets());
     if (!player.savedComponentsPresent())
         player.saveOldComponents();
     player.setAnimation(std::move(playerAnimation));
