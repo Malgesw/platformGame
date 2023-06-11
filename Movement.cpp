@@ -1,40 +1,37 @@
-//
-// Created by alessio on 25/07/22.
-//
+
 #include "Movement.h"
 #include <cmath>
 #include <utility>
 
 void Movement::moveLeft() {
-    if(isOnGround)
-        typeOfSprite = MOVELEFT;
-    else
-        typeOfSprite = JUMPLEFT;
-    velocity.x=velocity.x-speed;
-    if (velocity.x<=-10*speed)
-        velocity.x=-10*speed;
-    collisionBox.move(velocity.x*dt,0.f);
+
+    isMoving = true;
+    isFacingRight = false;
+    velocity.x = velocity.x - speed;
+    if (velocity.x <= -10 * speed)
+        velocity.x = -10 * speed;
+    collisionBox.move(velocity.x * dt, 0.f);
 }
 void Movement::moveRight() {
-    if(isOnGround)
-        typeOfSprite = MOVERIGHT;
-    else
-        typeOfSprite = JUMPRIGHT;
-    velocity.x=velocity.x+speed;
-    if (velocity.x>=10*speed)
-        velocity.x=10*speed;
-    collisionBox.move(velocity.x*dt,0.f);
+
+    isMoving = true;
+    isFacingRight = true;
+    velocity.x = velocity.x + speed;
+    if (velocity.x >= 10 * speed)
+        velocity.x = 10 * speed;
+    collisionBox.move(velocity.x * dt, 0.f);
 }
 
 
-Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size,char type)
-:speed(velocity),dt(0.01f),typeOfMovement(type){
+Movement::Movement(float velocity, sf::Vector2f startPosition, sf::Vector2f size, char type,
+                   unsigned short *typeOfSprite, bool isPlayer)
+        : speed(velocity), dt(0.01f), typeOfMovement(type), typeOfSprite(typeOfSprite), isPlayer(isPlayer) {
 
-    collisionBox=sf::RectangleShape(size);
+    collisionBox = sf::RectangleShape(size);
     collisionBox.setPosition(startPosition);
     collisionBox.setFillColor(sf::Color::White);
-    typeOfSprite = IDLERIGHT;
-    knockback=sf::Vector2f (0,0);
+    *typeOfSprite = IDLERIGHT;
+    knockback = sf::Vector2f(0, 0);
 }
 
 
@@ -44,11 +41,14 @@ bool Movement::checkCollisions() {
     bool collided = false;
     for (auto &o: barriers) {
 
-        sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
-        sf::FloatRect objectBounds;
-        sf::FloatRect nextPlayerPos = playerBounds;
-        nextPlayerPos.left += velocity.x * dt;
-        nextPlayerPos.top += velocity.y * dt;
+        if (std::abs(o->getGlobalBounds().top-collisionBox.getGlobalBounds().top)<400 and
+        std::abs(o->getGlobalBounds().left-collisionBox.getGlobalBounds().left)<600) {
+
+            sf::FloatRect playerBounds = collisionBox.getGlobalBounds();
+            sf::FloatRect objectBounds;
+            sf::FloatRect nextPlayerPos = playerBounds;
+            nextPlayerPos.left += velocity.x * dt;
+            nextPlayerPos.top += velocity.y * dt;
 
 
         objectBounds = o->getGlobalBounds();
@@ -106,8 +106,10 @@ bool Movement::checkCollisions() {
 
 
     }
-     return collided;
+
     }
+    return collided;
+   }
 
 
 void Movement::setVelocity(float x, float y){
@@ -127,15 +129,36 @@ sf::RectangleShape& Movement::getCollisions() {
 void Movement::update(const float &deltaTime, sf::Vector2f playerPosition) {
 
 
-    dt=deltaTime;
+    dt = deltaTime;
     applyKnockback();
-    if(typeOfMovement=='W')
 
-        velocity.y+=981.f*dt;
+    if (typeOfMovement == 'W')
+        velocity.y += 3200.f * dt;
+
+    if (typeOfMovement == 'G') {
+        if (velocity.y < 0)
+            velocity.y += 3200.f * dt;
+        else
+            velocity.y += 500.f * dt;
+    }
 
     checkCollisions();
-    collisionBox.move(0,velocity.y*dt);
+    collisionBox.move(0, velocity.y * dt);
 
+    //std::cout<<"from Movement cpp  isOnGround is "<<isOnGround<<" isFacingRight is "<<isFacingRight<<" and isMoving is "<<isMoving<<std::endl;
+
+    //setting animation type
+    if (*typeOfSprite != ATTACKRIGHT and *typeOfSprite != ATTACKLEFT) {
+        if ((not isOnGround) and (not isFacingRight)) *typeOfSprite = JUMPLEFT;
+        else if ((not isOnGround) and isFacingRight) *typeOfSprite = JUMPRIGHT;
+        else if (isOnGround and isMoving and (not isFacingRight)) *typeOfSprite = MOVELEFT;
+        else if (isOnGround and isMoving and isFacingRight) *typeOfSprite = MOVERIGHT;
+        else if (isOnGround and (not isMoving) and (not isFacingRight)) *typeOfSprite = IDLELEFT;
+        else if (isOnGround and (not isMoving) and (isFacingRight)) *typeOfSprite = IDLERIGHT;
+    }
+
+
+    isMoving = false;
 }
 
 bool Movement::onGround() const {
@@ -147,10 +170,6 @@ sf::Vector2f Movement::getPosition() const {
 }
 
 Movement::~Movement() = default;
-
-const std::vector<std::shared_ptr<LevelTile>> &Movement::getBarriers() const {
-    return barriers;
-}
 
 void Movement::addWalls(const std::vector<std::shared_ptr<LevelTile>>& newWalls) {
 
@@ -166,13 +185,17 @@ void Movement::clearWalls() {
 
 void Movement::applyKnockback() {
 
-    collisionBox.move(knockback*dt*7.f);
-    knockback=knockback-knockback*dt*7.f;
+    collisionBox.move(knockback * dt * 7.f);
+    knockback = knockback - knockback * dt * 7.f;
 
 }
 
 sf::Vector2f &Movement::getKnockback() {
     return knockback;
+}
+
+const std::vector<std::shared_ptr<LevelTile>> &Movement::getWalls() {
+    return barriers;
 }
 
 

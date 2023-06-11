@@ -14,7 +14,7 @@ Button::Button(sf::Vector2f size, sf::Vector2f position, sf::Color idleColor, co
     text.setFillColor(textColor);
     text.setCharacterSize(textSize);
     text.setPosition(button.getGlobalBounds().left + button.getGlobalBounds().width/2.f - text.getGlobalBounds().width/2.f,
-                     button.getGlobalBounds().top + button.getGlobalBounds().height/2.f - text.getGlobalBounds().height/2.f);
+                     button.getGlobalBounds().top + button.getGlobalBounds().height/2.f - text.getGlobalBounds().height/1.5f);
 
     buttonState = IDLE;
 

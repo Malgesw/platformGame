@@ -1,65 +1,71 @@
-//
-// Created by alessio on 26/09/22.
-//
-
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, int hitDamage, float knockback) : Attack(size, speed,
-                                                                                                  hitDamage,
-                                                                                                  knockback) {
+MeleeAttack::MeleeAttack(sf::Vector2f size, float speed, float hitDamage, float knockback, float delay,
+                         float attackOffset,
+                         unsigned short *typeOfSprite)
+        : Attack(size, speed, delay,
+                 hitDamage,
+                 knockback, typeOfSprite), attackoffset(attackOffset) {
 }
 
-void MeleeAttack::hit() {
-
-    if (cooldown.getElapsedTime().asSeconds()>attackSpeed) {
-
-        cooldown.restart();
-
-        auto i= targets.begin();
-
-        while (i!=targets.end()) {
-            auto currentTarget=*i;
-            bool enemyCancelled=false;
-
-            if (hitBox.getGlobalBounds().intersects(currentTarget.getCollisionbox().getGlobalBounds())) {
+void MeleeAttack::doDamage() {
 
 
-                sf::Vector2f knockbackDirection;
+    auto i = targets.begin();
 
-                if( std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x)>1.f) {
+    while (i != targets.end()) {
 
-                    knockbackDirection.x = (currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x) /
-                                           std::abs(currentTarget.getHitbox().getPosition().x - hitBox.getPosition().x);
-                }
-                else knockbackDirection.x=0;
+        auto &currentTarget = *i;
+        bool enemyCancelled = false;
 
-                if(std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y)>1.f) {
-                    knockbackDirection.y = (currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y) /
-                                           std::abs(currentTarget.getHitbox().getPosition().y - hitBox.getPosition().y);
-                }
-                else knockbackDirection.y=0;
+        if (hitBox.getGlobalBounds().intersects(currentTarget->getCollisionbox().getGlobalBounds())) {
 
-                if(checkDeath(currentTarget)){
 
-                    targets.erase(i++);
-                    enemyCancelled=true;
-                }
+            sf::Vector2f knockbackDirection;
 
-                currentTarget.receiveDamage(knockbackDirection * knockbackDistance, damage);
 
-            }
-            if(not enemyCancelled){
-                i++;
-            }
+            if (std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
+
+                knockbackDirection.x =
+                        (currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) /
+                        std::abs(
+                                currentTarget->getHitbox().getPosition().x -
+                                hitBox.getPosition().x);
+            } else knockbackDirection.x = 0;
+
+            if (std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
+                knockbackDirection.y =
+                        (currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) /
+                        std::abs(
+                                currentTarget->getHitbox().getPosition().y -
+                                hitBox.getPosition().y);
+            } else knockbackDirection.y = 0;
+
+            if (checkDeath(currentTarget)) {
+                //currentTarget.kill(damage);
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
+                targets.erase(i++);
+                enemyCancelled = true;
+            } else
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
 
         }
+        if (not enemyCancelled) {
+            i++;
+        }
+
     }
+
+
 }
 
-void MeleeAttack::update(sf::Vector2f centerPosition,bool facingRight) {
+void MeleeAttack::update(const float &dt, sf::Vector2f centerPosition, bool facingRight,const std::vector<std::shared_ptr<LevelTile>> &walls) {
 
-    hitBox.setPosition(facingRight?centerPosition.x-hitBox.getSize().x/2-attackoffset:centerPosition.x-hitBox.getSize().x/2+attackoffset,
-                       centerPosition.y-hitBox.getSize().y/2);
+    Attack::update(dt,centerPosition, facingRight,walls);
+    hitBox.setPosition(facingRight ? centerPosition.x - hitBox.getSize().x / 2 + attackoffset : centerPosition.x -
+                                                                                                hitBox.getSize().x / 2 -
+                                                                                                attackoffset,
+                       centerPosition.y - hitBox.getSize().y / 2);
 }
 
 

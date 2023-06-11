@@ -27,7 +27,6 @@ DropDownList::DropDownList(sf::Vector2f size, sf::Vector2f position, sf::Color c
     descriptionText.setString(description);
     descriptionText.setPosition(descrPosition);
     descriptionText.setCharacterSize(textSize);
-    descriptionText.setFillColor(sf::Color::Black);
     descriptionText.setFont(textFont);
 
 }

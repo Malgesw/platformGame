@@ -41,6 +41,11 @@ public:
                          button.getGlobalBounds().top + button.getGlobalBounds().height/2.f - text.getGlobalBounds().height/2.f);
     }
 
+    void setSize(sf::Vector2f newSize){
+        button.setSize(newSize);
+        text.setCharacterSize(static_cast<unsigned int>(newSize.y/2.5f));
+    }
+
 
 private:
 

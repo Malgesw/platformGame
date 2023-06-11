@@ -1,28 +1,55 @@
-//
-// Created by alessio on 12/09/22.
-//
-
 #ifndef PLATFORMGAME_ATTACKTARGET_H
 #define PLATFORMGAME_ATTACKTARGET_H
 
 #include "headers.h"
+#include "SpecialAbility.h"
 
 class AttackTarget {
 public:
 
-    AttackTarget(sf::RectangleShape* newCollisionbox,sf::RectangleShape* newHitbox,sf::Vector2f* newKnockback, int* newHp);
+    explicit AttackTarget(bool isBoss = false);
 
-    const sf::RectangleShape& getHitbox() const;
-    const sf::RectangleShape& getCollisionbox() const;
-    void receiveDamage(sf::Vector2f newKnockback,int lifeRemoved) const;
-    int getHp() const;
+    const sf::RectangleShape &getHitbox() const;
+
+    const sf::RectangleShape &getCollisionbox() const;
+
+    void receiveDamage(sf::Vector2f newKnockback, float lifeRemoved) noexcept(false);
+
+    //void kill(int lifeRemoved);
+
+    void update(sf::RectangleShape *newCollisionbox, sf::RectangleShape *newHitbox, sf::Vector2f *newKnockback,
+                float *newHp, unsigned short int newStatus);
+
+    bool isValid() {
+        if (hitbox != nullptr and collisionbox != nullptr and hp != nullptr and knockback != nullptr)
+            return true;
+        else
+            return false;
+    }
+
+    float getHp() const;
+
+    bool getBoss() const {
+        return isBoss;
+    }
+
+    unsigned short int getStatus() const {
+        return status;
+    }
 
 
 private:
-      sf::RectangleShape* hitbox;
-      sf::RectangleShape* collisionbox;
-      sf::Vector2f* knockback;
-      int *hp;
+    //sf::Clock timer;
+    sf::RectangleShape *hitbox;
+    sf::RectangleShape *collisionbox;
+    sf::Vector2f *knockback;
+    //sf::Vector2f nextKnockback;
+    //float nextDelay;
+    float *hp;
+    unsigned short int status;
+    bool isBoss;
+    //int nextHp;
+    //bool incomingDamage = false;
 
 };
 

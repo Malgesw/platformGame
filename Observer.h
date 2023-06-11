@@ -1,14 +1,17 @@
-//
-// Created by alessio on 02/10/22.
-//
-
 #ifndef PLATFORMGAME_OBSERVER_H
 #define PLATFORMGAME_OBSERVER_H
-class Observer{
+
+enum achievementTypes {
+    ENEMYKILLED, DROIDACTIVATED, RESETACHIEVEMENTS, NOACHIEVEMENT, BOSSKILLED
+};
+
+class Observer {
 
 public:
 
-    virtual ~Observer()=default;
-    virtual void getNews(char category)=0;
+    virtual ~Observer() = default;
+
+    virtual void getNews(unsigned short category) = 0;
 };
+
 #endif //PLATFORMGAME_OBSERVER_H

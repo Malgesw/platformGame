@@ -1,12 +1,5 @@
-//
-// Created by alessio on 01/09/22.
-//
-
-
 #include <iostream>
 #include "AStar.h"
-
-
 
 using namespace std::placeholders;
 

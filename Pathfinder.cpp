@@ -1,7 +1,3 @@
-//
-// Created by alessio on 01/09/22.
-//
-
 #include "Pathfinder.h"
 
 Pathfinder::Pathfinder(const std::vector<std::shared_ptr<LevelTile>> &walls, sf::Vector2f size, float time, sf::Vector2f source, sf::Vector2f target, float deltatime) :

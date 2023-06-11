@@ -9,19 +9,22 @@ class PauseMenu {
 
 public:
 
-    PauseMenu(sf::RenderWindow *window, sf::Font &font);
+    PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu);
     ~PauseMenu() = default;
 
-    void update(sf::Vector2f &mousePos);
+    void update(sf::Vector2f &mousePos, sf::Vector2f cameraPos);
+
     void render(sf::RenderTarget &target);
     bool isButtonPressed(const std::string &button);
     void moveButton(const std::string& buttonName, sf::Vector2f newPos);
+    void resizeButton(const std::string& buttonName, sf::Vector2f newSize);
 
 private:
 
     std::map<std::string, std::unique_ptr<Button>> buttons;
     sf::Font &font;
     sf::RectangleShape background;
+    bool isDeathMenu = false;
 
     void initButtons();
 

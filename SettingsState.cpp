@@ -13,7 +13,7 @@ SettingsState::SettingsState(sf::RenderWindow *window, std::stack<std::unique_pt
     bgTexture.loadFromFile("./images/OPTIONS.png");
 
     //background.setSize(static_cast<sf::Vector2f>(this->window->getSize()));
-    background.setSize(sf::Vector2f(800, 600));
+    background.setSize(sf::Vector2f(1920, 1080));
     //background.setFillColor(sf::Color::Green);
     background.setTexture(&bgTexture);
 
@@ -104,8 +104,13 @@ void SettingsState::updateKeys() {
 
 void SettingsState::initButtons() {
 
-    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(200.f, 50.f), sf::Vector2f(300.f, 450.f),
-                                               sf::Color(70, 70, 70, 200), "Exit", font, 16,
+    sf::Vector2f winSize(window->getView().getSize());
+
+    buttons["EXIT"] = std::make_unique<Button>(sf::Vector2f(winSize.x/4.f,
+                                                            winSize.y/12.f),
+                                               sf::Vector2f(3.f*winSize.x/8.f,
+                                                            3.f*winSize.y/4.f),
+                                               sf::Color(70, 70, 70, 200), "Exit", font, static_cast<unsigned int>(2.f*winSize.y/65.f),
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
 
@@ -113,20 +118,22 @@ void SettingsState::initButtons() {
 
 void SettingsState::initTextFields() {
 
-    textFields["LEFT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 100.f), 22,
-                                                     sf::Vector2f(125.f, 110.f), "Left", sf::Vector2f(40.f, 110.f),
+    sf::Vector2f winSize(window->getView().getSize());
+
+    textFields["LEFT"] = std::make_unique<TextField>(sf::Vector2f(winSize.x/8.f, winSize.y/12.f), sf::Vector2f(winSize.x/8.f, winSize.y/6.f), static_cast<unsigned int>(11.f*winSize.y/300.f),
+                                                     sf::Vector2f(5.f*winSize.x/32.f, 11.f*winSize.y/60.f), "Left", sf::Vector2f(winSize.x/20.f, 11.f*winSize.y/60.f),
                                                      &font, sf::Color(31, 157, 115, 255));
 
-    textFields["RIGHT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 160.f), 22,
-                                                     sf::Vector2f(125.f, 170.f), "Right", sf::Vector2f(40.f, 170.f),
+    textFields["RIGHT"] = std::make_unique<TextField>(sf::Vector2f(winSize.x/8.f, winSize.y/12.f), sf::Vector2f(winSize.x/8.f, 4.f*winSize.y/15.f), static_cast<unsigned int>(11.f*winSize.y/300.f),
+                                                     sf::Vector2f(5.f*winSize.x/32.f, 17.f*winSize.y/60.f), "Right", sf::Vector2f(winSize.x/20.f, 17.f*winSize.y/60.f),
                                                      &font, sf::Color(31, 157, 115, 255));
 
-    textFields["JUMP"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 220.f), 22,
-                                                     sf::Vector2f(100.f, 230.f), "Jump", sf::Vector2f(40.f, 230.f),
+    textFields["JUMP"] = std::make_unique<TextField>(sf::Vector2f(winSize.x/8.f, winSize.y/12.f), sf::Vector2f(winSize.x/8.f, 11.f*winSize.y/30.f), static_cast<unsigned int>(11.f*winSize.y/300.f),
+                                                     sf::Vector2f(5.f*winSize.x/32.f, 23.f*winSize.y/60.f), "Jump", sf::Vector2f(winSize.x/20.f, 23.f*winSize.y/60.f),
                                                      &font, sf::Color(31, 157, 115, 255));
 
-    textFields["SHOOT"] = std::make_unique<TextField>(sf::Vector2f(50.f, 50.f), sf::Vector2f(100.f, 280.f), 22,
-                                                     sf::Vector2f(125.f, 290.f), "Shoot", sf::Vector2f(35.f, 290.f),
+    textFields["SHOOT"] = std::make_unique<TextField>(sf::Vector2f(winSize.x/8.f, winSize.y/12.f), sf::Vector2f(winSize.x/8.f, 7.f*winSize.y/15.f), static_cast<unsigned int>(11.f*winSize.y/300.f),
+                                                     sf::Vector2f(5.f*winSize.x/32.f, 29.f*winSize.y/60.f), "Shoot", sf::Vector2f(winSize.x/20.f, 29.f*winSize.y/60.f),
                                                      &font, sf::Color(31, 157, 115, 255));
 
     std::ifstream file;
@@ -153,12 +160,13 @@ void SettingsState::initTextFields() {
 
 void SettingsState::initDropDownList() {
 
+    sf::Vector2f winSize(window->getView().getSize());
     std::vector<std::string> fields;
     fields = {"720x480", "1280x720", "1920x1080", "800x600"};
 
-    dropDownList = std::make_unique<DropDownList>(sf::Vector2f(100.f, 50.f), sf::Vector2f(200.f, 100.f),
+    dropDownList = std::make_unique<DropDownList>(sf::Vector2f(winSize.x/8.f, winSize.y/13.f), sf::Vector2f(winSize.x/2.25f, winSize.y/6.f),
                                                   sf::Color(130, 130, 130, 200),
-                                                  font, 16, fields, "Resolution", sf::Vector2f(200.f, 80.f),
+                                                  font, static_cast<unsigned int>(11.f*winSize.y/300.f), fields, "Resolution", sf::Vector2f(winSize.x/2.25f, 1.7f*winSize.y/15.f),
                                                   sf::Color(150, 150, 150, 255),
                                                   sf::Color(20, 20, 20, 200));
 
