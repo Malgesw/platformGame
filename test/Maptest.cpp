@@ -51,7 +51,8 @@ public:
                                                                                walls, sf::Vector2f(
                         tile->getGlobalBounds().width,
                         tile->getGlobalBounds().height),
-                                                                               enemy->spritePointer());
+                                                                               enemy->spritePointer(),
+                                                                               sf::Vector2f(16, 16));
         std::unique_ptr<Attack> enemyAttack = std::make_unique<AutoRanged>(sf::Vector2f(50.f, 50.f), 100, 0.5f, 5.f,
                                                                            50.f, 0.f, player->spritePointer(), 400.f);
         auto enemyAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f(35, 35),
