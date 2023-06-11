@@ -1,42 +1,5 @@
 #include "LevelTile.h"
 
-/*
-bool LevelTile::setupSprite(char tile) {
-
-    std::string textureName;
-
-    switch(tile){
-
-        case '2':
-            textureName = "./images/door.png";
-            exit = true;
-            tileType = DOOR;
-            break;
-        case '0':
-            textureName = "./images/Ground.jpg";
-            tileType = GROUND;
-            break;
-        case '1':
-            textureName = "./images/wall.png";
-            tileType = WALL;
-            break;
-        default:
-            textureName = "";
-
-    }
-
-    if(!texture.loadFromFile(textureName))
-        return false;
-
-    texture.setSmooth(true);
-    body.setFillColor(sf:: Color::White);
-    body.setTexture(&texture);
-    //temporary texture cut for testing
-    body.setTextureRect(sf::IntRect(0,0,50,50));
-    return true;
-
-}
- */
 
 LevelTile::LevelTile(sf::Texture* text  , float x, float y, sf::Vector2f size, unsigned short type) {
 
@@ -137,9 +100,9 @@ LevelTile::LevelTile(sf::Texture* text  , float x, float y, sf::Vector2f size, u
         case (28):
             body.setTextureRect(sf::IntRect(1000, 6824, 1000, 975));
             break;
-            //add other intersections and variants
-            //possible ideas: broken colums, droid pods and most importantly door
-
+        case (29):
+            body.setTextureRect(sf::IntRect(4000, 6860, 1000, 975));
+            break;
 
 
         default:

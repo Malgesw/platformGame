@@ -143,6 +143,10 @@ void Room::initRoom(const std::string &roomName, std::vector<sf::Texture *> &til
                     row.push_back(
                             std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, WALL_OUT_FLOOR));
                     break;
+                case 'l':
+                    row.push_back(
+                            std::make_unique<LevelTile>(tilesTextures[0], j * dimX, i * dimY, size, BLACK_STONE));
+                    break;
                 default:
                     throw std::runtime_error("invalid tile texture");
 
@@ -162,7 +166,7 @@ void Room::initRoom(const std::string &roomName, std::vector<sf::Texture *> &til
                 tiles[i][j]->getTileType() == INT_OUT_SW or tiles[i][j]->getTileType() == ANGLE_SW or
                 tiles[i][j]->getTileType() == ANGLE_SE or tiles[i][j]->getTileType() == ANGLE_NW or
                 tiles[i][j]->getTileType() == ANGLE_NE or tiles[i][j]->getTileType() == WALL_OUT_FLOOR or
-                tiles[i][j]->getTileType() == WALL_HOR)
+                tiles[i][j]->getTileType() == WALL_HOR or tiles[i][j]->getTileType() == BLACK_STONE)
                 walls.push_back(tiles[i][j]);
             else if (tiles[i][j]->getTileType() == DOOR)
                 doors.push_back(tiles[i][j]);

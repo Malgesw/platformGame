@@ -34,7 +34,9 @@ enum TILES {
     ANGLE_SW = 25,
     ANGLE_SE = 26,
     INT_UPTOLEFT = 27,
-    WALL_OUT_FLOOR = 28
+    WALL_OUT_FLOOR = 28,
+    BLACK_STONE = 29
+
 };
 
 class LevelTile {

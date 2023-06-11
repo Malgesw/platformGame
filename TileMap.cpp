@@ -116,11 +116,18 @@ void TileMap::spawnEnemies(GameCharacter &player) {
 }
 
 void TileMap::placeItems(GameCharacter &player) {
-    generateItem(0, sf::Vector2i(2, 16), sf::Vector2f(80.f, 80.f), TACO, player);
-    generateItem(0, sf::Vector2i(3, 16), sf::Vector2f(80.f, 80.f), TACO, player);
-    generateItem(0, sf::Vector2i(3, 14), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
-    generateItem(1, sf::Vector2i(32, 22), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
-    generateItem(0, sf::Vector2i(4, 14), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(1, sf::Vector2i(13, 6), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(1, sf::Vector2i(24, 4), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(1, sf::Vector2i(32, 22), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(2, sf::Vector2i(20, 2), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(2, sf::Vector2i(67, 7), sf::Vector2f(80.f, 80.f), TACO, player);
+    generateItem(2, sf::Vector2i(75, 1), sf::Vector2f(80.f, 80.f), TACO, player);
+
+    generateItem(1, sf::Vector2i(38, 5), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
+    generateItem(1, sf::Vector2i(45, 23), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
+    generateItem(3, sf::Vector2i(7, 9), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
+    generateItem(3, sf::Vector2i(19, 9), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
+
     generateItem(2, sf::Vector2i(2, 12),
                  sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
                  player);
@@ -316,32 +323,36 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         rooms[roomNumber]->addItem(item_s);
     } else if (type == SHELLDROID) {
         auto text = new sf::Texture;
-        text->loadFromFile("./images/ballDroid.png");
-        auto animation = std::make_unique<Animation>(text, sf::Vector2i(5, 1), 0.30f, size);
+        text->loadFromFile("./images/droidstatic2.png");
+        auto text2 = new sf::Texture;
+        text2->loadFromFile("./images/ballDroid.png");
+        auto animation = std::make_unique<Animation>(text, sf::Vector2i(1, 1), 0.30f, size * 1.3f);
         std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(380, sf::Vector2f(
                                                                                              position.x * rooms[currentRoom]->getDimX(),
                                                                                              position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer(),
                                                                                      true);
         playerMovement->addWalls(rooms[currentRoom]->getWalls());
         //auto playerAttack=std::make_unique<RangedAttack>(sf::Vector2f (40.f,40.f),400.5f,0.5f,1,150.f,player.spritePointer(),true);
-        std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 4), 0.3f,
+        std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text2, sf::Vector2i(5, 4), 0.3f,
                                                                                  sf::Vector2f(168, 126) / 1.1f, true,
                                                                                  player.spritePointer());
         std::unique_ptr<SpecialAbility> playerSpecialAbility = std::make_unique<Shell>(player.spritePointer());
-        std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(120.f, 126.f), 1.0f, 1.5f,
+        std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(120.f, 126.f), 1.0f, 3.0f,
                                                                              200.f,
                                                                              0.f, 40.f, player.spritePointer());
         playerAttack->addTargets(rooms[currentRoom]->getTargets());
         playerAttack->attach(achievementCounter);
         std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
                                                                std::move(playerAttack), std::move(playerSpecialAbility),
-                                                               size,
+                                                               size * 1.3f,
                                                                sf::Vector2f(static_cast<float>(position.x) *
                                                                             rooms[roomNumber]->getDimX() +
-                                                                            rooms[roomNumber]->getDimX() / 2.f,
+                                                                            rooms[roomNumber]->getDimX() / 2 -
+                                                                            size.x / 2 - 20.f,
                                                                             static_cast<float>(position.y) *
                                                                             rooms[roomNumber]->getDimY() +
-                                                                            rooms[roomNumber]->getDimY() / 2.f),
+                                                                            rooms[roomNumber]->getDimY() / 2 -
+                                                                            size.y / 2 - 15.f),
                                                                std::move(animation));
         rooms[roomNumber]->addItem(item_d);
         std::vector<AttackTarget *> newTargets;
@@ -354,16 +365,18 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         }*/
     } else if (type == GLIDINGDROID) {
         auto text = new sf::Texture;
-        text->loadFromFile("./images/jb_spritesheetnew.png");
-        auto animation = std::make_unique<Animation>(text, sf::Vector2i(5, 1), 0.30f, size);
+        text->loadFromFile("./images/staticdroid.png");
+        auto text2 = new sf::Texture;
+        text2->loadFromFile("./images/jb_spritesheetnew.png");
+        auto animation = std::make_unique<Animation>(text, sf::Vector2i(1, 1), 0.30f, size * 1.3f);
         std::unique_ptr<Movement> playerMovement = std::make_unique<GlidingMovement>(380, sf::Vector2f(
                                                                                              position.x * rooms[currentRoom]->getDimX(),
                                                                                              position.y * rooms[currentRoom]->getDimY()), sf::Vector2f(120, 126), 2000, player.spritePointer(),
                                                                                      true);
         playerMovement->addWalls(rooms[currentRoom]->getWalls());
-        auto playerAttack = std::make_unique<RangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 1.0f, 1,
+        auto playerAttack = std::make_unique<RangedAttack>(sf::Vector2f(40.f, 40.f), 400.5f, 1.0f, 2.f,
                                                            150.f, 0.3f, player.spritePointer(), true);
-        std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text, sf::Vector2i(5, 4), 0.3f,
+        std::unique_ptr<Animation> playerAnimation = std::make_unique<Animation>(text2, sf::Vector2i(5, 4), 0.3f,
                                                                                  sf::Vector2f(168, 126) / 1.1f, true,
                                                                                  player.spritePointer());
         std::unique_ptr<SpecialAbility> playerSpecialAbility = std::make_unique<NoSpecialAbility>();
@@ -373,13 +386,15 @@ void TileMap::generateItem(int roomNumber, sf::Vector2i position, sf::Vector2f s
         playerAttack->attach(achievementCounter);
         std::unique_ptr<Item> item_d = std::make_unique<Droid>(std::move(playerAnimation), std::move(playerMovement),
                                                                std::move(playerAttack), std::move(playerSpecialAbility),
-                                                               size,
+                                                               size * 1.3f,
                                                                sf::Vector2f(static_cast<float>(position.x) *
                                                                             rooms[roomNumber]->getDimX() +
-                                                                            rooms[roomNumber]->getDimX() / 2.f,
+                                                                            rooms[roomNumber]->getDimX() / 2.f
+                                                                            - size.x / 2 - 20.f,
                                                                             static_cast<float>(position.y) *
                                                                             rooms[roomNumber]->getDimY() +
-                                                                            rooms[roomNumber]->getDimY() / 2.f),
+                                                                            rooms[roomNumber]->getDimY() / 2.f
+                                                                            - size.y / 2 - 20.f),
                                                                std::move(animation));
         rooms[roomNumber]->addItem(item_d);
         std::vector<AttackTarget *> newTargets;
