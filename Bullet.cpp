@@ -1,7 +1,8 @@
 #include "Bullet.h"
 
-Bullet::Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions)
-        : speed(speed), damage(damage), knockback(knockback), maxCollisions(maxCollisions) {
+Bullet::Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions,
+               float maxDistance)
+        : speed(speed), damage(damage), knockback(knockback), maxCollisions(maxCollisions), maxDistance(maxDistance) {
 
 
     body = sf::RectangleShape(size);
@@ -20,10 +21,14 @@ std::list<AttackTarget *>::const_iterator Bullet::update(const float &dt, const 
 
 
         body.move(direction * dt * speed);
+        travelledDistance += static_cast<float>(sqrt(pow(direction.x, 2) + pow(direction.y, 2)) * dt * speed);
+        if (travelledDistance > maxDistance) {
+            collided = true;
+        }
 
         auto i = targets.begin();
 
-        while (i!=targets.end()) {
+        while (i != targets.end()) {
             auto &currentTarget = *i;
             if (/*currentTarget->isValid() and*/ body.getGlobalBounds().intersects(
                     (currentTarget->getCollisionbox().getGlobalBounds()))) {

@@ -12,13 +12,13 @@ RangedAttack::RangedAttack(sf::Vector2f newBulletSize, float newBulletSpeed, flo
         texture->loadFromFile("./images/bulletenemy.png");
 
 
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 1, 1500.f);
 
 }
 
 void RangedAttack::doDamage() {
 
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 1, 1500.f);
     auto i = bullets.begin();
     while (i != bullets.end() and (*i).isActive()) i++;
     if (i != bullets.end()) (*i).shoot(nextBulletStartPosition, nextBulletDirection);

@@ -5,12 +5,14 @@
 #include "AttackTarget.h"
 #include "LevelTile.h"
 #include "Animation.h"
+#include "usefulFunctions.h"
 
 
 class Bullet {
 
 public:
-    Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions);
+    Bullet(sf::Vector2f size, float speed, float damage, float knockback, sf::Texture *texture, int maxCollisions,
+           float maxDistance);
 
     virtual std::list<AttackTarget *>::const_iterator update(const float &dt, const std::list<AttackTarget *> &targets,
                                                              const std::vector<std::shared_ptr<LevelTile>> &walls);
@@ -37,6 +39,8 @@ protected:
     std::unique_ptr<Animation> animation;
     int maxCollisions;
     int collisionsCounter = 0;
+    float travelledDistance = 0.f;
+    float maxDistance;
 
 
 };

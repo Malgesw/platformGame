@@ -12,14 +12,14 @@ StarRangedAttack::StarRangedAttack(sf::Vector2f bulletSize, float bulletSpeed, f
 
 void StarRangedAttack::doDamage() {
 
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
-    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 3);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
+    bullets.emplace_back(bulletSize, bulletSpeed, damage, knockback, texture, 2, 2500.f);
 
     auto i = bullets.begin();
     while (i != bullets.end() and (*i).isActive()) i++;
