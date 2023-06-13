@@ -15,7 +15,7 @@ public:
 
     sf::Clock timer;
 
-    const float delay = 0.3f;
+    const float delay = 0.2f;
 };
 
 

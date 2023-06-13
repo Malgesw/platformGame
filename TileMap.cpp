@@ -116,6 +116,7 @@ void TileMap::spawnEnemies(GameCharacter &player) {
 }
 
 void TileMap::placeItems(GameCharacter &player) {
+    generateItem(0, sf::Vector2i(43, 25), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(1, sf::Vector2i(13, 6), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(1, sf::Vector2i(24, 4), sf::Vector2f(80.f, 80.f), TACO, player);
     generateItem(1, sf::Vector2i(32, 22), sf::Vector2f(80.f, 80.f), TACO, player);
@@ -126,7 +127,7 @@ void TileMap::placeItems(GameCharacter &player) {
     generateItem(1, sf::Vector2i(38, 5), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
     generateItem(1, sf::Vector2i(45, 23), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
     generateItem(3, sf::Vector2i(7, 9), sf::Vector2f(50.f, 50.f), SHELLDROID, player);
-    generateItem(3, sf::Vector2i(19, 9), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
+    generateItem(3, sf::Vector2i(18, 9), sf::Vector2f(50.f, 50.f), GLIDINGDROID, player);
 
     generateItem(2, sf::Vector2i(2, 12),
                  sf::Vector2f(rooms[currentRoom]->getDimX() / 1.5f, rooms[currentRoom]->getDimY() / 1.5f), DEATHZONE,
