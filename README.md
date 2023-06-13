@@ -27,4 +27,4 @@ Heal your wounds with tacos of dubious origins
 
 Show your worth and complete the steamrush
 
-![[clipBoss.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/clipBoss.gif)
