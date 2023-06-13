@@ -57,7 +57,8 @@ public:
                                                                                walls, sf::Vector2f(
                         tile->getGlobalBounds().width,
                         tile->getGlobalBounds().height),
-                                                                               enemy->spritePointer());
+                                                                               enemy->spritePointer(),
+                                                                               sf::Vector2f(16, 16));
         std::unique_ptr<Attack> enemyAttack = std::make_unique<AutoMelee>(sf::Vector2f(60.f, 60.f), 0.5f, 1, 49.f,
                                                                           0.0f, 0.f,
                                                                           player->spritePointer());

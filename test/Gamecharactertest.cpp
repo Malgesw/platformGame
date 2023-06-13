@@ -10,23 +10,32 @@ public:
     std::unique_ptr<GameCharacter> player;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::shared_ptr<LevelTile> tile;
+
     Gamecharactertest(){
-        tile=std::make_shared<LevelTile>('1',0.f,0.f, sf::Vector2f(50.f,50.f));
+        auto tileTexture = new sf::Texture;
+        tileTexture->loadFromFile("./images/playerSheet.png");
+        tile = std::make_shared<LevelTile>(tileTexture, 0.f, 50.f, sf::Vector2f(50.f, 50.f), 1);
         walls.push_back(tile);
-        sf::Texture* playerTexture=new sf::Texture;
+        auto playerTexture = new sf::Texture;
         playerTexture->loadFromFile("./images/playerSheet.png");
-        player= std::make_unique<GameCharacter>(50, 50);
-        std::unique_ptr<Movement> playerMovement=std::make_unique<WalkingMovement>(80,sf::Vector2f (50.f,50.f),sf::Vector2f (25,35),200);
-        std::unique_ptr<Attack> playerAttack=std::make_unique<MeleeAttack>(sf::Vector2f (45.f,35.f),0.5f,1,49.f);
-        auto playerAnimation=std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f, sf::Vector2f (35,35),true);
+        player = std::make_unique<GameCharacter>(50, 50);
+        std::unique_ptr<Movement> playerMovement = std::make_unique<WalkingMovement>(80, sf::Vector2f(50.f, 50.f),
+                                                                                     sf::Vector2f(25, 35), 200,
+                                                                                     player->spritePointer(), true);
+        std::unique_ptr<Attack> playerAttack = std::make_unique<MeleeAttack>(sf::Vector2f(45.f, 35.f), 0.5f, 1, 49.f,
+                                                                             0.0f, 0.f, player->spritePointer());
+        auto playerAnimation = std::make_unique<Animation>(playerTexture, sf::Vector2i(5, 3), 0.3f,
+                                                           sf::Vector2f(35, 35), true, player->spritePointer());
         player->setMovement(std::move(playerMovement));
         player->setAttack(std::move(playerAttack));
         player->setAnimation(std::move(playerAnimation));
-        player->getMovement().addWalls(walls);
+        player->addWalls(walls);
 
     }
 };
-TEST_F(Gamecharactertest, playeronground){
-    player->getMovement().getCollisions().setPosition(0.f,50.f);
-    EXPECT_TRUE(player->getMovement().onGround());
+TEST_F(Gamecharactertest, playeronground) {
+    player->setPosition(0.f, 0.f);
+    EXPECT_TRUE(player->isOnGround());
 }
+
+
