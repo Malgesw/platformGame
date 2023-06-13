@@ -1,15 +1,9 @@
-//
-// Created by alessio on 01/09/22.
-//
-
 #ifndef PLATFORMGAME_PATHFINDER_H
 #define PLATFORMGAME_PATHFINDER_H
-
 
 #include "AStar.h"
 #include "headers.h"
 #include "LevelTile.h"
-
 
 class Pathfinder: public AStar::Generator{
 
@@ -24,7 +18,6 @@ public:
     }
 
 private:
-
 
     sf::Vector2f currentDestination;
     int currentIndex;
@@ -41,7 +34,6 @@ private:
     void updateCurrentTarget();
     static sf::Vector2f tilesToPixels(AStar::Vec2i tilePos,sf::Vector2f tileSize);
     static AStar::Vec2i pixelToTiles(sf::Vector2f pixelPos ,sf::Vector2f tileSize);
-
 
 };
 

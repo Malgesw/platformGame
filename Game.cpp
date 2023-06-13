@@ -71,7 +71,7 @@ void Game::run() {
 
 void Game::initWindow() {
 
-    window = new sf::RenderWindow(sf::VideoMode(800, 600), "Steamrush");
+    window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Steamrush");
 
     std::ifstream ifs;
     ifs.open("./Config/window_settings.ini");

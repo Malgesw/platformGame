@@ -9,68 +9,76 @@
 #include "AutoWalking.h"
 #include "AutoFlying.h"
 #include "AutoMelee.h"
+#include "RangedAttack.h"
 
+enum collisionType {
+    BOTTOM = 0, TOP = 1, RIGHT = 2, LEFT = 3
+};
 
 class Room {
 
 public:
 
+    Room(const std::string &roomName, GameCharacter &mainCharacter, const std::vector<sf::Texture *> &textures,
+         sf::Vector2i mapSize, std::vector<sf::Texture *> &tilesTextures);
 
-    Room(const std::string& roomName,GameCharacter &mainCharachter,const std::vector<sf::Texture * > & textures,sf::Vector2i mapSize);
     void render(sf::RenderTarget &target);
-    void update(const float &dt, unsigned int &currentRoom,sf::RenderWindow* window);
+
+    unsigned short int update(const float &dt, unsigned int &currentRoom, sf::RenderWindow *window);
+
     const sf::Vector2i &getMapSize() const;
 
+    void addEnemy(std::unique_ptr<GameCharacter> &enemy);
 
-    void addEnemy(std::unique_ptr<GameCharacter>& enemy);
+    void addItem(std::unique_ptr<Item> &item);
 
+    void clearEnemies();
 
+    void clearItems();
     const std::vector<std::shared_ptr<LevelTile>>& getWalls() const {
         return walls;
     }
-
     float getDimX() const{
         return dimX;
     }
-
     float getDimY() const{
         return dimY;
     }
-
     const std::vector<std::shared_ptr<LevelTile>> &getDoors() const {
         return doors;
     }
-
     std::list<std::unique_ptr<GameCharacter>> &getEnemies() {
         return enemies;
     }
-
-    std::vector<AttackTarget> getTargets();
+    std::vector<AttackTarget *> getTargets();
     sf::View &getCamera(){
         return camera;
     }
-
     void setCameraCenter(float x, float y){
         camera.setCenter(x, y);
     }
 
 private:
 
-    enum enemyType{flying=0, walking=1};
-    std::map< std:: string, std::unique_ptr<Item>> items;
+    enum enemyType {
+        flying = 0, walking = 1
+    };
+    std::list<std::unique_ptr<Item>> items;
     std::vector<std::vector<std::shared_ptr<LevelTile>>> tiles;
     std::vector<std::shared_ptr<LevelTile>> walls;
     std::vector<std::shared_ptr<LevelTile>> doors;
     std::list<std::unique_ptr<GameCharacter>> enemies;
     std::vector<std::string> numbers;
-    GameCharacter& player;
+    GameCharacter &player;
     sf::Vector2i mapSize;
     float dimX;
     float dimY;
     sf::View camera;
+    sf::RectangleShape bg;
+    sf::Texture *bgtexture;
+    sf::Texture *bgtexture3;
 
-
-    void initFloor(const std::string& roomName);
+    void initRoom(const std::string &roomName, std::vector<sf::Texture *> &tilesTextures);
 
 };
 

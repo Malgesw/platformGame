@@ -1,42 +1,42 @@
 #include "PauseMenu.h"
 
-PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font) : font(font) {
+PauseMenu::PauseMenu(sf::RenderWindow *window, sf::Font &font, bool isDeathMenu) : font(font), isDeathMenu(isDeathMenu) {
 
     initButtons();
 
-    background.setSize(static_cast<sf::Vector2f>(window->getSize()));
+    background.setSize(static_cast<sf::Vector2f>(1.5f * window->getView().getSize()));
     background.setFillColor(sf::Color(sf::Color(20, 20, 20, 100)));
 
 }
 
-void PauseMenu::update(sf::Vector2f &mousePos) {
-
-    for(auto &b : buttons)
+void PauseMenu::update(sf::Vector2f &mousePos, sf::Vector2f cameraPos) {
+    for (auto &b: buttons)
         b.second->update(mousePos);
-
+    background.setPosition(cameraPos);
 }
 
 void PauseMenu::render(sf::RenderTarget &target) {
-
     target.draw(background);
-
     for(auto &b : buttons)
         b.second->render(target);
-
 }
 
 bool PauseMenu::isButtonPressed(const std::string &button) {
-
     if(buttons[button]->isPressed())
         return true;
     else
         return false;
-
 }
 
 void PauseMenu::initButtons() {
 
-    buttons["CONTINUE"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
+    if(isDeathMenu)
+        buttons["RESTART"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
+                                                       sf::Color(70, 70, 70, 200), "Restart", font, 14,
+                                                       sf::Color(150, 150, 150, 255),
+                                                       sf::Color(20, 20, 20, 200));
+    else
+        buttons["CONTINUE"] = std::make_unique<Button>(sf::Vector2f(90.f, 30.f), sf::Vector2f(300.f, 50.f),
                                                sf::Color(70, 70, 70, 200), "Continue", font, 14,
                                                sf::Color(150, 150, 150, 255),
                                                sf::Color(20, 20, 20, 200));
@@ -49,7 +49,9 @@ void PauseMenu::initButtons() {
 }
 
 void PauseMenu::moveButton(const std::string& buttonName, sf::Vector2f newPos) {
-
     buttons[buttonName]->setPosition(newPos);
+}
 
+void PauseMenu::resizeButton(const std::string& buttonName, sf::Vector2f newSize) {
+    buttons[buttonName]->setSize(newSize);
 }

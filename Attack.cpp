@@ -1,25 +1,21 @@
-//
-// Created by alessio on 19/08/22.
-//
-
 #include "Attack.h"
 #include <utility>
 
-Attack::Attack(sf::Vector2f size, float speed, int hitDamage, float knockback):
-        attackSpeed(speed), damage(hitDamage), knockbackDistance(knockback) {
+Attack::Attack(sf::Vector2f size, float speed, float delay, float hitDamage, float knockback,
+               unsigned short *typeOfSprite) :
+        attackSpeed(speed), damage(hitDamage), knockback(knockback), typeOfSprite(typeOfSprite), attackDelay(delay) {
 
-hitBox=sf::RectangleShape(size);
-hitBox.setFillColor(sf::Color::Blue);
+    hitBox = sf::RectangleShape(size);
+    hitBox.setFillColor(sf::Color::Blue);
 }
 
 sf::RectangleShape& Attack::getHitBox(){
     return hitBox;
 }
 
+void Attack::addTargets(const std::vector<AttackTarget *> &newTargets) {
 
-void Attack::addTargets(const std::vector<AttackTarget>& newTargets) {
-
-    for(auto &t : newTargets){
+    for (auto &t: newTargets) {
         targets.push_back(t);
     }
 }
@@ -28,14 +24,25 @@ void Attack::clearTargets() {
     targets.clear();
 }
 
-bool Attack::checkDeath(const AttackTarget &target) const{
-
-    if(target.getHp()<=damage){
-
-        notify('k');
-        return true;
+std::vector<AttackTarget *> Attack::getTargets() const {
+    std::vector<AttackTarget *> currentTargets;
+    for (auto &t: targets) {
+        currentTargets.push_back(t);
     }
-    else{
+    return currentTargets;
+}
+
+
+bool Attack::checkDeath(AttackTarget *target) const {
+
+    if (target->getHp() <= damage and target->getStatus() != INVINCIBLE) {
+
+        if (target->getBoss())
+            notify(BOSSKILLED);
+        else
+            notify(ENEMYKILLED);
+        return true;
+    } else {
         return false;
     }
 }
@@ -49,9 +56,88 @@ void Attack::detach(Observer *o) {
     observers.remove(o);
 }
 
-void Attack::notify(char category) const {
-    for(auto &o : observers){
+void Attack::notify(unsigned short category) const {
+    for (auto &o: observers) {
         o->getNews(category);
     }
 }
+
+bool Attack::hit() {
+
+    bool canAttack = false;
+    if (cooldown.getElapsedTime().asSeconds() > attackSpeed) {
+        cooldown.restart();
+        canAttack = true;
+        if (*typeOfSprite == MOVERIGHT or *typeOfSprite == JUMPRIGHT or *typeOfSprite == IDLERIGHT or
+            *typeOfSprite == ATTACKRIGHT) {
+            *typeOfSprite = ATTACKRIGHT;
+        } else {
+            *typeOfSprite = ATTACKLEFT;
+        }
+
+        incomingAttack = true;
+        delay.restart();
+    }
+    return canAttack;
+}
+
+/*void Attack::applyCollisionDamage() {
+
+    auto i = targets.begin();
+
+    while (i != targets.end()) {
+
+        auto currentTarget = *i;
+        bool enemyCancelled = false;
+
+        if (hitBox.getGlobalBounds().intersects(currentTarget->getCollisionbox().getGlobalBounds())) {
+
+
+            sf::Vector2f knockbackDirection;
+
+            if (std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) > 1.f) {
+
+                knockbackDirection.x = (currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x) /
+                                       std::abs(currentTarget->getHitbox().getPosition().x - hitBox.getPosition().x);
+            } else knockbackDirection.x = 0;
+
+            if (std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) > 1.f) {
+                knockbackDirection.y = (currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y) /
+                                       std::abs(currentTarget->getHitbox().getPosition().y - hitBox.getPosition().y);
+            } else knockbackDirection.y = 0;
+
+            if (checkDeath(currentTarget)) {
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
+                targets.erase(i++);
+                enemyCancelled = true;
+            } else {
+
+                currentTarget->receiveDamage(knockbackDirection * knockback, damage);
+            }
+
+        }
+        if (not enemyCancelled) {
+            i++;
+        }
+
+    }
+}*/
+
+
+void Attack::update(const float &dt, sf::Vector2f centerPosition, bool orientation,
+                    const std::vector<std::shared_ptr<LevelTile>> &walls) {
+
+    if (incomingAttack) {
+        if (delay.getElapsedTime().asSeconds() > attackDelay) {
+
+
+            doDamage();
+            delay.restart();
+            incomingAttack = false;
+        }
+    }
+
+}
+
+
 
