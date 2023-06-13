@@ -7,23 +7,23 @@ old laboratory full of dangers.
 
 Run away to save yourself
 
-![[room1clip.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/room1clip.gif)
 
 Use powerful droids to destroy your enemies
 
-![[clipShellDroid1.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/clipShellDroid1.gif)
 
 Exploit their abilities at your advantage
 
-![[clipShellDroid2.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/clipShellDroid2.gif)
 
 Each one with its own use
 
-![[clipGlidingDroid.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/clipGlidingDroid.gif)
 
 Heal your wounds with tacos of dubious origins
 
-![[clipTaco.gif]]
+![](https://github.com/Malgesw/platformGame/blob/master/Gifs/clipTaco.gif)
 
 Show your worth and complete the steamrush
 
