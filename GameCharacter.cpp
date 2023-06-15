@@ -267,6 +267,8 @@ bool GameCharacter::savedComponentsPresent() {
 
 void GameCharacter::restoreOldComponents() {
 
+    backupAttack->clearTargets();
+    backupAttack->addTargets(attack->getTargets());
     backupMovement->getCollisions().setPosition(movement->getPosition());
     animation = std::move(backupAnimation);
     movement = std::move(backupMovement);

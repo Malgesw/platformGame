@@ -38,42 +38,39 @@ bool Achievement::checkAchievements() {
     bool result = false;
 
 
-    if (newAchievement and enemiesKilled == 1 and achievementType == ENEMYKILLED) {
-        text.setString("first enemy killed, keep on");
-        fontOpacity = 255;
-        newAchievement = false;
-    }
+    if (achievementType == ENEMYKILLED) {
+        if (newAchievement and enemiesKilled == 1) {
+            text.setString("first enemy killed, keep on");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement and enemiesKilled == 2) {
+            text.setString("double kill!");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement and enemiesKilled == 3) {
+            text.setString("rampage!");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement and enemiesKilled == 10) {
+            text.setString("please spare some enemies for our next game");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement and enemiesKilled == 11) {
+            text.setString("noone ever listens to me");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement and enemiesKilled == 18) {
+            text.setString("there are none left, are you happy now?");
+            fontOpacity = 255;
+            newAchievement = false;
+        } else if (newAchievement) {
+            std::string message = "Enemies Killed:  " + std::to_string(enemiesKilled);
+            text.setString(message);
+            fontOpacity = 255;
+            newAchievement = false;
+        }
 
-    if (newAchievement and enemiesKilled == 2 and achievementType == ENEMYKILLED) {
-        text.setString("double kill!");
-        fontOpacity = 255;
-        newAchievement = false;
     }
-
-    if (newAchievement and enemiesKilled == 3 and achievementType == ENEMYKILLED) {
-        text.setString("rampage!");
-        fontOpacity = 255;
-        newAchievement = false;
-    }
-
-    if (newAchievement and enemiesKilled == 10 and achievementType == ENEMYKILLED) {
-        text.setString("please spare some enemies for the next game");
-        fontOpacity = 255;
-        newAchievement = false;
-    }
-
-    if (newAchievement and enemiesKilled == 11 and achievementType == ENEMYKILLED) {
-        text.setString("noone ever listens to me");
-        fontOpacity = 255;
-        newAchievement = false;
-    }
-
-    if (newAchievement and enemiesKilled == 18 and achievementType == ENEMYKILLED) {
-        text.setString("there are none left, are you happy now?");
-        fontOpacity = 255;
-        newAchievement = false;
-    }
-
     if (newAchievement and achievementType == DROIDACTIVATED) {
         text.setString("Droid activated!");
         fontOpacity = 255;

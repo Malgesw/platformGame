@@ -20,11 +20,10 @@ set(SOURCE_FILES main.cpp Game.cpp Game.h State.cpp State.h headers.h GameState.
 
 
 add_executable(platformGame main.cpp)
-set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR C:/SFML-2.5.1/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics audio network REQUIRED)
 
-include_directories(C:/SFML/include)
+
+include_directories(${SFML_INCLUDE_DIRS})
 add_library(core ${SOURCE_FILES})
 target_link_libraries(core sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 target_link_libraries(platformGame core)
