@@ -104,7 +104,7 @@ void TileMap::spawnEnemies(GameCharacter &player) {
     generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(40, 24), player);
 
     generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 3), player);
-    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 14), player);
+    generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 13), player);
     generateEnemy(0, "./Levels/FlyingEnemy.ini", sf::Vector2i(32, 24), player);
 
     generateEnemy(1, "./Levels/FlyingEnemy.ini", sf::Vector2i(10, 13), player);

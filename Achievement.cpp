@@ -56,6 +56,24 @@ bool Achievement::checkAchievements() {
         newAchievement = false;
     }
 
+    if (newAchievement and enemiesKilled == 10 and achievementType == ENEMYKILLED) {
+        text.setString("please spare some enemies for the next game");
+        fontOpacity = 255;
+        newAchievement = false;
+    }
+
+    if (newAchievement and enemiesKilled == 11 and achievementType == ENEMYKILLED) {
+        text.setString("noone ever listens to me");
+        fontOpacity = 255;
+        newAchievement = false;
+    }
+
+    if (newAchievement and enemiesKilled == 18 and achievementType == ENEMYKILLED) {
+        text.setString("there are none left, are you happy now?");
+        fontOpacity = 255;
+        newAchievement = false;
+    }
+
     if (newAchievement and achievementType == DROIDACTIVATED) {
         text.setString("Droid activated!");
         fontOpacity = 255;
